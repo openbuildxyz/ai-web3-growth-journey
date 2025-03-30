@@ -1,0 +1,7 @@
+// Contract addresses
+export const TASK_MANAGER_ADDRESS = "0x287e555731d2F733C9732F59c16598da1825f762"
+export const USDC_ADDRESS = "0xA5d9016627Faa3cdC2C23BAAEdF93069e9f2c0B8"
+
+// USDC decimals
+export const USDC_DECIMALS = 18
+
