@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Life NFT Demo</title>
+    <script type="importmap">
+    {
+        "imports": {
+            "ethers": "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as ethers from 'ethers';
+        window.ethers = ethers;
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            gap: 1px;
+            background: #ccc;
+            padding: 10px;
+            margin: 20px 0;
+        }
+        .cell {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 1px solid #999;
+            cursor: pointer;
+        }
+        .cell.alive {
+            background: black;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+        }
+        #status {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game of Life NFT Demo</h1>
+    
+    <div id="wallet-status">
+        钱包状态
+    </div>
+
+    <div class="controls">
+        <button onclick="connectWithPrivateKey()" style="background-color: #553c9a; color: white;">使用私钥连接</button>
+        <button onclick="randomize()">随机生成</button>
+        <button onclick="step()">下一代</button>
+        <button onclick="mintNFT()">铸造NFT</button>
+        <button onclick="loadNFT()">加载NFT</button>
+    </div>
+
+    <div id="game-container">
+        <div class="game-board" id="board"></div>
+        
+        <div>
+            NFT ID: <input type="number" id="tokenId" min="1" value="1">
+        </div>
+
+        <div id="status">
+            状态: 准备就绪
+        </div>
+    </div>
+
+    <script>
+        let boardState = Array(10).fill().map(() => Array(10).fill(false));
+        let wallet;
+        let provider;
+        let contract;
+        
+        // 初始化页面
+        function initBoard() {
+            const board = document.getElementById('board');
+            board.innerHTML = '';
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.onclick = () => toggleCell(i, j);
+                    board.appendChild(cell);
+                }
+            }
+            updateBoard();
+        }
+
+        // 切换细胞状态
+        function toggleCell(i, j) {
+            boardState[i][j] = !boardState[i][j];
+            updateBoard();
+        }
+
+        // 更新显示
+        function updateBoard() {
+            const cells = document.getElementsByClassName('cell');
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    const cell = cells[i * 10 + j];
+                    cell.className = 'cell' + (boardState[i][j] ? ' alive' : '');
+                }
+            }
+        }
+
+        // 随机生成
+        function randomize() {
+            boardState = boardState.map(row => 
+                row.map(() => Math.random() > 0.7)
+            );
+            updateBoard();
+        }
+
+        // 计算下一代
+        function step() {
+            const newState = boardState.map(row => [...row]);
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    const neighbors = countNeighbors(i, j);
+                    if (boardState[i][j]) {
+                        newState[i][j] = neighbors === 2 || neighbors === 3;
+                    } else {
+                        newState[i][j] = neighbors === 3;
+                    }
+                }
+            }
+            boardState = newState;
+            updateBoard();
+        }
+
+        // 计算邻居数量
+        function countNeighbors(i, j) {
+            let count = 0;
+            for (let di = -1; di <= 1; di++) {
+                for (let dj = -1; dj <= 1; dj++) {
+                    if (di === 0 && dj === 0) continue;
+                    const ni = (i + di + 10) % 10;
+                    const nj = (j + dj + 10) % 10;
+                    if (boardState[ni][nj]) count++;
+                }
+            }
+            return count;
+        }
+
+        // 使用私钥连接
+        async function connectWithPrivateKey() {
+            try {
+                console.log("开始使用私钥连接...");
+                
+                // 创建provider
+                provider = new ethers.JsonRpcProvider('https://testnet-rpc.monad.xyz/');
+                console.log("Provider已创建");
+
+                // 使用私钥创建钱包
+                const privateKey = '334cdb37a1f46d0b2100425b92f49d1fcf435183ad391fac2d04238acd98e5dc';
+                wallet = new ethers.Wallet(privateKey, provider);
+                console.log("钱包已创建");
+
+                // 获取网络信息
+                const network = await provider.getNetwork();
+                console.log("网络信息:", {
+                    name: network.name,
+                    chainId: network.chainId.toString()
+                });
+
+                // 获取钱包地址和余额
+                const address = wallet.address;
+                const balance = await provider.getBalance(address);
+                console.log("钱包地址:", address);
+                console.log("余额:", ethers.formatEther(balance), "MON");
+
+                // 更新状态显示
+                document.getElementById('wallet-status').innerHTML = 
+                    `钱包已连接: ${address}<br>` +
+                    `余额: ${parseFloat(ethers.formatEther(balance)).toFixed(4)} MON`;
+
+                // 初始化合约
+                console.log("初始化合约...");
+                const contractAddress = "0x680c88f57717010661710C5849a47A13694F83A0";
+                const abi = [
+                    "function mintGame(string memory initialState) public payable",
+                    "function updateGameState(uint256 tokenId, string memory newState, uint256 generation) public",
+                    "function getGameState(uint256 tokenId) public view returns (string memory boardState, uint256 generation, uint256 timestamp, address player)"
+                ];
+                contract = new ethers.Contract(contractAddress, abi, wallet);
+                console.log("合约初始化成功");
+
+                document.getElementById('status').innerText = '成功连接到Monad测试网';
+            } catch (error) {
+                console.error("连接失败:", error);
+                document.getElementById('status').innerText = '连接失败: ' + error.message;
+            }
+        }
+
+        // 铸造NFT
+        async function mintNFT() {
+            try {
+                if (!contract) {
+                    throw new Error("请先连接钱包");
+                }
+                console.log("准备铸造NFT...");
+                console.log("当前游戏状态:", boardState);
+                const boardString = JSON.stringify(boardState);
+                
+                console.log("发送交易中...");
+                const tx = await contract.mintGame(boardString, {
+                    value: ethers.parseEther("0.01")
+                });
+                console.log("交易已发送:", tx.hash);
+                
+                console.log("等待交易确认...");
+                const receipt = await tx.wait();
+                console.log("交易已确认:", receipt);
+                
+                document.getElementById('status').innerText = 'NFT铸造成功！交易哈希: ' + tx.hash;
+            } catch (error) {
+                console.error("铸造失败:", error);
+                document.getElementById('status').innerText = '铸造失败：' + error.message;
+            }
+        }
+
+        // 加载NFT
+        async function loadNFT() {
+            try {
+                if (!contract) {
+                    throw new Error("请先连接钱包");
+                }
+                const tokenId = document.getElementById('tokenId').value;
+                console.log("加载NFT...");
+                console.log("Token ID:", tokenId);
+                
+                const state = await contract.getGameState(tokenId);
+                console.log("游戏状态:", state);
+                
+                boardState = JSON.parse(state.boardState);
+                updateBoard();
+                
+                document.getElementById('status').innerText = 
+                    `加载成功！\n代数: ${state.generation}\n` +
+                    `所有者: ${state.player}\n` +
+                    `时间戳: ${new Date(state.timestamp * 1000).toLocaleString()}`;
+            } catch (error) {
+                console.error("加载失败:", error);
+                document.getElementById('status').innerText = '加载失败：' + error.message;
+            }
+        }
+
+        // 页面加载完成后初始化
+        window.onload = () => {
+            initBoard();
+        };
+    </script>
+</body>
+</html>
