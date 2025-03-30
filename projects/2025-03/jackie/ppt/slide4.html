@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链智付 - 技术架构</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neo-primary: #ff5d56;
+            --neo-secondary: #29ffc9;
+            --neo-accent: #74ee15;
+            --neo-black: #000000;
+            --neo-offset: 4px;
+        }
+        
+        body {
+            background-color: #fbf8ef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .neo-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .neo-badge {
+            background-color: var(--neo-primary);
+            color: white;
+            border: 3px solid black;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            position: relative;
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+            transform: rotate(-1deg);
+        }
+        
+        .architecture-layer {
+            border: 3px solid black;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .layer-badge {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background-color: white;
+            padding: 0 10px;
+            font-weight: bold;
+            color: black;
+        }
+        
+        .layer-1 {
+            background-color: rgba(255, 93, 86, 0.1);
+            box-shadow: 4px 4px 0 0 var(--neo-black);
+        }
+        
+        .layer-2 {
+            background-color: rgba(41, 255, 201, 0.1);
+            box-shadow: 4px 4px 0 0 var(--neo-black);
+        }
+        
+        .layer-3 {
+            background-color: rgba(116, 238, 21, 0.1);
+            box-shadow: 4px 4px 0 0 var(--neo-black);
+        }
+        
+        .component {
+            background-color: white;
+            border: 2px solid black;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+            font-weight: bold;
+        }
+        
+        .flow-arrow {
+            display: none;
+        }
+        
+        @media (min-width: 768px) {
+            .flow-arrow {
+                display: block;
+                position: absolute;
+                bottom: -25px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: black;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-5xl">
+        <div class="neo-card">
+            <div class="mb-4">
+                <span class="neo-badge text-lg">技术架构</span>
+            </div>
+            
+            <h1 class="text-4xl font-bold mb-8">ChainPayGate 技术架构</h1>
+            
+            <div class="architecture-layer layer-1">
+                <span class="layer-badge">智能合约层</span>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="component">
+                        <i class="fas fa-key text-yellow-500 mr-2"></i>
+                        用户授权管理合约
+                    </div>
+                    <div class="component">
+                        <i class="fas fa-money-bill-wave text-green-500 mr-2"></i>
+                        自动扣费处理合约
+                    </div>
+                    <div class="component">
+                        <i class="fas fa-database text-blue-500 mr-2"></i>
+                        服务注册管理合约
+                    </div>
+                </div>
+                <div class="flow-arrow">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+            </div>
+            
+            <div class="architecture-layer layer-2">
+                <span class="layer-badge">MCP代理层</span>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="component">
+                        <i class="fas fa-plug text-purple-500 mr-2"></i>
+                        标准MCP接口接入
+                    </div>
+                    <div class="component">
+                        <i class="fas fa-shield-alt text-red-500 mr-2"></i>
+                        授权验证和扣费模块
+                    </div>
+                    <div class="component">
+                        <i class="fas fa-random text-indigo-500 mr-2"></i>
+                        服务路由分发系统
+                    </div>
+                </div>
+                <div class="flow-arrow">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+            </div>
+            
+            <div class="architecture-layer layer-3">
+                <span class="layer-badge">服务执行层</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="component">
+                        <i class="fas fa-cogs text-gray-700 mr-2"></i>
+                        多样化API连接适配器
+                    </div>
+                    <div class="component">
+                        <i class="fas fa-check-double text-teal-500 mr-2"></i>
+                        结果验证和格式化系统
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold mb-4">技术创新点</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                        <span class="text-lg">基于MCP的模块化架构，支持多种API类型的标准化接入</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                        <span class="text-lg">预授权机制结合智能合约，实现一次许可、多次使用的支付流程</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                        <span class="text-lg">链上验证和链下计算相结合，平衡性能和可信度</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

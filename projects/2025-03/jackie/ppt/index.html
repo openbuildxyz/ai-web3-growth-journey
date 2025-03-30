@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链智付 (ChainPayGate) - 区块链上的通用MCP支付网关</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neo-primary: #ff5d56;
+            --neo-secondary: #29ffc9;
+            --neo-accent: #74ee15;
+            --neo-black: #000000;
+            --neo-offset: 4px;
+        }
+        
+        body {
+            background-color: #fbf8ef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        .neo-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .neo-button {
+            background-color: white;
+            color: black;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .neo-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: calc(var(--neo-offset) + 2px) calc(var(--neo-offset) + 2px) 0 0 var(--neo-black);
+        }
+        
+        .neo-button:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+        }
+        
+        .neo-frame {
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            background-color: white;
+        }
+        
+        .slide-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: white;
+            border-right: 3px solid black;
+            box-shadow: var(--neo-offset) 0 0 0 var(--neo-black);
+            z-index: 100;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .nav-menu.open {
+            transform: translateX(0);
+        }
+        
+        .slide-indicators {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border: 2px solid black;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .indicator.active {
+            background-color: var(--neo-primary);
+        }
+        
+        .nav-arrows {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 50;
+        }
+        
+        .arrow-btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            color: black;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .arrow-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: calc(var(--neo-offset) + 2px) calc(var(--neo-offset) + 2px) 0 0 var(--neo-black);
+        }
+        
+        .arrow-btn:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+        }
+    </style>
+</head>
+<body>
+    <div class="neo-container">
+        <div id="slideContainer" class="w-full h-full neo-frame">
+            <iframe id="slideFrame" class="slide-iframe" src="slide1.html"></iframe>
+        </div>
+        
+        <button id="menuToggle" class="neo-button absolute top-5 left-5 p-2 rounded">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <button id="fullscreenBtn" class="neo-button absolute top-5 right-5 p-2 rounded">
+            <i class="fas fa-expand"></i>
+        </button>
+        
+        <div id="navMenu" class="nav-menu">
+            <div class="p-4 border-b-2 border-black">
+                <h2 class="text-xl font-bold">链智付</h2>
+                <p class="text-sm">区块链上的通用MCP支付网关</p>
+            </div>
+            <ul class="p-2">
+                <li class="slide-link active p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide1.html">1. 主页介绍</li>
+                <li class="slide-link p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide2.html">2. 问题痛点</li>
+                <li class="slide-link p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide3.html">3. 解决方案</li>
+                <li class="slide-link p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide4.html">4. 技术架构</li>
+                <li class="slide-link p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide5.html">5. 核心特性</li>
+                <li class="slide-link p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide6.html">6. 应用场景</li>
+                <li class="slide-link p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide7.html">7. 演示案例</li>
+                <li class="slide-link p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide8.html">8. 未来展望</li>
+                <li class="slide-link p-2 hover:bg-gray-100 cursor-pointer" data-slide="slide9.html">9. 团队信息</li>
+            </ul>
+        </div>
+        
+        <div id="slideIndicators" class="slide-indicators"></div>
+        
+        <div class="nav-arrows">
+            <button id="prevBtn" class="arrow-btn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button id="nextBtn" class="arrow-btn">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        const slides = [
+            'slide1.html',
+            'slide2.html',
+            'slide3.html',
+            'slide4.html',
+            'slide5.html',
+            'slide6.html',
+            'slide7.html',
+            'slide8.html',
+            'slide9.html'
+        ];
+        
+        let currentSlideIndex = 0;
+        const slideFrame = document.getElementById('slideFrame');
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const slideIndicators = document.getElementById('slideIndicators');
+        
+        // 创建指示器
+        slides.forEach((_, index) => {
+            const indicator = document.createElement('div');
+            indicator.className = 'indicator';
+            if (index === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => goToSlide(index));
+            slideIndicators.appendChild(indicator);
+        });
+        
+        // 导航菜单切换
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+        });
+        
+        // 全屏功能
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                }
+            }
+        });
+        
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+        
+        // 导航箭头按钮
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        
+        // 导航菜单点击
+        document.querySelectorAll('.slide-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const slidePath = link.getAttribute('data-slide');
+                goToSlideByPath(slidePath);
+                navMenu.classList.remove('open');
+            });
+        });
+        
+        function goToSlideByPath(slidePath) {
+            const index = slides.indexOf(slidePath);
+            if (index !== -1) {
+                goToSlide(index);
+            }
+        }
+        
+        function goToSlide(index) {
+            if (index >= 0 && index < slides.length) {
+                currentSlideIndex = index;
+                slideFrame.src = slides[currentSlideIndex];
+                updateIndicators();
+                updateActiveLink();
+            }
+        }
+        
+        function nextSlide() {
+            goToSlide(currentSlideIndex + 1);
+        }
+        
+        function prevSlide() {
+            goToSlide(currentSlideIndex - 1);
+        }
+        
+        function updateIndicators() {
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                if (index === currentSlideIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        function updateActiveLink() {
+            document.querySelectorAll('.slide-link').forEach((link, index) => {
+                if (index === currentSlideIndex) {
+                    link.classList.add('active', 'font-bold', 'bg-gray-100');
+                } else {
+                    link.classList.remove('active', 'font-bold', 'bg-gray-100');
+                }
+            });
+        }
+    </script>
+</body>
+</html> 

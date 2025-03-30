@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链智付 - 问题痛点</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neo-primary: #ff5d56;
+            --neo-secondary: #29ffc9;
+            --neo-accent: #74ee15;
+            --neo-black: #000000;
+            --neo-offset: 4px;
+        }
+        
+        body {
+            background-color: #fbf8ef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .neo-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .neo-badge {
+            background-color: var(--neo-primary);
+            color: white;
+            border: 3px solid black;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            position: relative;
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+            transform: rotate(-1deg);
+        }
+        
+        .pain-point {
+            border-left: 5px solid var(--neo-primary);
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .pain-point:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--neo-primary);
+            border: 3px solid black;
+            border-radius: 50%;
+            left: -12px;
+            top: 0;
+        }
+        
+        .solution {
+            background-color: rgba(116, 238, 21, 0.1);
+            border: 2px solid var(--neo-accent);
+            border-radius: 0;
+            padding: 1rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+        
+        .solution:before {
+            content: '💡';
+            position: absolute;
+            font-size: 1.5rem;
+            top: -15px;
+            left: 10px;
+            background-color: white;
+            padding: 0 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-5xl">
+        <div class="neo-card">
+            <div class="mb-4">
+                <span class="neo-badge text-lg">我们解决了什么问题？</span>
+            </div>
+            
+            <h1 class="text-4xl font-bold mb-8">当前MCP支付痛点</h1>
+            
+            <div class="pain-point">
+                <h3 class="text-2xl font-bold mb-3">痛点一：API调用与支付割裂</h3>
+                <p class="text-lg mb-3">传统方式：用户需要经历注册服务→获取API密钥→设置支付方式→管理账单→调用API的繁琐流程</p>
+                <div class="solution">
+                    <p class="text-lg font-bold">我们的方案：</p>
+                    <p class="text-lg">一次授权，多次自动扣款调用API，类似预付费会员卡，一次设置，随时使用！</p>
+                </div>
+            </div>
+            
+            <div class="pain-point">
+                <h3 class="text-2xl font-bold mb-3">痛点二：Web3应用无法便捷调用外部服务</h3>
+                <p class="text-lg mb-3">传统方式：智能合约难以直接调用外部API，需要复杂的预言机设置，用户体验差</p>
+                <div class="solution">
+                    <p class="text-lg font-bold">我们的方案：</p>
+                    <p class="text-lg">通过MCP标准化接口和预授权机制，智能合约可以像调用内部函数一样轻松调用外部世界的任何API</p>
+                </div>
+            </div>
+            
+            <div class="pain-point mb-0">
+                <h3 class="text-2xl font-bold mb-3">痛点三：API提供商缺乏简单的加密支付入口</h3>
+                <p class="text-lg mb-3">传统方式：API提供商需要对接传统支付系统，难以接入Web3生态和获取加密用户</p>
+                <div class="solution">
+                    <p class="text-lg font-bold">我们的方案：</p>
+                    <p class="text-lg">一站式解决方案，API提供商注册服务后自动获得加密货币预授权支付通道</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

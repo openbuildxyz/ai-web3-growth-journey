@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链智付 - 解决方案</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neo-primary: #ff5d56;
+            --neo-secondary: #29ffc9;
+            --neo-accent: #74ee15;
+            --neo-black: #000000;
+            --neo-offset: 4px;
+        }
+        
+        body {
+            background-color: #fbf8ef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .neo-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .neo-badge {
+            background-color: var(--neo-primary);
+            color: white;
+            border: 3px solid black;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            position: relative;
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+            transform: rotate(-1deg);
+        }
+        
+        .neo-step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 2rem;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 45px;
+            height: 45px;
+            background-color: var(--neo-secondary);
+            border: 3px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+        }
+        
+        .solution-img {
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .highlight-box {
+            background-color: rgba(255, 93, 86, 0.1);
+            border: 2px solid var(--neo-primary);
+            padding: 1rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+        
+        .highlight-box:before {
+            content: '🔥';
+            position: absolute;
+            font-size: 1.5rem;
+            top: -15px;
+            left: 10px;
+            background-color: white;
+            padding: 0 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-5xl">
+        <div class="neo-card">
+            <div class="mb-4">
+                <span class="neo-badge text-lg">解决方案</span>
+            </div>
+            
+            <h1 class="text-4xl font-bold mb-8">MCP支付网关：一键授权，多次调用</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <div class="neo-step">
+                        <div class="step-number">1</div>
+                        <h3 class="text-2xl font-bold mb-2">预授权机制</h3>
+                        <p class="text-lg">用户一次性授权代币，为多次API调用提前支付费用，无需每次都确认交易</p>
+                    </div>
+                    
+                    <div class="neo-step">
+                        <div class="step-number">2</div>
+                        <h3 class="text-2xl font-bold mb-2">低摩擦调用</h3>
+                        <p class="text-lg">授权后，用户或智能合约发送MCP请求，系统自动验证授权并扣款</p>
+                    </div>
+                    
+                    <div class="neo-step">
+                        <div class="step-number">3</div>
+                        <h3 class="text-2xl font-bold mb-2">链上验证</h3>
+                        <p class="text-lg">MCP返回的结果带有加密证明，确保数据未被篡改，可被链上验证</p>
+                    </div>
+                    
+                    <div class="neo-step">
+                        <div class="step-number">4</div>
+                        <h3 class="text-2xl font-bold mb-2">跨链互操作</h3>
+                        <p class="text-lg">未来可在任何支持MCP的区块链上使用相同服务，一次授权多链使用</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <img class="solution-img mb-6" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="API网关示意图">
+                    
+                    <div class="highlight-box">
+                        <h3 class="text-xl font-bold mb-2">想象一下：</h3>
+                        <p class="text-lg">就像办了一张充值会员卡，之后每次使用各种数字服务时无需重复付款，系统自动从余额中扣除，极大简化使用体验！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
