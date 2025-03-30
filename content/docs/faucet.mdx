@@ -1,0 +1,91 @@
+---
+title: 小白领水指南
+---
+
+在 Web3 世界中探索和开发时，你经常会听到“领水”这个词。对于新手来说，这可能听起来很奇怪。别担心，这篇指南将为你详细解释什么是领水、为什么需要领水，以及如何操作。
+
+## 什么是水龙头 (Faucet)?
+
+在加密货币领域，“水龙头” (Faucet) 指的是一个网站或工具，它会免费分发少量测试代币 (Test Tokens) 到你的钱包地址。这些代币通常用于特定区块链的测试网络 (Testnet)。
+
+## 为什么需要测试币 (领水)?
+
+区块链上的每一笔交易或操作（例如部署智能合约、与 dApp 交互）都需要支付 Gas 费，通常使用该链的原生代币支付。
+
+*   **主网 (Mainnet):** 这是真实的区块链网络，上面的代币具有实际价值。在主网上操作需要花费真金白银。
+*   **测试网 (Testnet):** 这是主网的克隆版本，专门用于测试和开发。测试网上的代币没有实际价值，可以通过水龙头免费获取。
+
+**因此，你需要测试币的主要原因包括：**
+
+1.  **无风险测试:** 在将你的 dApp 或智能合约部署到主网之前，可以在测试网上进行充分的测试，而无需花费真实的加密货币。
+2.  **学习和体验:** 新手可以通过测试币在测试网上体验转账、与 dApp 交互等操作，熟悉钱包和区块链的使用，而没有财务风险。
+3.  **支付 Gas 费:** 在测试网上进行任何操作（如部署合约、调用合约函数）都需要用测试币来支付 Gas 费。
+
+## 小白快速领水（0G-Newton-Testnet）
+
+1、首先访问0G官方的[领水网站](https://hub.0g.ai/faucet)
+
+2、点击`Add 0G Testnet`按钮，添加0G Testnet到MetaMask钱包
+![add-testnet](/faucet/add-testnet.png)
+
+3、点击MeatMask钱包，确认当前选择的是0G Testnet，如果不是需要切换到对应的区块链网络，然后复制钱包地址
+![copy-address](/faucet/copy-address.png)
+
+4、输入你的钱包地址，点击`Request 0G`按钮，等待测试币发放，你的钱包测试币余额就会发生变化了
+![request-0g](/faucet/request-0g.png)
+
+
+## 如何从水龙头获取测试币?
+
+获取测试币通常很简单：
+
+1.  **找到对应的水龙头:** 每个测试网通常都有一个或多个官方或社区提供的水龙头。你需要找到你目标测试网的水龙头网站。可以通过搜索引擎搜索 "[测试网名称] Faucet" (例如 "Sepolia Faucet") 来查找。
+2.  **准备你的钱包地址:** 打开你的加密钱包（如 MetaMask），切换到对应的测试网络（如果尚未添加，请参考下一节），然后复制你的钱包地址。
+3.  **在水龙头网站请求:** 访问水龙头网站，将你的钱包地址粘贴到指定输入框，然后按照指示完成请求（可能需要进行人机验证，或连接钱包/社交媒体账号）。
+4.  **等待接收:** 等待一小段时间，水龙头就会将测试币发送到你的钱包地址。你可以在钱包中查看余额或在测试网的区块浏览器上查询你的地址来确认。
+
+**请注意:**
+
+*   水龙头通常有领取限制，例如每个地址每天或每隔一段时间只能领取一次，并且数量有限。
+*   有些水龙头可能需要你持有少量主网代币或其他条件才能领取。
+
+## 使用Chainlist自动添加区块链网络（推荐）
+
+直接访问[Chainlist](https://chainlist.org/)官网，这里面包含了很多区块链网络及测试网的信息，点击`Add to MetaMask`可以很方便的添加到你的钱包中。添加测试网的话，请确保勾选了`Include Testnets`。
+
+![chainlist](/faucet/chainlist.png)
+
+## 常用领水网站
+
+*   [0G Faucet](https://hub.0g.ai/faucet) - 0G 官方的领水网站
+*   [OpenBuild Monad Faucet](https://faucet.openbuild.xyz/monad?code=85b04405-88f6-40d4-9d3a-25624636c84a) - OpenBuild的Monad测试网的领水网站
+*   [Monad Faucet](https://testnet.monad.xyz/) - Monad官方的测试网的领水网站
+*   [Hackquest Faucet](https://www.hackquest.io/zh-cn/faucets) - Hackquest官方的领水网站
+*   [POW Faucet](https://sepolia-faucet.pk910.de/) - POW Faucet的Sepolia工作量证明水龙头（模拟挖矿，防止机器人把水都领走了），需要对应钱包的[Passport](https://app.passport.xyz/)大于2分，可以绑定一些社交账号，很容易就能符合条件。
+*   [Chainlist Faucet](https://faucets.chain.link/) - Chainlist 官方的领水网站，需要钱包中至少包含1 LINK在以太坊主网
+
+其他测试网的领水网站可以自行搜索，或者积极参与对应的社区项目和共学。
+
+## 手动添加测试网络添加到你的钱包（小白不推荐）
+
+像 MetaMask 这样的钱包默认通常只配置了以太坊主网和少数几个流行的测试网。如果你需要连接到一个新的测试网（比如某个 Layer2 的测试网），你需要手动添加它的网络配置信息。
+
+**手动添加网络步骤 (以 MetaMask 为例):**
+
+1.  **打开 MetaMask 钱包插件。**
+2.  **点击顶部的网络选择器** (通常显示当前连接的网络名称，如 "以太坊主网")。
+3.  **点击列表底部的 "添加网络" (Add Network) 按钮。**
+4.  **选择 "手动添加网络" (Add a network manually)。**
+5.  **填写网络配置信息:** 你需要填写以下信息，这些信息通常可以在该区块链的官方文档或 [Chainlist](https://chainlist.org/) (一个查找 EVM 兼容网络信息的实用网站，请确保勾选 "Include Testnets") 上找到：
+    *   **网络名称 (Network Name):** 例如 "Sepolia test network"
+    *   **新的 RPC URL (New RPC URL):** 这是与网络交互的节点地址，例如 `https://rpc.sepolia.org`
+    *   **链 ID (Chain ID):** 网络的唯一标识符，例如 `11155111` (Sepolia 的 Chain ID)
+    *   **货币符号 (Currency Symbol):** 网络原生代币的符号，例如 `SepETH`
+    *   **区块浏览器 URL (Block Explorer URL) (可选):** 用于查询交易和地址信息的网站，例如 `https://sepolia.etherscan.io`
+6.  **点击 "保存" (Save)。**
+
+保存后，你就可以在网络选择器中看到并切换到新添加的测试网了。
+
+**重要提示:** 网络信息 (特别是 RPC URL) 可能会发生变化，请始终以官方文档或 Chainlist 等可靠来源为准。
+
+现在你应该明白了为什么需要领水以及如何操作了。祝你在 Web3 的探索之旅中一切顺利！
