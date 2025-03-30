@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI生成漫画NFT产品演示</title>
+    <style>
+        :root {
+            --primary: #4A6FA5;
+            --secondary: #687C97;
+            --dark: #2F3542;
+            --light: #FFFFFF;
+            --gray: #F0F0F0;
+            --shadow-color: rgba(0, 0, 0, 0.15);
+            --clay-bg: #eef1f5;
+            --clay-shadow1: rgba(255, 255, 255, 0.6);
+            --clay-shadow2: rgba(47, 53, 66, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #E9EDF2;
+            color: #3A4554;
+            overflow: hidden;
+        }
+        
+        #presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5% 10%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            z-index: 1;
+            background-color: #E9EDF2;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(74, 111, 165, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 85% 60%, rgba(104, 124, 151, 0.12) 0%, transparent 30%);
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            text-align: center;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px var(--clay-shadow2),
+                         -2px -2px 4px var(--clay-shadow1);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px var(--clay-shadow2),
+                         -1px -1px 2px var(--clay-shadow1);
+        }
+        
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            text-align: center;
+            color: #3A4554;
+        }
+        
+        .button {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 12px 28px;
+            border: none;
+            border-radius: 18px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 2rem;
+            box-shadow: 
+                6px 6px 12px var(--clay-shadow2),
+                -6px -6px 12px var(--clay-shadow1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                8px 8px 16px var(--clay-shadow2),
+                -8px -8px 16px var(--clay-shadow1);
+        }
+        
+        .button:active {
+            transform: translateY(1px);
+            box-shadow: 
+                inset 4px 4px 8px var(--clay-shadow2),
+                inset -4px -4px 8px var(--clay-shadow1);
+        }
+        
+        .image-container {
+            width: 70%;
+            max-width: 800px;
+            margin: 2rem 0;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 
+                12px 12px 24px var(--clay-shadow2),
+                -12px -12px 24px var(--clay-shadow1);
+            padding: 10px;
+            background-color: var(--clay-bg);
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            z-index: 10;
+        }
+        
+        .nav-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--clay-bg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                2px 2px 4px var(--clay-shadow2),
+                -2px -2px 4px var(--clay-shadow1);
+        }
+        
+        .nav-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.3);
+            box-shadow: 
+                inset 2px 2px 4px rgba(0, 0, 0, 0.2),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.1);
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+        
+        .control-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--clay-bg);
+            color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                6px 6px 12px var(--clay-shadow2),
+                -6px -6px 12px var(--clay-shadow1);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .control-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                8px 8px 16px var(--clay-shadow2),
+                -8px -8px 16px var(--clay-shadow1);
+        }
+        
+        .control-button:active {
+            transform: translateY(1px);
+            box-shadow: 
+                inset 4px 4px 8px var(--clay-shadow2),
+                inset -4px -4px 8px var(--clay-shadow1);
+        }
+        
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(58, 69, 84, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .share-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .share-content {
+            background-color: var(--clay-bg);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 550px;
+            width: 90%;
+            color: var(--dark);
+            box-shadow: 
+                12px 12px 24px rgba(0, 0, 0, 0.2),
+                -12px -12px 24px var(--clay-shadow1);
+        }
+        
+        .share-content h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .share-link {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            background-color: white;
+            color: var(--dark);
+            box-shadow: 
+                inset 4px 4px 8px var(--clay-shadow2),
+                inset -4px -4px 8px var(--clay-shadow1);
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .highlight {
+            color: #5A7DA0;
+            font-weight: bold;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 2rem 0;
+            max-width: 800px;
+        }
+        
+        .feature-item {
+            background-color: var(--clay-bg);
+            padding: 30px;
+            border-radius: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 
+                8px 8px 16px var(--clay-shadow2),
+                -8px -8px 16px var(--clay-shadow1);
+            position: relative;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                12px 12px 24px var(--clay-shadow2),
+                -12px -12px 24px var(--clay-shadow1);
+        }
+        
+        .feature-item h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .feature-item p {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+        
+        .steps-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .step-number {
+            background-color: var(--clay-bg);
+            color: var(--primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 25px;
+            flex-shrink: 0;
+            box-shadow: 
+                6px 6px 12px var(--clay-shadow2),
+                -6px -6px 12px var(--clay-shadow1);
+        }
+        
+        .step-content {
+            flex-grow: 1;
+            background-color: var(--clay-bg);
+            padding: 20px;
+            border-radius: 24px;
+            box-shadow: 
+                6px 6px 12px var(--clay-shadow2),
+                -6px -6px 12px var(--clay-shadow1);
+        }
+        
+        .step-content h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .step-content p {
+            font-size: 1.1rem;
+            text-align: left;
+            margin-bottom: 0;
+        }
+        
+        .prompt-example {
+            background-color: var(--clay-bg);
+            padding: 30px;
+            border-radius: 24px;
+            margin: 1.5rem 0;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 
+                8px 8px 16px var(--clay-shadow2),
+                -8px -8px 16px var(--clay-shadow1);
+        }
+        
+        .prompt-example h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .prompt-example p {
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            text-align: left;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        @keyframes floatAnimation {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .floating {
+            animation: floatAnimation 5s ease-in-out infinite;
+        }
+        
+        .delay-200 { animation-delay: 200ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-600 { animation-delay: 600ms; }
+        .delay-800 { animation-delay: 800ms; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            p { font-size: 1.2rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="presentation">
+        <!-- 第1页：封面 -->
+        <div class="slide active">
+            <h1 class="fade-in">AI创意漫画<span class="highlight">NFT</span></h1>
+            <p class="fade-in delay-200">使用先进的AI技术，创造全新的数字艺术体验</p>
+            <div class="image-container fade-in delay-400">
+                <img src="/api/placeholder/800/450" alt="AI漫画NFT展示">
+            </div>
+            <button class="button fade-in delay-600" onclick="nextSlide()">开始探索</button>
+        </div>
+        
+        <!-- 第2页：问题与解决方案 -->
+        <div class="slide">
+            <h2 class="fade-in">数字艺术的未来</h2>
+            <p class="fade-in delay-200">当今数字艺术市场面临的三大痛点</p>
+            <div class="feature-grid">
+                <div class="feature-item fade-in delay-400">
+                    <h3>创作壁垒高</h3>
+                    <p>传统漫画创作需要专业技能，普通人难以参与</p>
+                </div>
+                <div class="feature-item fade-in delay-600">
+                    <h3>内容同质化</h3>
+                    <p>市场上的作品风格单一，缺乏创新和多元化</p>
+                </div>
+                <div class="feature-item fade-in delay-800">
+                    <h3>版权问题</h3>
+                    <p>数字艺术作品容易被复制，创作者权益难以保障</p>
+                </div>
+                <div class="feature-item fade-in delay-800">
+                    <h3>变现困难</h3>
+                    <p>数字创作者难以从作品中获得合理的经济回报</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第3页：产品介绍 -->
+        <div class="slide">
+            <h2 class="fade-in">我们的解决方案</h2>
+            <p class="fade-in delay-200">AI生成漫画NFT：让创意不再受限，让价值得到保障</p>
+            <div class="image-container fade-in delay-400 floating">
+                <img src="/api/placeholder/800/450" alt="产品功能展示">
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item fade-in delay-600">
+                    <h3>AI驱动创作</h3>
+                    <p>用文字描述即可生成专业级别的漫画作品</p>
+                </div>
+                <div class="feature-item fade-in delay-800">
+                    <h3>NFT确权</h3>
+                    <p>区块链技术保障作品所有权与真实性</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第4页：产品优势 -->
+        <div class="slide">
+            <h2 class="fade-in">为什么选择我们的AI漫画NFT？</h2>
+            <div class="feature-grid">
+                <div class="feature-item fade-in delay-200">
+                    <h3>低门槛创作</h3>
+                    <p>仅需提供文字提示词，AI即可生成精美漫画</p>
+                </div>
+                <div class="feature-item fade-in delay-400">
+                    <h3>独特性保障</h3>
+                    <p>每件作品均由AI算法独立生成，确保唯一性</p>
+                </div>
+                <div class="feature-item fade-in delay-600">
+                    <h3>版权明晰</h3>
+                    <p>NFT技术确保创作者权益与所有权清晰可查</p>
+                </div>
+                <div class="feature-item fade-in delay-800">
+                    <h3>流动性高</h3>
+                    <p>通过OpenSea等知名平台实现全球范围的交易与流通</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第5页：使用流程 -->
+        <div class="slide">
+            <h2 class="fade-in">创建与交易流程</h2>
+            <div class="steps-container">
+                <div class="step fade-in delay-200">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>创建提示词</h3>
+                        <p>编写详细的场景、人物、风格描述，指导AI生成你想要的漫画</p>
+                    </div>
+                </div>
+                <div class="step fade-in delay-400">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>AI生成漫画</h3>
+                        <p>我们的AI系统根据提示词生成高质量、风格一致的漫画作品</p>
+                    </div>
+                </div>
+                <div class="step fade-in delay-600">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>铸造NFT</h3>
+                        <p>将生成的漫画作品铸造为NFT，记录在区块链上确保其唯一性</p>
+                    </div>
+                </div>
+                <div class="step fade-in delay-800">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>OpenSea交易</h3>
+                        <p>在OpenSea等平台上展示、出售或购买NFT漫画作品</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第6页：提示词示例 -->
+        <div class="slide">
+            <h2 class="fade-in">提示词创作指南</h2>
+            <p class="fade-in delay-200">优质的提示词是创造精彩漫画作品的关键</p>
+            <div class="prompt-example fade-in delay-400">
+                <h3>示例提示词</h3>
+                <p>风格：赛博朋克与日本浮世绘的融合
+人物：一位穿着传统和服但配有高科技义肢的女性武士
+场景：雨夜的霓虹灯闪烁的未来城市街道，天空有飞行器
+情绪：沉思且坚定，表现出力量与优雅的平衡
+构图：从低角度仰视，强调人物的力量感
+色调：以深蓝和紫红为主，霓虹灯的黄色和粉色点缀</p>
+            </div>
+            <p class="fade-in delay-600">提示词越详细，生成的漫画作品就越符合你的期望</p>
+        </div>
+        
+        <!-- 第7页：作品展示 -->
+        <div class="slide">
+            <h2 class="fade-in">精选NFT作品展示</h2>
+            <div class="image-container fade-in delay-200">
+                <img src="/api/placeholder/800/450" alt="NFT作品展示">
+            </div>
+            <p class="fade-in delay-400">这些作品已在OpenSea平台上成功交易，每一幅都具有独特性与收藏价值</p>
+        </div>
+        
+        <!-- 第8页：市场前景 -->
+        <div class="slide">
+            <h2 class="fade-in">市场与未来发展</h2>
+            <div class="feature-grid">
+                <div class="feature-item fade-in delay-200">
+                    <h3>NFT市场规模</h3>
+                    <p>数字艺术NFT市场预计到2027年将达到500亿美元规模</p>
+                </div>
+                <div class="feature-item fade-in delay-400">
+                    <h3>创作者经济</h3>
+                    <p>AI工具正在赋能更多普通人参与数字创作并从中获益</p>
+                </div>
+                <div class="feature-item fade-in delay-600">
+                    <h3>发展路线</h3>
+                    <p>未来将推出创作者社区、更多艺术风格支持以及跨媒体IP开发</p>
+                </div>
+                <div class="feature-item fade-in delay-800">
+                    <h3>技术迭代</h3>
+                    <p>持续优化AI生成算法，提升漫画质量与个性化程度</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第9页：用户见证 -->
+        <div class="slide">
+            <h2 class="fade-in">用户反馈</h2>
+            <div class="feature-grid">
+                <div class="feature-item fade-in delay-200">
+                    <h3>张先生 - 收藏家</h3>
+                    <p>"AI生成的漫画具有独特的创意视角，我已经收藏了15幅作品，它们的价值一直在稳步提升。"</p>
+                </div>
+                <div class="feature-item fade-in delay-400">
+                    <h3>李女士 - 创作者</h3>
+                    <p>"没想到只需要编写提示词就能创作出如此精美的漫画，并且通过NFT获得了实际收入。"</p>
+                </div>
+                <div class="feature-item fade-in delay-600">
+                    <h3>王先生 - 艺术投资者</h3>
+                    <p>"相比传统艺术品，AI漫画NFT的流动性更高，交易更便捷，是数字资产配置的好选择。"</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第10页：号召行动 -->
+        <div class="slide">
+            <h2 class="fade-in">加入AI漫画NFT的创新浪潮</h2>
+            <p class="fade-in delay-200">无论你是创作者、收藏家还是投资者，都能在这个新兴市场中找到机会</p>
+            <div class="image-container fade-in delay-400 floating">
+                <img src="/api/placeholder/800/450" alt="加入我们">
+            </div>
+            <button class="button fade-in delay-600" onclick="openShareModal()">立即开始体验</button>
+        </div>
+        
+        <!-- 导航点 -->
+        <div class="navigation" id="nav-dots"></div>
+        
+        <!-- 控制按钮 -->
+        <div class="controls">
+            <div class="control-button" onclick="prevSlide()">❮</div>
+            <div class="control-button" onclick="nextSlide()">❯</div>
+            <div class="control-button" onclick="openShareModal()">↗</div>
+        </div>
+        
+        <!-- 分享模态框 -->
+        <div class="share-modal" id="shareModal">
+            <div class="share-content">
+                <h3>分享这个演示文稿</h3>
+                <input type="text" class="share-link" value="https://example.com/ai-nft-presentation" readonly>
+                <div class="share-buttons">
+                    <button class="button" onclick="copyLink()">复制链接</button>
+                    <button class="button" style="background-color: var(--dark);" onclick="closeShareModal()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 初始化变量
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // 创建导航点
+        const navDots = document.getElementById('nav-dots');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('nav-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            navDots.appendChild(dot);
+        }
+        
+        // 切换到指定幻灯片
+        function goToSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSlides) index = totalSlides - 1;
+            
+            slides[currentSlide].classList.remove('active');
+            document.querySelectorAll('.nav-dot')[currentSlide].classList.remove('active');
+            
+            currentSlide = index;
+            
+            slides[currentSlide].classList.add('active');
+            document.querySelectorAll('.nav-dot')[currentSlide].classList.add('active');
+            
+            // 重置动画
+            const animElements = slides[currentSlide].querySelectorAll('.fade-in');
+            animElements.forEach(el => {
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = '';
+                }, 10);
+            });
+        }
+        
+        // 下一页
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+        
+        // 上一页
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+        
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+        
+        // 打开分享模态框
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('active');
+        }
+        
+        // 关闭分享模态框
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('active');
+        }
+        
+        // 复制链接
+        function copyLink() {
+            const linkInput = document.querySelector('.share-link');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            
+            const originalText = document.querySelector('.share-buttons .button').innerText;
+            document.querySelector('.share-buttons .button').innerText = '已复制!';
+            setTimeout(() => {
+                document.querySelector('.share-buttons .button').innerText = originalText;
+            }, 2000);
+        }
+        
+        // 点击模态框外部关闭
+        document.getElementById('shareModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('shareModal')) {
+                closeShareModal();
+            }
+        });
+        
+        // 监听窗口大小变化，调整样式
+        window.addEventListener('resize', () => {
+            // 可以添加响应式调整逻辑
+        });
+    </script>
+</body>
+</html>
