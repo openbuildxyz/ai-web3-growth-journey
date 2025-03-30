@@ -215,7 +215,7 @@ function App() {
       const gameCount = await contract.gameCounter();
       const gameList = [];
 
-      for (let i = 0; i < gameCount; i++) {
+      for (let i = gameCount - 1; i >= 0; i--) {
         const gameInfo = await contract.getGameInfo(i);
         gameList.push({
           id: i,
