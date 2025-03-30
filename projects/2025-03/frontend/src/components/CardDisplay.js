@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useWeb3 } from '../context/Web3Context';
+import '../index.css';
 
 const CardDisplay = ({ cardId, name }) => {
   const { cardLibrary } = useWeb3();
@@ -58,11 +59,37 @@ const CardDisplay = ({ cardId, name }) => {
     }
   };
   
+  // 根据卡片ID加载对应图片
+  const getCardImage = (id) => {
+    try {
+      // 尝试从images文件夹加载对应ID的图片
+      // 注意：在webpack环境中，这种动态导入需要特殊处理
+      return require(`../images/${id}.png`);
+    } catch (error) {
+      // 如果找不到，使用默认图片
+      try {
+        return require('../images/1.png');
+      } catch (e) {
+        // 如果连默认图片都找不到，返回空
+        return null;
+      }
+    }
+  };
+  
+  const imageUrl = getCardImage(card.id);
+  
   return (
-    <div className={`card-display ${getRarityClassName(card.rarity)}`}>
-      <h4>{card.name || name}</h4>
-      <p className="rarity">{getRarityText(card.rarity)}</p>
-      <p className="multiplier">奖励: {card.rewardMultiplier / 100}x</p>
+    <div className={`card-container ${getRarityClassName(card.rarity)}`}>
+      <div className="card-inner">
+        <div className="card-front">
+          {imageUrl && <img src={imageUrl} alt={card.name || name} className="card-image" />}
+        </div>
+        <div className="card-back">
+          <h4>{card.name || name}</h4>
+          <p className="rarity">{getRarityText(card.rarity)}</p>
+          <p className="multiplier">奖励: {card.rewardMultiplier / 100}x</p>
+        </div>
+      </div>
     </div>
   );
 };

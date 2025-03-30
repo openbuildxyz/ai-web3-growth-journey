@@ -18,9 +18,61 @@ code {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.card-display, .empty-card {
+.card-container {
+  width: 150px;
+  height: 200px;
+  perspective: 1000px;
+  margin: 15px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-container:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-front {
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  padding: 10px;
+}
+
+.empty-card {
   width: 150px;
   height: 200px;
   border-radius: 10px;
@@ -29,34 +81,120 @@ code {
   justify-content: center;
   align-items: center;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.empty-card {
   background-color: #e0e0e0;
   border: 2px dashed #bbb;
   font-size: 3rem;
   color: #999;
+  margin: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.common {
+/* 卡片稀有度样式 */
+.common .card-back {
   background-color: #e0e0e0;
   border: 2px solid #bbb;
 }
 
-.rare {
+.rare .card-back {
   background-color: #b3e0ff;
   border: 2px solid #4da6ff;
 }
 
-.epic {
+.epic .card-back {
   background-color: #d9b3ff;
   border: 2px solid #9933ff;
 }
 
-.legendary {
+.legendary .card-back {
   background-color: #ffd700;
   border: 2px solid #ff9900;
+}
+
+/* 抽卡游戏页面样式 */
+.draw-game {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.game-info {
+  text-align: center;
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 15px;
+}
+
+.stats p {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.current-cards h2, .last-drawn h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.last-drawn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.actions {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.draw-button {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.draw-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.draw-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+.draw-animation {
+  animation: flipCard 1s ease-in-out;
+}
+
+@keyframes flipCard {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(180deg); }
 }
 
 /* 游戏页面样式 */
