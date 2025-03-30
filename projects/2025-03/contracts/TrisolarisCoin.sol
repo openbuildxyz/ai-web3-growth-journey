@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract TrisolarisCoin is ERC20, Ownable {
     // 游戏代币，用于抽卡和奖励
     
-    constructor() ERC20("Trisolaris Coin", "TRI") Ownable(msg.sender) {
+    constructor() ERC20("Trisolaris Coin", "TRI") {
         // 初始铸造1,000,000枚代币
         _mint(msg.sender, 1000000 * 10 ** decimals());
     }

@@ -1,0 +1,130 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* 卡牌样式 */
+.card-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card-display, .empty-card {
+  width: 150px;
+  height: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.empty-card {
+  background-color: #e0e0e0;
+  border: 2px dashed #bbb;
+  font-size: 3rem;
+  color: #999;
+}
+
+.common {
+  background-color: #e0e0e0;
+  border: 2px solid #bbb;
+}
+
+.rare {
+  background-color: #b3e0ff;
+  border: 2px solid #4da6ff;
+}
+
+.epic {
+  background-color: #d9b3ff;
+  border: 2px solid #9933ff;
+}
+
+.legendary {
+  background-color: #ffd700;
+  border: 2px solid #ff9900;
+}
+
+/* 游戏页面样式 */
+.draw-game {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.game-info {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.card-section {
+  margin-bottom: 2rem;
+}
+
+.current-cards h2, .last-drawn h3 {
+  margin-bottom: 1rem;
+}
+
+.actions {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.draw-button {
+  padding: 0.75rem 2rem;
+  font-size: 1.25rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.draw-button:hover {
+  background-color: #45a049;
+}
+
+.draw-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* 历史记录样式 */
+.draw-history {
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.history-title {
+  margin-bottom: 1rem;
+}
+
+.history-stats {
+  display: flex;
+  justify-content: space-around;
+}

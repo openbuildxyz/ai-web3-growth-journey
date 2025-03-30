@@ -6,8 +6,12 @@
   "scripts": {
     "test": "hardhat test",
     "compile": "hardhat compile",
+    "deploy:local": "hardhat run scripts/deploy-local.js --network hardhat",
     "deploy:mumbai": "hardhat run scripts/deploy.js --network mumbai",
-    "deploy:polygon": "hardhat run scripts/deploy.js --network polygon"
+    "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
+    "node": "hardhat node",
+    "frontend:install": "cd frontend && npm install",
+    "frontend:start": "cd frontend && npm start"
   },
   "dependencies": {
     "@chainlink/contracts": "^0.4.1",

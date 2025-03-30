@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { Web3Context } from '../context/Web3Context';
+import { useWeb3 } from '../context/Web3Context';
 import CardDisplay from '../components/CardDisplay';
 import DrawHistory from '../components/DrawHistory';
-import { toast } from 'react-toastify';
 
 const DrawGame = () => {
-  const { account, gameContract, triToken, balance, setBalance } = useContext(Web3Context);
+  const { account, gameContract, triToken, balance, setBalance } = useWeb3();
   const [drawPrice, setDrawPrice] = useState(0);
   const [jackpot, setJackpot] = useState(0);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -55,7 +54,7 @@ const DrawGame = () => {
           // 监听三连事件
           gameContract.on("TripleMatch", (user, cardId, reward, event) => {
             if (user.toLowerCase() === account.toLowerCase()) {
-              toast.success(`恭喜！您获得了三连奖励：${ethers.utils.formatEther(reward)} TRI！`);
+              alert(`恭喜！您获得了三连奖励：${ethers.utils.formatEther(reward)} TRI！`);
               
               // 更新余额
               updateBalance();
@@ -89,12 +88,12 @@ const DrawGame = () => {
   // 抽卡
   const handleDraw = async () => {
     if (!account) {
-      toast.error("请先连接钱包");
+      alert("请先连接钱包");
       return;
     }
     
     if (parseFloat(balance) < parseFloat(drawPrice)) {
-      toast.error("代币余额不足");
+      alert("代币余额不足");
       return;
     }
     
@@ -119,7 +118,7 @@ const DrawGame = () => {
       updateBalance();
     } catch (error) {
       console.error("Error drawing card", error);
-      toast.error("抽卡失败，请重试");
+      alert("抽卡失败，请重试");
       setIsDrawing(false);
     }
   };

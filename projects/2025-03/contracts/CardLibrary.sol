@@ -18,7 +18,7 @@ contract CardLibrary is Ownable {
     Card[] public cards;
     uint256 public totalProbability;
     
-    constructor() Ownable(msg.sender) {
+    constructor() {
         // 初始化卡牌库
         addCard("Common Crystal", Rarity.COMMON, 6000, 110); // 60%, 奖励1.1倍
         addCard("Rare Gem", Rarity.RARE, 3000, 150); // 30%, 奖励1.5倍
