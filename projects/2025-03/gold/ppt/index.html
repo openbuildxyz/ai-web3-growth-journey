@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>去中心化创意内容平台</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-purple-900 to-purple-600">
+    <!-- 星星背景 -->
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+    </div>
+
+    <div class="flex h-screen">
+        <!-- 侧边导航 -->
+        <nav id="sidebar" class="bg-purple-900 bg-opacity-50 backdrop-filter backdrop-blur-lg w-64 transform transition-transform duration-300 border-r border-white border-opacity-10">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 mb-8">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-cube text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-white text-2xl font-bold">创意平台</h1>
+                </div>
+                <ul class="space-y-4">
+                    <li><a href="slides/intro.html" class="text-white opacity-80 hover:opacity-100 flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all duration-300 group" target="slideFrame">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-home text-white"></i>
+                        </div>
+                        <span>产品介绍</span>
+                    </a></li>
+                    <li><a href="slides/product.html" class="text-white opacity-80 hover:opacity-100 flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all duration-300 group" target="slideFrame">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-cube text-white"></i>
+                        </div>
+                        <span>核心功能</span>
+                    </a></li>
+                    <li><a href="slides/features.html" class="text-white opacity-80 hover:opacity-100 flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all duration-300 group" target="slideFrame">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-user-friends text-white"></i>
+                        </div>
+                        <span>用户旅程</span>
+                    </a></li>
+                    <li><a href="slides/tech.html" class="text-white opacity-80 hover:opacity-100 flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all duration-300 group" target="slideFrame">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-microchip text-white"></i>
+                        </div>
+                        <span>技术架构</span>
+                    </a></li>
+                    <li><a href="slides/advantage.html" class="text-white opacity-80 hover:opacity-100 flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all duration-300 group" target="slideFrame">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-star text-white"></i>
+                        </div>
+                        <span>差异化优势</span>
+                    </a></li>
+                    <li><a href="slides/contact.html" class="text-white opacity-80 hover:opacity-100 flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all duration-300 group" target="slideFrame">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-rocket text-white"></i>
+                        </div>
+                        <span>运营策略</span>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <div class="flex-1 relative">
+            <div class="absolute top-6 left-6 z-10">
+                <button id="toggleSidebar" class="text-white bg-purple-800 bg-opacity-50 backdrop-filter backdrop-blur-lg p-3 rounded-xl hover:bg-opacity-70 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="absolute top-6 right-6 z-10">
+                <button id="fullscreenBtn" class="text-white bg-purple-800 bg-opacity-50 backdrop-filter backdrop-blur-lg p-3 rounded-xl hover:bg-opacity-70 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+            <iframe name="slideFrame" src="slides/intro.html" class="w-full h-full border-none"></iframe>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html> 
