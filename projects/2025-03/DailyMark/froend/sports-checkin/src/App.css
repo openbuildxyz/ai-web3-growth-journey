@@ -1,0 +1,293 @@
+/* 全局样式 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 导航样式 */
+.navigation {
+  background-color: #2a3f54;
+  color: white;
+  padding: 1rem;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.nav-wallet {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.address {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.disconnect-btn {
+  background-color: #c75c5c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 登录页面样式 */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+}
+
+.login-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.login-container h1 {
+  margin-bottom: 1rem;
+  color: #2a3f54;
+}
+
+.login-container p {
+  margin-bottom: 2rem;
+  color: #666;
+}
+
+.connect-wallet-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.connect-wallet-btn:hover {
+  background-color: #2980b9;
+}
+
+/* 打卡页面样式 */
+.checkin-page {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.checkin-page h1 {
+  margin-bottom: 2rem;
+  color: #2a3f54;
+}
+
+.checkin-stats {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.checkin-stats p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.checkin-btn {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+  box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+}
+
+.checkin-btn:hover {
+  background-color: #2ecc71;
+  transform: translateY(-2px);
+}
+
+.checkin-btn:active {
+  transform: translateY(0);
+}
+
+/* 成就动画样式 */
+.achievement-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.achievement-animation h2 {
+  color: white;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 勋章页面样式 */
+.medals-page {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.medals-page h1 {
+  margin-bottom: 2rem;
+  color: #2a3f54;
+  text-align: center;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.achievement-item {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.achievement-item.earned:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.achievement-item.locked {
+  opacity: 0.7;
+}
+
+.required-checkins {
+  margin-top: 1rem;
+  color: #666;
+}
+
+.achievement-status {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.achievement-item.earned .achievement-status {
+  color: #27ae60;
+}
+
+.achievement-item.locked .achievement-status {
+  color: #7f8c8d;
+}
+
+/* 成就组件样式 */
+.achievement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.achievement-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid gold;
+}
+
+.achievement-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.achievement h3 {
+  margin-bottom: 0.5rem;
+  color: #2a3f54;
+}
+
+.achievement-level {
+  background-color: #f1c40f;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.achievement.locked .achievement-image {
+  border-color: #bdc3c7;
+}
