@@ -1,0 +1,87 @@
+.game-list {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.game-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.game-item:hover {
+  transform: translateY(-2px);
+}
+
+.game-item.is-in-game {
+  border-left: 4px solid #1890ff;
+}
+
+.game-details h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.game-state {
+  font-weight: bold;
+  color: #1890ff;
+  margin: 5px 0;
+}
+
+.player {
+  color: #666;
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.game-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.join-button, .view-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.join-button {
+  background-color: #52c41a;
+  color: white;
+}
+
+.join-button:hover {
+  background-color: #389e0d;
+}
+
+.view-button {
+  background-color: #1890ff;
+  color: white;
+}
+
+.view-button:hover {
+  background-color: #096dd9;
+}
+
+.no-games {
+  text-align: center;
+  padding: 30px;
+  color: #999;
+  font-size: 1.1rem;
+} 

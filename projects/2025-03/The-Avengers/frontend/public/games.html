@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>超级井字棋</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+        font-family: 'Press Start 2P', cursive;
+        overflow: hidden;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 2rem;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        animation: fadeIn 1s ease, pulse 2s infinite alternate;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes pulse {
+        from {
+          transform: scale(1);
+        }
+
+        to {
+          transform: scale(1.06);
+        }
+      }
+
+      #gameBoard {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(100px, 140px));
+        grid-template-rows: repeat(3, minmax(100px, 140px));
+        gap: 15px;
+        margin-bottom: 25px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #e0e0e0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 95vw;
+      }
+
+      .miniGrid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(30px, 46px));
+        grid-template-rows: repeat(3, minmax(30px, 46px));
+        border: 3px solid #666;
+        padding: 5px;
+        background-color: #ddd;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+      }
+
+      .miniGrid.active {
+        background-color: #f5f5dc;
+        box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.8);
+        border-color: #ffd700;
+        animation: pulseActive 1s infinite alternate;
+      }
+
+      @keyframes pulseActive {
+        from {
+          transform: scale(1);
+        }
+
+        to {
+          transform: scale(1.08);
+        }
+      }
+
+      .cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        border: 2px solid #999;
+        background-color: #eee;
+        transition: all 0.3s ease;
+        border-radius: 5px;
+        aspect-ratio: 1;
+      }
+
+      .cell:hover {
+        background-color: #ccc;
+        transform: scale(1.1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .cell.X {
+        color: #0000ff;
+        text-shadow: 0 0 8px rgba(0, 0, 255, 0.7);
+        animation: tada 1s ease;
+      }
+
+      .cell.O {
+        color: #ff0000;
+        text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+        animation: tada 1s ease;
+      }
+
+      .cell.highlight {
+        background-color: rgb(53, 223, 87);
+        /* 或者其他你喜欢的颜色 */
+        transform: scale(1.2);
+        /* 放大效果 */
+        transition: background-color 0.5s ease, transform 0.5s ease;
+      }
+
+      @keyframes tada {
+        from {
+          transform: scale(1);
+        }
+
+        10%,
+        20% {
+          transform: scale(0.9) rotate(-3deg);
+        }
+
+        30%,
+        50%,
+        70% {
+          transform: scale(1.1) rotate(3deg);
+        }
+
+        40%,
+        60% {
+          transform: scale(1.1) rotate(-3deg);
+        }
+
+        80% {
+          transform: scale(1.05) rotate(0);
+        }
+
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .winning {
+        background-color: #ffd700;
+        animation: flash 1s infinite;
+      }
+
+      @keyframes flash {
+        0% {
+          background-color: #ffd700;
+        }
+
+        50% {
+          background-color: #ffb700;
+        }
+
+        100% {
+          background-color: #ffd700;
+        }
+      }
+
+      #message {
+        font-size: 1rem;
+        margin-bottom: 25px;
+        color: #fff;
+        background-color: #000;
+        padding: 10px 20px;
+        border-radius: 8px;
+        min-height: 1.5em;
+        line-height: 1.5em;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        animation: fadeIn 1s ease, slideIn 1s ease;
+        text-align: center;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      button {
+        padding: 12px 25px;
+        font-size: 1rem;
+        cursor: pointer;
+        background: linear-gradient(to bottom, #4caf50, #388e3c);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        font-family: 'Press Start 2P', cursive;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        animation: fadeIn 1s ease, pulseButton 2s infinite alternate;
+      }
+
+      @keyframes pulseButton {
+        from {
+          transform: scale(1);
+        }
+
+        to {
+          transform: scale(1.04);
+        }
+      }
+
+      button:hover {
+        background: linear-gradient(to bottom, #66bb6a, #43a047);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        transform: translateY(-2px);
+      }
+
+      button:active {
+        background: linear-gradient(to bottom, #388e3c, #2e7d32);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        transform: translateY(0);
+      }
+
+      #difficultyContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        animation: fadeIn 1s ease;
+      }
+
+      #difficultyLabel {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 8px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      .difficulty-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .difficulty-button {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        background-color: #eee;
+        border: 2px solid #999;
+        border-radius: 8px;
+        color: #23540e;
+        font-family: 'Press Start 2P', cursive;
+        transition: all 0.2s ease;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      .difficulty-button:hover {
+        background-color: #ccc;
+        border-color: #666;
+        transform: scale(1.05);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .difficulty-button.selected {
+        background-color: #4caf50;
+        color: white;
+        border-color: #388e3c;
+        box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+        transform: scale(1.1);
+      }
+
+      .fireworks-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1000;
+      }
+
+      .firework {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #ffeb3b;
+        animation: explode 1.2s ease-out forwards, flicker 0.1s infinite;
+      }
+
+      @keyframes explode {
+        0% {
+          transform: translate(var(--startX), var(--startY)) scale(0);
+          opacity: 1;
+        }
+
+        100% {
+          transform: translate(var(--endX), var(--endY)) scale(3);
+          opacity: 0;
+        }
+      }
+
+      @keyframes flicker {
+        0% {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 0.7;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        #message {
+          font-size: 1.2rem;
+        }
+
+        button {
+          font-size: 1rem;
+          padding: 10px 20px;
+        }
+
+        #difficultyLabel {
+          font-size: 1rem;
+        }
+
+        .difficulty-button {
+          font-size: 1rem;
+          padding: 8px 15px;
+        }
+
+        .difficulty-group {
+          gap: 10px;
+        }
+
+        #difficultyContainer {
+          gap: 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.1rem;
+        }
+
+        #message {
+          font-size: 1rem;
+        }
+
+        button {
+          font-size: 1rem;
+          padding: 8px 16px;
+        }
+
+        #difficultyLabel {
+          font-size: 0.8rem;
+        }
+
+        .difficulty-button {
+          font-size: 0.8rem;
+          padding: 6px 10px;
+        }
+
+        .difficulty-group {
+          gap: 8px;
+        }
+
+        #difficultyContainer {
+          gap: 8px;
+        }
+      }
+
+      .cell.last-move {
+        box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8);
+        animation: highlight 2s ease;
+        z-index: 10;
+      }
+
+      @keyframes highlight {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0px rgba(255, 215, 0, 0);
+        }
+
+        50% {
+          transform: scale(1.2);
+          box-shadow: 0 0 20px 8px rgba(255, 215, 0, 1);
+        }
+
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8);
+        }
+      }
+
+      #bottom {
+        font-size: 0.5rem;
+        margin-top: 25px;
+        color: #666;
+      }
+
+      /* 新增样式 */
+      .mode-button {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        background-color: #eee;
+        border: 2px solid #999;
+        border-radius: 8px;
+        color: #23540e;
+        font-family: 'Press Start 2P', cursive;
+        transition: all 0.2s ease;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        margin: 0 8px;
+      }
+
+      .mode-button:hover {
+        background-color: #ccc;
+        border-color: #666;
+        transform: scale(1.05);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .mode-button.selected {
+        background-color: #4caf50;
+        color: white;
+        border-color: #388e3c;
+        box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+        transform: scale(1.1);
+      }
+
+      #scoreBoard {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+        color: #333;
+      }
+
+      .score-container {
+        margin: 0 15px;
+        padding: 8px 15px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      #undo-button {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+        background: linear-gradient(to bottom, #ff9800, #f57c00);
+      }
+
+      #language-toggle {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        font-size: 0.7rem;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="language-toggle">中/EN</button>
+    <h1>超级井字棋</h1>
+    <div id="scoreBoard">
+      <div class="score-container">❌: <span id="xScore">0</span></div>
+      <div class="score-container">⭕: <span id="oScore">0</span></div>
+      <div class="score-container">平局: <span id="tieScore">0</span></div>
+    </div>
+    <div id="message"></div>
+    <div id="gameBoard"></div>
+
+    <div id="modeContainer" style="margin-bottom: 15px">
+      <button class="mode-button selected" data-mode="ai">人机对战</button>
+      <button class="mode-button" data-mode="pvp">双人对战</button>
+    </div>
+
+    <div id="difficultyContainer">
+      <div class="difficulty-group">
+        <button class="difficulty-button" data-difficulty="10">简单</button>
+        <button class="difficulty-button" data-difficulty="50">中等</button>
+        <button class="difficulty-button" data-difficulty="200">困难</button>
+        <button class="difficulty-button" data-difficulty="500">大师</button>
+      </div>
+    </div>
+
+    <button id="undo-button">撤销</button>
+    <button id="resetButton">重置</button>
+    <div class="fireworks-container"></div>
+    <div id="bottom">&copy; 2023-2025 | 由Claude AI生成</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script>
+      // 初始化 Tone.js
+      const moveSynth = new Tone.Synth().toDestination();
+      const winSynth = new Tone.MembraneSynth().toDestination();
+      const drawSynth = new Tone.NoiseSynth().toDestination();
+
+      // 声音播放函数
+      function playMoveSound() {
+        moveSynth.triggerAttackRelease('C4', '8n');
+      }
+      function playWinSound() {
+        // winSynth.triggerAttackRelease("A4", "1n");  // 膜片合成器
+        // 使用更复杂的和弦和音序
+        const now = Tone.now();
+        winSynth.triggerAttackRelease('C5', '8n', now);
+        winSynth.triggerAttackRelease('E5', '8n', now + 0.2);
+        winSynth.triggerAttackRelease('G5', '8n', now + 0.4);
+        winSynth.triggerAttackRelease('C6', '1n', now + 0.6);
+      }
+
+      function playDrawSound() {
+        const now = Tone.now();
+        drawSynth.triggerAttackRelease('C4', '8n', now);
+        drawSynth.triggerAttackRelease('D4', '8n', now + 0.2);
+        drawSynth.triggerAttackRelease('E4', '8n', now + 0.4);
+        drawSynth.triggerAttackRelease('F4', '1n', now + 0.6);
+      }
+
+      function resetGameSound() {
+        const now = Tone.now();
+        moveSynth.triggerAttackRelease('C4', '16n', now);
+        moveSynth.triggerAttackRelease('D4', '16n', now + 0.1);
+        moveSynth.triggerAttackRelease('E4', '16n', now + 0.2);
+        moveSynth.triggerAttackRelease('F4', '16n', now + 0.3);
+      }
+
+      // 初始化游戏
+      const gameBoard = document.getElementById('gameBoard');
+      const message = document.getElementById('message');
+      const resetButton = document.getElementById('resetButton');
+      const difficultyContainer = document.getElementById('difficultyContainer');
+      const difficultyButtons = document.querySelectorAll('.difficulty-button');
+      const fireworksContainer = document.querySelector('.fireworks-container');
+      const modeButtons = document.querySelectorAll('.mode-button');
+      const undoButton = document.getElementById('undo-button');
+      const languageToggle = document.getElementById('language-toggle');
+      const xScoreElement = document.getElementById('xScore');
+      const oScoreElement = document.getElementById('oScore');
+      const tieScoreElement = document.getElementById('tieScore');
+
+      const SIZE = 3;
+      let board = createBoard();
+      let currentPlayer = 'X';
+      let activeMiniGrid = -1;
+      let gameOver = false;
+      let moveHistory = [];
+      let simulationTimeout = 200;
+      let selectedDifficulty = 200;
+      let gameMode = 'ai'; // 'ai' 或 'pvp'
+      let isChineseLanguage = true;
+      let scores = {
+        X: 0,
+        O: 0,
+        Tie: 0,
+      };
+
+      // 语言配置
+      const translations = {
+        title: {
+          zh: '超级井字棋',
+          en: 'Ultimate Tic-Tac-Toe',
+        },
+        modes: {
+          ai: {
+            zh: '人机对战',
+            en: 'vs AI',
+          },
+          pvp: {
+            zh: '双人对战',
+            en: 'PvP Mode',
+          },
+        },
+        difficulties: {
+          10: {
+            zh: '简单',
+            en: 'EASY',
+          },
+          50: {
+            zh: '中等',
+            en: 'Medium',
+          },
+          200: {
+            zh: '困难',
+            en: 'Hard',
+          },
+          500: {
+            zh: '大师',
+            en: 'Master',
+          },
+        },
+        buttons: {
+          reset: {
+            zh: '重置',
+            en: 'Reset',
+          },
+          undo: {
+            zh: '撤销',
+            en: 'Undo',
+          },
+        },
+        messages: {
+          welcome: {
+            zh: '❌ VS ⭕️ 开始游戏！',
+            en: "❌ VS ⭕️ Let's Go!",
+          },
+          thinking: {
+            zh: '⭕️ 思考中...',
+            en: '⭕️ IS THINKING...',
+          },
+          chessing: {
+            zh: '⭕️ 正在下棋...',
+            en: '⭕️ is CHESSING...',
+          },
+          yourTurn: {
+            zh: '轮到你了 ❌',
+            en: "It's your turn ❌",
+          },
+          win: {
+            zh: ' 获胜！',
+            en: ' Win!',
+          },
+          tie: {
+            zh: '平局！',
+            en: 'Tie!',
+          },
+        },
+        scoreBoard: {
+          ties: {
+            zh: '平局: ',
+            en: 'Ties: ',
+          },
+        },
+      };
+
+      function updateLanguage() {
+        document.title = isChineseLanguage ? translations.title.zh : translations.title.en;
+        document.querySelector('h1').textContent = isChineseLanguage
+          ? translations.title.zh
+          : translations.title.en;
+
+        // 更新按钮文本
+        resetButton.textContent = isChineseLanguage
+          ? translations.buttons.reset.zh
+          : translations.buttons.reset.en;
+        undoButton.textContent = isChineseLanguage
+          ? translations.buttons.undo.zh
+          : translations.buttons.undo.en;
+
+        // 更新模式按钮
+        modeButtons.forEach((button) => {
+          const mode = button.dataset.mode;
+          button.textContent = isChineseLanguage
+            ? translations.modes[mode].zh
+            : translations.modes[mode].en;
+        });
+
+        // 更新难度按钮
+        difficultyButtons.forEach((button) => {
+          const difficulty = button.dataset.difficulty;
+          button.textContent = isChineseLanguage
+            ? translations.difficulties[difficulty].zh
+            : translations.difficulties[difficulty].en;
+        });
+
+        // 更新欢迎消息
+        if (
+          !gameOver &&
+          message.textContent ===
+            (isChineseLanguage
+              ? translations.messages.welcome.en
+              : translations.messages.welcome.zh)
+        ) {
+          message.textContent = isChineseLanguage
+            ? translations.messages.welcome.zh
+            : translations.messages.welcome.en;
+        }
+
+        // 更新得分板标签
+        document.querySelectorAll('.score-container')[2].innerHTML =
+          (isChineseLanguage ? translations.scoreBoard.ties.zh : translations.scoreBoard.ties.en) +
+          `<span id="tieScore">${scores.Tie}</span>`;
+      }
+
+      message.textContent = translations.messages.welcome.zh;
+
+      // --- Helper Functions ---
+      function createBoard() {
+        const board = [];
+        for (let i = 0; i < SIZE; i++) {
+          board[i] = [];
+          for (let j = 0; j < SIZE; j++) {
+            board[i][j] = Array(SIZE * SIZE).fill('');
+          }
+        }
+        return board;
+      }
+
+      // 添加一个变量来跟踪最后一步棋的位置
+      let lastMove = null;
+      let miniGridWinners = Array(SIZE * SIZE).fill(null); // 新增数组来跟踪每个小九宫格的胜者
+
+      function renderBoard() {
+        gameBoard.innerHTML = '';
+        for (let i = 0; i < SIZE; i++) {
+          for (let j = 0; j < SIZE; j++) {
+            const miniGrid = document.createElement('div');
+            miniGrid.classList.add('miniGrid');
+
+            const miniGridIndex = i * SIZE + j;
+            if (activeMiniGrid === -1) {
+              // 只有当小九宫格没有胜者时，才添加active类
+              if (miniGridWinners[miniGridIndex] === null) {
+                miniGrid.classList.add('active');
+              }
+            } else if (activeMiniGrid === miniGridIndex) {
+              miniGrid.classList.add('active');
+            }
+
+            for (let k = 0; k < SIZE * SIZE; k++) {
+              const cell = document.createElement('div');
+              cell.classList.add('cell');
+            }
+
+            if (activeMiniGrid === i * SIZE + j) {
+              miniGrid.classList.add('active');
+            }
+            for (let k = 0; k < SIZE * SIZE; k++) {
+              const cell = document.createElement('div');
+              cell.classList.add('cell');
+              if (board[i][j][k] === 'X') {
+                cell.textContent = '❌';
+                cell.classList.add('X');
+              } else if (board[i][j][k] === 'O') {
+                cell.textContent = '⭕';
+                cell.classList.add('O');
+              } else {
+                cell.textContent = '';
+              }
+
+              // 高亮显示最后一步棋
+              if (lastMove && lastMove.i === i && lastMove.j === j && lastMove.k === k) {
+                cell.classList.add('last-move');
+              }
+
+              if (isWinningCell(board, i, j, k)) {
+                cell.classList.add('winning');
+              }
+              cell.addEventListener('click', () => handleCellClick(i, j, k));
+              miniGrid.appendChild(cell);
+            }
+            gameBoard.appendChild(miniGrid);
+          }
+        }
+      }
+
+      function checkMiniGridWin(grid) {
+        const lines = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+        for (const line of lines) {
+          const [a, b, c] = line;
+          if (grid[a] && grid[a] === grid[b] && grid[a] === grid[c]) {
+            return grid[a];
+          }
+        }
+        return null;
+      }
+
+      function checkGameOver(board) {
+        const miniGridWinners = [];
+        for (let i = 0; i < SIZE; i++) {
+          for (let j = 0; j < SIZE; j++) {
+            miniGridWinners.push(checkMiniGridWin(board[i][j]));
+          }
+        }
+        const lines = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+
+        for (const line of lines) {
+          const [a, b, c] = line;
+          if (
+            miniGridWinners[a] &&
+            miniGridWinners[a] === miniGridWinners[b] &&
+            miniGridWinners[a] === miniGridWinners[c]
+          ) {
+            return miniGridWinners[a];
+          }
+        }
+        // 检查是否所有小格子都已经下满, 修改了这里的判断逻辑
+        let allCellsFilled = true;
+        for (let i = 0; i < SIZE; i++) {
+          for (let j = 0; j < SIZE; j++) {
+            if (miniGridWinners[i * SIZE + j] === null) {
+              // Use the miniGridWinners array
+              for (let k = 0; k < SIZE * SIZE; k++) {
+                if (board[i][j][k] === '') {
+                  allCellsFilled = false;
+                  break;
+                }
+              }
+              if (!allCellsFilled) break;
+            }
+          }
+          if (!allCellsFilled) break;
+        }
+
+        // 如果所有小格子都已下满或所有小棋盘都有结果，则为平局
+        if (allCellsFilled) {
+          return 'Tie';
+        }
+        return null;
+      }
+
+      function handleCellClick(i, j, k) {
+        if (gameOver) return;
+
+        const miniGridIndex = i * SIZE + j;
+        if (activeMiniGrid === -1 || activeMiniGrid === miniGridIndex) {
+          if (board[i][j][k] === '') {
+            moveHistory.push({
+              board: JSON.parse(JSON.stringify(board)),
+              currentPlayer: currentPlayer,
+              activeMiniGrid: activeMiniGrid,
+              i: i,
+              j: j,
+              k: k,
+            });
+
+            // 记录玩家的最后一步棋
+            lastMove = {
+              i,
+              j,
+              k,
+            };
+
+            board[i][j][k] = currentPlayer;
+            let nextActiveMiniGrid = k;
+
+            const miniWin = checkMiniGridWin(board[i][j]);
+            if (miniWin) {
+              miniGridWinners[miniGridIndex] = miniWin; // Store the winner of the mini-grid
+            }
+
+            const gameWin = checkGameOver(board);
+            if (gameWin) {
+              gameOver = true;
+              if (gameWin === 'Tie') {
+                playDrawSound();
+                scores.Tie++;
+                tieScoreElement.textContent = scores.Tie;
+                message.textContent = isChineseLanguage
+                  ? translations.messages.tie.zh
+                  : translations.messages.tie.en;
+              } else {
+                playWinSound();
+                scores[gameWin]++;
+                if (gameWin === 'X') {
+                  xScoreElement.textContent = scores.X;
+                } else {
+                  oScoreElement.textContent = scores.O;
+                }
+                message.textContent = `${gameWin}${
+                  isChineseLanguage ? translations.messages.win.zh : translations.messages.win.en
+                }`;
+                triggerFireworks(gameWin);
+              }
+
+              renderBoard();
+              saveGameState();
+              return;
+            } else {
+              const nextRow = Math.floor(nextActiveMiniGrid / SIZE);
+              const nextCol = nextActiveMiniGrid % SIZE;
+              if (checkMiniGridWin(board[nextRow][nextCol])) {
+                activeMiniGrid = -1;
+              } else {
+                activeMiniGrid = nextActiveMiniGrid;
+              }
+            }
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            playMoveSound();
+            renderBoard();
+            saveGameState();
+
+            if (gameMode === 'ai' && currentPlayer === 'O' && !gameOver) {
+              message.textContent = isChineseLanguage
+                ? translations.messages.thinking.zh
+                : translations.messages.thinking.en;
+              setTimeout(computerMove, 1000);
+            }
+          }
+        }
+      }
+
+      async function computerMove() {
+        if (gameOver) return;
+
+        const start = Date.now();
+        const timeout = simulationTimeout;
+
+        let bestMove = null;
+        let maxScore = -Infinity;
+
+        const possibleMoves = getPossibleMoves(board, activeMiniGrid);
+
+        // 改进AI，添加评估函数
+        for (const move of possibleMoves) {
+          // 先进行简单评估，优先选择能够形成连线的位置
+          const initialScore = evaluateMove(board, move.i, move.j, move.k, currentPlayer);
+          let score = initialScore * 5; // 加权初始评估
+          let simulations = 0;
+
+          // 对于高级难度，增加模拟次数
+          const maxSimulations = selectedDifficulty >= 200 ? 150 : 100;
+
+          while (Date.now() - start < timeout && simulations < maxSimulations) {
+            const result = simulateMove(board, move.i, move.j, move.k, currentPlayer);
+            score += result;
+            simulations++;
+          }
+
+          const averageScore = score / (simulations + 1);
+          if (averageScore > maxScore) {
+            maxScore = averageScore;
+            bestMove = move;
+          }
+        }
+
+        if (bestMove) {
+          // 先显示电脑将要下棋的位置
+          message.textContent = isChineseLanguage
+            ? translations.messages.chessing.zh
+            : translations.messages.chessing.en;
+
+          // 记录电脑的最后一步棋
+          lastMove = {
+            i: bestMove.i,
+            j: bestMove.j,
+            k: bestMove.k,
+          };
+
+          moveHistory.push({
+            board: JSON.parse(JSON.stringify(board)),
+            currentPlayer: currentPlayer,
+            activeMiniGrid: activeMiniGrid,
+            i: bestMove.i,
+            j: bestMove.j,
+            k: bestMove.k,
+          });
+
+          board[bestMove.i][bestMove.j][bestMove.k] = currentPlayer;
+          let nextActiveMiniGrid = bestMove.k;
+          const miniWin = checkMiniGridWin(board[bestMove.i][bestMove.j]);
+          const miniGridIndex = bestMove.i * SIZE + bestMove.j;
+
+          if (miniWin) {
+            miniGridWinners[miniGridIndex] = miniWin;
+          }
+
+          const gameWin = checkGameOver(board);
+          if (gameWin) {
+            gameOver = true;
+            if (gameWin === 'Tie') {
+              scores.Tie++;
+              tieScoreElement.textContent = scores.Tie;
+              message.textContent = isChineseLanguage
+                ? translations.messages.tie.zh
+                : translations.messages.tie.en;
+            } else {
+              scores[gameWin]++;
+              if (gameWin === 'X') {
+                xScoreElement.textContent = scores.X;
+              } else {
+                oScoreElement.textContent = scores.O;
+              }
+              message.textContent = `${gameWin}${
+                isChineseLanguage ? translations.messages.win.zh : translations.messages.win.en
+              }`;
+              triggerFireworks(currentPlayer);
+            }
+            renderBoard();
+            saveGameState();
+            return;
+          } else {
+            const nextRow = Math.floor(nextActiveMiniGrid / SIZE);
+            const nextCol = nextActiveMiniGrid % SIZE;
+            if (checkMiniGridWin(board[nextRow][nextCol])) {
+              activeMiniGrid = -1;
+            } else {
+              activeMiniGrid = nextActiveMiniGrid;
+            }
+          }
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+          renderBoard();
+          // 清除消息
+          setTimeout(() => {
+            message.textContent =
+              currentPlayer === 'X'
+                ? isChineseLanguage
+                  ? translations.messages.yourTurn.zh
+                  : translations.messages.yourTurn.en
+                : '';
+          }, 500);
+          saveGameState();
+          // 添加延时和高亮显示
+          await new Promise((resolve) => setTimeout(resolve, 500)); // 延时 500 毫秒
+
+          const cellElement =
+            gameBoard.children[bestMove.i * SIZE + bestMove.j].children[bestMove.k];
+          cellElement.classList.add('highlight'); // 添加高亮类
+
+          setTimeout(() => {
+            cellElement.classList.remove('highlight'); // 移除高亮类
+          }, 1000); // 1秒后移除高亮
+        }
+      }
+
+      // 添加评估函数，用于评估特定移动的价值
+      function evaluateMove(board, i, j, k, player) {
+        const simBoard = JSON.parse(JSON.stringify(board));
+        simBoard[i][j][k] = player;
+
+        // 检查是否可以赢得小九宫格
+        if (checkMiniGridWin(simBoard[i][j]) === player) {
+          return 2.0;
+        }
+
+        // 检查中心位置（通常在井字棋中是好位置）
+        if (k === 4) {
+          return 1.3;
+        }
+
+        // 检查角落位置（次优选择）
+        if (k === 0 || k === 2 || k === 6 || k === 8) {
+          return 1.1;
+        }
+
+        // 默认分数
+        return 1.0;
+      }
+
+      function getPossibleMoves(board, activeMiniGrid) {
+        const moves = [];
+        if (activeMiniGrid === -1) {
+          for (let i = 0; i < SIZE; i++) {
+            for (let j = 0; j < SIZE; j++) {
+              if (miniGridWinners[i * SIZE + j] === null) {
+                // Only check mini-grids without a winner
+                for (let k = 0; k < SIZE * SIZE; k++) {
+                  if (board[i][j][k] === '') {
+                    moves.push({
+                      i,
+                      j,
+                      k,
+                    });
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          const i = Math.floor(activeMiniGrid / SIZE);
+          const j = activeMiniGrid % SIZE;
+          if (miniGridWinners[activeMiniGrid] === null) {
+            // 确保当前小九宫格没有胜者
+            for (let k = 0; k < SIZE * SIZE; k++) {
+              if (board[i][j][k] === '') {
+                moves.push({
+                  i,
+                  j,
+                  k,
+                });
+              }
+            }
+          } else {
+            // 如果当前小九宫格已经有胜者，则玩家可以选择任何没有胜者的小九宫格
+            for (let i = 0; i < SIZE; i++) {
+              for (let j = 0; j < SIZE; j++) {
+                if (miniGridWinners[i * SIZE + j] === null) {
+                  for (let k = 0; k < SIZE * SIZE; k++) {
+                    if (board[i][j][k] === '') {
+                      moves.push({
+                        i,
+                        j,
+                        k,
+                      });
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        return moves;
+      }
+
+      function simulateMove(board, i, j, k, player) {
+        const simBoard = JSON.parse(JSON.stringify(board));
+        const simMiniGridWinners = [...miniGridWinners]; // Copy the miniGridWinners array
+        let simPlayer = player;
+        let simActiveMiniGrid = activeMiniGrid;
+
+        simBoard[i][j][k] = simPlayer;
+        let nextActiveMiniGrid = k;
+        const miniWin = checkMiniGridWin(simBoard[i][j]);
+        const miniGridIndex = i * SIZE + j;
+
+        let gameOver = false;
+        let winner = null;
+
+        if (miniWin) {
+          simMiniGridWinners[miniGridIndex] = miniWin; // Update the copy
+        }
+
+        const gameWin = checkGameOver(simBoard);
+        if (gameWin) {
+          gameOver = true;
+          winner = gameWin;
+        } else {
+          const nextRow = Math.floor(nextActiveMiniGrid / SIZE);
+          const nextCol = nextActiveMiniGrid % SIZE;
+          if (checkMiniGridWin(simBoard[nextRow][nextCol])) {
+            simActiveMiniGrid = -1;
+          } else {
+            simActiveMiniGrid = nextActiveMiniGrid;
+          }
+        }
+
+        simPlayer = simPlayer === 'X' ? 'O' : 'X';
+
+        while (!gameOver) {
+          const possibleMoves = getPossibleMoves(simBoard, simActiveMiniGrid);
+          if (possibleMoves.length === 0) {
+            winner = null;
+            break;
+          }
+
+          const randomMoveIndex = Math.floor(Math.random() * possibleMoves.length);
+          const { i: moveI, j: moveJ, k: moveK } = possibleMoves[randomMoveIndex];
+
+          simBoard[moveI][moveJ][moveK] = simPlayer;
+          nextActiveMiniGrid = moveK;
+          const miniWinSim = checkMiniGridWin(simBoard[moveI][moveJ]);
+          const moveMiniGridIndex = moveI * SIZE + moveJ;
+          if (miniWinSim) {
+            simMiniGridWinners[moveMiniGridIndex] = miniWinSim; // Update within the loop
+          }
+          const gameWinSim = checkGameOver(simBoard);
+          if (gameWinSim) {
+            gameOver = true;
+            winner = gameWinSim;
+            break;
+          } else {
+            const nextRowSim = Math.floor(nextActiveMiniGrid / SIZE);
+            const nextColSim = nextActiveMiniGrid % SIZE;
+            if (checkMiniGridWin(simBoard[nextRowSim][nextColSim])) {
+              simActiveMiniGrid = -1;
+            } else {
+              simActiveMiniGrid = nextActiveMiniGrid;
+            }
+          }
+
+          simPlayer = simPlayer === 'X' ? 'O' : 'X';
+        }
+        if (winner === player) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+
+      function isWinningCell(board, i, j, k) {
+        const grid = board[i][j];
+        const cellValue = grid[k];
+        if (!cellValue) return false;
+
+        const winPatterns = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+
+        for (const pattern of winPatterns) {
+          const [a, b, c] = pattern;
+          if (a === k || b === k || c === k) {
+            if (grid[a] === cellValue && grid[b] === cellValue && grid[c] === cellValue) {
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+
+      // --- Game State Management ---
+      function saveGameState() {
+        const gameState = {
+          board: board,
+          currentPlayer: currentPlayer,
+          activeMiniGrid: activeMiniGrid,
+          gameOver: gameOver,
+          moveHistory: moveHistory,
+          miniGridWinners: miniGridWinners,
+          gameMode: gameMode,
+          scores: scores,
+          isChineseLanguage: isChineseLanguage,
+        };
+        Cookies.set('ultimateTicTacToe', JSON.stringify(gameState), {
+          expires: 7,
+        });
+      }
+
+      function loadGameState() {
+        const savedState = Cookies.get('ultimateTicTacToe');
+        if (savedState) {
+          const gameState = JSON.parse(savedState);
+          board = gameState.board;
+          currentPlayer = gameState.currentPlayer;
+          activeMiniGrid = gameState.activeMiniGrid;
+          gameOver = gameState.gameOver;
+          moveHistory = gameState.moveHistory || [];
+          miniGridWinners = gameState.miniGridWinners || Array(SIZE * SIZE).fill(null);
+          gameMode = gameState.gameMode || 'ai';
+          scores = gameState.scores || { X: 0, O: 0, Tie: 0 };
+          isChineseLanguage =
+            gameState.isChineseLanguage !== undefined ? gameState.isChineseLanguage : true;
+
+          // 更新UI
+          xScoreElement.textContent = scores.X;
+          oScoreElement.textContent = scores.O;
+          tieScoreElement.textContent = scores.Tie;
+
+          // 更新模式选择
+          modeButtons.forEach((button) => {
+            if (button.dataset.mode === gameMode) {
+              button.classList.add('selected');
+            } else {
+              button.classList.remove('selected');
+            }
+          });
+
+          // 显示/隐藏难度选择
+          difficultyContainer.style.display = gameMode === 'ai' ? 'flex' : 'none';
+
+          // 更新语言
+          updateLanguage();
+        }
+      }
+
+      // 撤销上一步
+      function undoMove() {
+        if (moveHistory.length > 0) {
+          const lastState = moveHistory.pop();
+          board = lastState.board;
+          currentPlayer = lastState.currentPlayer;
+          activeMiniGrid = lastState.activeMiniGrid;
+          lastMove = lastState;
+
+          // 重新检查小九宫格胜者
+          miniGridWinners = Array(SIZE * SIZE).fill(null);
+          for (let i = 0; i < SIZE; i++) {
+            for (let j = 0; j < SIZE; j++) {
+              const miniWin = checkMiniGridWin(board[i][j]);
+              if (miniWin) {
+                miniGridWinners[i * SIZE + j] = miniWin;
+              }
+            }
+          }
+
+          gameOver = false;
+          renderBoard();
+          message.textContent =
+            currentPlayer === 'X'
+              ? isChineseLanguage
+                ? translations.messages.yourTurn.zh
+                : translations.messages.yourTurn.en
+              : '';
+          saveGameState();
+        }
+      }
+
+      // --- Event Listeners ---
+      resetButton.addEventListener('click', () => {
+        board = createBoard();
+        currentPlayer = 'X';
+        activeMiniGrid = -1;
+        gameOver = false;
+        moveHistory = [];
+        lastMove = null;
+        miniGridWinners = Array(SIZE * SIZE).fill(null);
+        renderBoard();
+        resetGameSound();
+        message.textContent = isChineseLanguage
+          ? translations.messages.welcome.zh
+          : translations.messages.welcome.en;
+        saveGameState();
+      });
+
+      difficultyButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+          selectedDifficulty = parseInt(event.target.dataset.difficulty);
+          simulationTimeout = selectedDifficulty;
+          difficultyButtons.forEach((b) => b.classList.remove('selected'));
+          event.target.classList.add('selected');
+          saveGameState();
+        });
+      });
+
+      modeButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+          if (event.target.dataset.mode !== gameMode) {
+            gameMode = event.target.dataset.mode;
+            modeButtons.forEach((b) => b.classList.remove('selected'));
+            event.target.classList.add('selected');
+
+            // 切换模式时重置游戏
+            board = createBoard();
+            currentPlayer = 'X';
+            activeMiniGrid = -1;
+            gameOver = false;
+            moveHistory = [];
+            lastMove = null;
+            miniGridWinners = Array(SIZE * SIZE).fill(null);
+            renderBoard();
+
+            // 显示/隐藏难度选择
+            difficultyContainer.style.display = gameMode === 'ai' ? 'flex' : 'none';
+
+            message.textContent = isChineseLanguage
+              ? translations.messages.welcome.zh
+              : translations.messages.welcome.en;
+            saveGameState();
+          }
+        });
+      });
+
+      undoButton.addEventListener('click', undoMove);
+
+      languageToggle.addEventListener('click', () => {
+        isChineseLanguage = !isChineseLanguage;
+        updateLanguage();
+        saveGameState();
+      });
+
+      document.querySelector(`[data-difficulty="${selectedDifficulty}"]`).classList.add('selected');
+
+      // --- Initial Setup ---
+      loadGameState();
+      renderBoard();
+      if (gameMode === 'ai' && currentPlayer === 'O' && !gameOver) {
+        setTimeout(computerMove, 500);
+      }
+
+      function triggerFireworks(winner) {
+        const numFireworks = 40 + Math.floor(Math.random() * 30);
+        const containerRect = fireworksContainer.getBoundingClientRect();
+        const centerX = containerRect.width / 2;
+        const centerY = containerRect.height / 2;
+
+        for (let i = 0; i < numFireworks; i++) {
+          const firework = document.createElement('div');
+          firework.classList.add('firework');
+          const startX = centerX + ((Math.random() - 0.5) * containerRect.width) / 2;
+          const startY = centerY + ((Math.random() - 0.5) * containerRect.height) / 2;
+          const endX = centerX + (Math.random() - 0.5) * containerRect.width;
+          const endY = (containerRect.height * Math.random()) / 2;
+
+          firework.style.setProperty('--startX', `${startX}px`);
+          firework.style.setProperty('--startY', `${startY}px`);
+          firework.style.setProperty('--endX', `${endX}px`);
+          firework.style.setProperty('--endY', `${endY}px`);
+
+          const color = ['#ffeb3b', '#f44336', '#2196f3', '#4caf50', '#9c27b0'][i % 5];
+          firework.style.backgroundColor = color;
+
+          const size = 12 + Math.random() * 12;
+          firework.style.width = `${size}px`;
+          firework.style.height = `${size}px`;
+
+          const duration = 1 + Math.random() * 0.7;
+          firework.style.animationDuration = `${duration}s`;
+
+          fireworksContainer.appendChild(firework);
+
+          firework.addEventListener('animationend', () => {
+            firework.remove();
+          });
+        }
+        const winnerSymbol = document.createElement('div');
+        winnerSymbol.style.position = 'absolute';
+        winnerSymbol.style.top = '50%';
+        winnerSymbol.style.left = '50%';
+        winnerSymbol.style.transform = 'translate(-50%, -50%)';
+        winnerSymbol.style.fontSize = '7rem';
+        winnerSymbol.style.color = winner === 'X' ? '#0000FF' : '#FF0000';
+        winnerSymbol.textContent = winner === 'X' ? '❌' : '⭕';
+        winnerSymbol.style.zIndex = '1001';
+        winnerSymbol.style.animation = 'pulse 2s infinite';
+        fireworksContainer.appendChild(winnerSymbol);
+
+        setTimeout(() => {
+          winnerSymbol.remove();
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
