@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonLedger - AI 驱动的去中心化碳足迹追踪与交易平台</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* 基本样式与 Linear 风格 */
+        body {
+            @apply bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans leading-relaxed transition-colors duration-300 ease-in-out;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+        h1, h2, h3, h4, h5, h6 {
+            @apply font-semibold text-gray-900 dark:text-white;
+        }
+        h2 { @apply text-3xl md:text-4xl mb-8 text-center; }
+        h3 { @apply text-2xl md:text-3xl mb-6; }
+        section { @apply py-16 md:py-24 px-4 sm:px-6 lg:px-8; }
+        .section-separator { @apply border-t border-gray-200 dark:border-gray-700 my-12; }
+
+        /* 卡片样式 */
+        .card {
+            @apply bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-lg hover:ring-1 hover:ring-indigo-500/50 dark:hover:ring-indigo-400/50 transition-all duration-300 ease-in-out;
+        }
+        .card i { @apply text-indigo-500 dark:text-indigo-400 text-2xl mb-4 block; }
+
+        /* 按钮样式 */
+        .btn {
+            @apply inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium shadow-md hover:bg-indigo-700 hover:scale-105 transform transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50;
+        }
+        .btn-outline {
+            @apply inline-block px-6 py-3 border border-indigo-500 text-indigo-500 dark:border-indigo-400 dark:text-indigo-400 rounded-lg font-medium hover:bg-indigo-50 dark:hover:bg-gray-800 hover:scale-105 transform transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50;
+        }
+        .theme-toggle-btn {
+            @apply fixed top-4 right-4 z-50 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300;
+        }
+
+        /* 淡入动画 (配合 JS 使用) */
+        .fade-in-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 确保长页面性能，隐藏水平滚动条 */
+         html, body {
+             overflow-x: hidden;
+         }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 深色/浅色模式切换按钮 -->
+    <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="theme-toggle-btn">
+        <i class="fas fa-sun" id="theme-toggle-light-icon"></i>
+        <i class="fas fa-moon hidden" id="theme-toggle-dark-icon"></i>
+    </button>
+
+    <main>
+        <!-- 封面 Section -->
+        <section id="cover" class="min-h-screen flex flex-col justify-center items-center text-center bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-800">
+            <div class="fade-in-element is-visible">
+                 <img src="https://raw.githubusercontent.com/github/explore/18dfdcad1090531de292b5c0f7c68c5ce31e78b8/topics/ai/ai.png" alt="AI Icon" class="w-24 h-24 mx-auto mb-6 rounded-full shadow-lg bg-white p-2">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
+                    CarbonLedger
+                </h1>
+                <p class="text-xl md:text-2xl lg:text-3xl text-indigo-600 dark:text-indigo-400 mb-8 font-medium">
+                    AI 驱动的去中心化碳足迹追踪与交易平台
+                </p>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                    利用人工智能和区块链技术，打造透明、可信、高效的下一代碳信用市场。
+                </p>
+                 <div class="mt-10">
+                    <a href="#problem" class="btn">了解更多 <i class="fas fa-arrow-down ml-2"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container mx-auto">
+
+            <!-- 问题 Section -->
+            <section id="problem">
+                <h2 class="fade-in-element">当前碳市场面临的挑战</h2>
+                <p class="text-center text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto fade-in-element">
+                    传统的碳市场和追踪机制存在诸多痛点，严重阻碍了全球气候目标的实现。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card fade-in-element">
+                        <i class="fas fa-eye-slash"></i>
+                        <h3 class="text-xl font-semibold mb-2">不透明</h3>
+                        <p>碳信用的来源、核算方法和交易过程缺乏透明度，难以验证其真实环境效益。</p>
+                    </div>
+                    <div class="card fade-in-element">
+                        <i class="fas fa-tachometer-alt-slow"></i>
+                        <h3 class="text-xl font-semibold mb-2">效率低下</h3>
+                        <p>中心化的认证和交易流程繁琐、耗时，涉及大量中介机构，成本高昂。</p>
+                    </div>
+                    <div class="card fade-in-element">
+                        <i class="fas fa-user-shield"></i>
+                        <h3 class="text-xl font-semibold mb-2">信任缺失</h3>
+                        <p>由于信息不对称和监管困难，市场参与者之间普遍缺乏信任。</p>
+                    </div>
+                    <div class="card fade-in-element">
+                        <i class="fas fa-users-slash"></i>
+                        <h3 class="text-xl font-semibold mb-2">参与门槛高</h3>
+                        <p>复杂的规则和高昂的认证成本限制了中小企业和个人参与碳市场的机会。</p>
+                    </div>
+                    <div class="card fade-in-element">
+                        <i class="fas fa-leaf-slash"></i>
+                        <h3 class="text-xl font-semibold mb-2">绿洗风险</h3>
+                        <p>企业可能购买低质量或重复计算的碳信用进行“漂绿”，实际减排效果存疑。</p>
+                    </div>
+                     <div class="card fade-in-element bg-indigo-50 dark:bg-indigo-900/50 border border-indigo-200 dark:border-indigo-800">
+                        <i class="fas fa-chart-line text-red-500 dark:text-red-400"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-red-600 dark:text-red-400">问题严重性</h3>
+                        <p>据估计，现有自愿碳市场中高达 <strong class="font-bold">30%-50%</strong> 的碳信用可能不具备真实的环境效益，严重损害了市场信誉和气候行动的有效性。</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <!-- 解决方案 Section -->
+            <section id="solution">
+                <h2 class="fade-in-element">我们的解决方案：CarbonLedger</h2>
+                <p class="text-center text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto fade-in-element">
+                    CarbonLedger 是一个基于 AI 和区块链技术的去中心化平台，旨在彻底改变碳足迹追踪和交易的方式。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in-element">
+                        <h3 class="text-2xl font-semibold mb-4">核心价值主张</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 dark:text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+                                <span><strong class="font-semibold">透明可信:</strong> 所有碳数据和交易记录在区块链上，公开、不可篡改，AI 算法自动验证数据准确性。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 dark:text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+                                <span><strong class="font-semibold">高效自动化:</strong> 智能合约自动执行碳信用生成和交易流程，减少人工干预和时间成本。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 dark:text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+                                <span><strong class="font-semibold">普惠易用:</strong> 简化的用户界面和流程，降低参与门槛，让更多组织和个人参与碳减排。</span>
+                            </li>
+                             <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 dark:text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+                                <span><strong class="font-semibold">杜绝绿洗:</strong> 基于 AI 的严格数据验证和区块链的透明性，确保碳信用的高质量和唯一性。</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card fade-in-element">
+                        <h3 class="text-xl font-semibold mb-4 text-center">高阶架构</h3>
+                        <!-- 架构图占位符 -->
+                        <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-6 text-center h-64 flex flex-col items-center justify-center">
+                            <i class="fas fa-project-diagram text-4xl text-indigo-500 dark:text-indigo-400 mb-4"></i>
+                            <p class="font-medium">高阶架构图</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                                (展示 Blockchain, AI, Oracle 如何协同工作) <br/>
+                                数据源 (IoT/API) -> Oracle -> AI 验证引擎 -> 智能合约 (Blockchain) -> CarbonLedger 平台 (用户界面/API) -> 碳信用代币
+                            </p>
+                        </div>
+                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">架构图示意</p>
+                    </div>
+                </div>
+            </section>
+
+             <div class="section-separator"></div>
+
+            <!-- 核心功能与技术实现 Section -->
+            <section id="how-it-works">
+                <h2 class="fade-in-element">核心功能与技术实现</h2>
+
+                <!-- 用户旅程图 -->
+                <div class="mb-16 fade-in-element">
+                    <h3 class="text-2xl font-semibold mb-6 text-center">用户旅程</h3>
+                    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4 text-center">
+                        <div class="flex flex-col items-center p-4 rounded-lg w-full md:w-1/5 card">
+                            <i class="fas fa-upload text-3xl mb-2 text-indigo-500 dark:text-indigo-400"></i>
+                            <span class="font-semibold">1. 数据上传</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">用户通过 App/Web/API 上传碳足迹相关数据 (如能耗、物料使用等)。</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-gray-400 dark:text-gray-500 hidden md:block transform rotate-90 md:rotate-0"></i>
+                        <div class="flex flex-col items-center p-4 rounded-lg w-full md:w-1/5 card">
+                            <i class="fas fa-robot text-3xl mb-2 text-indigo-500 dark:text-indigo-400"></i>
+                            <span class="font-semibold">2. AI 验证</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">AI 模型分析数据异常、核对基线、评估减排量，确保数据真实有效。</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-gray-400 dark:text-gray-500 hidden md:block transform rotate-90 md:rotate-0"></i>
+                        <div class="flex flex-col items-center p-4 rounded-lg w-full md:w-1/5 card">
+                            <i class="fab fa-ethereum text-3xl mb-2 text-indigo-500 dark:text-indigo-400"></i>
+                            <span class="font-semibold">3. 数据上链</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">经验证的数据摘要 (Hash) 和减排结果通过 Oracle 记录到区块链上。</p>
+                        </div>
+                         <i class="fas fa-arrow-right text-gray-400 dark:text-gray-500 hidden md:block transform rotate-90 md:rotate-0"></i>
+                         <div class="flex flex-col items-center p-4 rounded-lg w-full md:w-1/5 card">
+                            <i class="fas fa-coins text-3xl mb-2 text-indigo-500 dark:text-indigo-400"></i>
+                            <span class="font-semibold">4. 积分生成</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">智能合约根据上链数据自动生成对应的碳信用代币 (如 ERC-20 或 NFT)。</p>
+                        </div>
+                         <i class="fas fa-arrow-right text-gray-400 dark:text-gray-500 hidden md:block transform rotate-90 md:rotate-0"></i>
+                        <div class="flex flex-col items-center p-4 rounded-lg w-full md:w-1/5 card">
+                            <i class="fas fa-chart-pie text-3xl mb-2 text-indigo-500 dark:text-indigo-400"></i>
+                            <span class="font-semibold">5. 查看与交易</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">用户在平台上查看自己的碳积分，并可在去中心化市场上进行交易。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 关键技术点 -->
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                     <div class="card fade-in-element">
+                         <i class="fas fa-file-contract"></i>
+                         <h4 class="text-xl font-semibold mb-2">智能合约 (Smart Contracts)</h4>
+                         <p>基于 Solidity (或其他兼容语言) 编写，部署在 EVM 兼容链上。负责自动化碳信用代币的铸造、转移、销毁逻辑，确保交易规则的强制执行和透明性。</p>
+                     </div>
+                     <div class="card fade-in-element">
+                         <i class="fas fa-brain"></i>
+                          <h4 class="text-xl font-semibold mb-2">AI 验证机制</h4>
+                         <p>利用机器学习模型（如异常检测、回归分析）对上传数据进行交叉验证和一致性检查。模拟阶段可使用规则引擎或预定义算法进行验证，输出置信度评分。</p>
+                     </div>
+                     <div class="card fade-in-element">
+                         <i class="fas fa-link"></i>
+                          <h4 class="text-xl font-semibold mb-2">预言机 (Oracle)</h4>
+                          <p>作为连接链下数据（AI 验证结果、IoT 数据）与链上智能合约的桥梁。即使是模拟数据，也通过预言机节点将可信结果提交上链，触发合约执行。（例如使用 Chainlink 或自定义 Oracle 服务）</p>
+                     </div>
+                 </div>
+
+                <!-- 技术栈展示 -->
+                <div class="fade-in-element">
+                    <h3 class="text-2xl font-semibold mb-6 text-center">技术栈</h3>
+                    <div class="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-center text-gray-600 dark:text-gray-400">
+                        <span class="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                            <i class="fab fa-ethereum text-indigo-500"></i> <span>Blockchain (EVM)</span>
+                        </span>
+                        <span class="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                            <i class="fas fa-code"></i> <span>Solidity</span>
+                        </span>
+                         <span class="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                            <i class="fab fa-python text-blue-500"></i> <span>AI/ML (Python)</span>
+                        </span>
+                         <span class="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                            <i class="fas fa-link text-orange-500"></i> <span>Oracle (Chainlink/Custom)</span>
+                        </span>
+                        <span class="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                            <i class="fab fa-react text-cyan-500"></i> <span>Frontend (React/Vue/...)</span>
+                        </span>
+                         <span class="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                             <i class="fab fa-node-js text-green-500"></i> <span>Backend (Node.js/...)</span>
+                        </span>
+                        <span class="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                            <i class="fas fa-database"></i> <span>Database (IPFS/DB)</span>
+                        </span>
+                        <span class="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                            <i class="fab fa-docker text-blue-600"></i> <span>Deployment</span>
+                        </span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <!-- Demo Section -->
+            <section id="demo" class="text-center">
+                <h2 class="fade-in-element">产品演示 (MVP)</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto fade-in-element">
+                    我们将现场演示 CarbonLedger MVP 的核心流程，展示如何将模拟数据转化为链上可验证的碳积分。
+                </p>
+                <div class="bg-gray-100 dark:bg-gray-800 p-8 rounded-lg shadow-inner max-w-4xl mx-auto fade-in-element">
+                    <h3 class="text-2xl font-semibold mb-6">演示流程概览</h3>
+                    <ol class="list-decimal list-inside text-left space-y-3 text-gray-700 dark:text-gray-300 mx-auto max-w-md">
+                        <li><strong class="font-semibold">模拟数据输入:</strong> 在用户界面输入代表减排活动的模拟数据。</li>
+                        <li><strong class="font-semibold">(模拟) AI 验证:</strong> 后端触发模拟的 AI 验证逻辑，确认数据有效性。</li>
+                        <li><strong class="font-semibold">链上交易确认:</strong> 验证通过后，调用智能合约，在测试网 (如 Sepolia) 上铸造碳信用代币。</li>
+                        <li><strong class="font-semibold">界面更新:</strong> 用户界面实时显示增加的碳积分余额。</li>
+                    </ol>
+                     <div class="mt-8">
+                         <a href="https://sepolia.etherscan.io/" target="_blank" rel="noopener noreferrer" class="btn-outline">
+                            <i class="fab fa-ethereum mr-2"></i> 查看 Etherscan (测试网)
+                        </a>
+                         <p class="text-xs mt-2 text-gray-500 dark:text-gray-400">(演示时将展示具体交易链接)</p>
+                     </div>
+                </div>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <!-- 创新点与优势 Section -->
+            <section id="why-us">
+                <h2 class="fade-in-element">创新点与优势</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                     <div class="card fade-in-element">
+                         <i class="fas fa-lightbulb"></i>
+                        <h3 class="text-xl font-semibold mb-2">独特性</h3>
+                         <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                             <li><strong class="font-semibold">AI 驱动验证:</strong> 创新性地引入 AI 进行碳数据的自动化、智能化验证，提高准确性和效率。</li>
+                             <li><strong class="font-semibold">去中心化信任:</strong> 利用区块链技术构建无需信任第三方、完全透明的碳信用生命周期记录。</li>
+                             <li><strong class="font-semibold">多技术融合:</strong> 结合 AI、Blockchain、Oracle 和 IoT (未来)，形成端到端的解决方案。</li>
+                         </ul>
+                     </div>
+                     <div class="card fade-in-element">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3 class="text-xl font-semibold mb-2">竞争优势</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                            <li><strong class="font-semibold">更高可信度:</strong> 相比传统认证机构，流程更透明、数据更可靠，有效防止绿洗。</li>
+                            <li><strong class="font-semibold">更低成本 & 更高效率:</strong> 自动化流程减少了中介环节和人工审核成本。</li>
+                            <li><strong class="font-semibold">更强流动性:</strong> 基于代币化的碳信用更易于在全球范围内进行交易和流转。</li>
+                            <li><strong class="font-semibold">更广参与度:</strong> 降低门槛，吸引中小企业和个人参与碳市场。</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-separator"></div>
+
+             <!-- 市场潜力与商业模式 Section -->
+            <section id="market">
+                <h2 class="fade-in-element">市场潜力与商业模式</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="fade-in-element">
+                        <h3 class="text-2xl font-semibold mb-4"><i class="fas fa-users mr-2 text-indigo-500"></i>目标用户</h3>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>有碳中和目标的大型企业</li>
+                            <li>寻求低成本碳信用的中小企业</li>
+                            <li>碳汇项目开发者 (如林业、农业)</li>
+                            <li>希望参与碳减排的个人/社区</li>
+                            <li>ESG 投资者和评级机构</li>
+                            <li>政府和监管机构</li>
+                        </ul>
+                    </div>
+                     <div class="fade-in-element">
+                        <h3 class="text-2xl font-semibold mb-4"><i class="fas fa-dollar-sign mr-2 text-indigo-500"></i>潜在商业模式</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">(Hackathon 阶段重点展示潜力)</p>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li><strong class="font-semibold">交易手续费:</strong> 对平台上的碳信用交易收取少量手续费。</li>
+                            <li><strong class="font-semibold">企业级服务订阅:</strong> 为企业提供高级功能，如定制化报告、API 接入、私有化部署选项。</li>
+                            <li><strong class="font-semibold">数据分析服务:</strong> 提供基于链上数据的深度碳排放分析和预测服务。</li>
+                            <li><strong class="font-semibold">认证与咨询服务:</strong> 提供基于 AI 的预认证服务或与第三方认证机构合作。</li>
+                        </ul>
+                    </div>
+                </div>
+                 <p class="mt-12 text-center text-lg text-gray-600 dark:text-gray-400 fade-in-element">
+                    全球自愿碳市场预计在 <strong class="font-semibold text-indigo-600 dark:text-indigo-400">2030 年</strong>达到 <strong class="font-semibold text-indigo-600 dark:text-indigo-400">数百亿甚至上千亿</strong>美元规模，CarbonLedger 旨在成为该市场的关键基础设施。
+                </p>
+            </section>
+
+            <div class="section-separator"></div>
+
+             <!-- 未来规划 Section -->
+            <section id="roadmap">
+                <h2 class="fade-in-element">未来规划 (Roadmap)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card fade-in-element">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center"><i class="fas fa-rocket text-sm mr-2 text-indigo-500"></i>短期 (未来 3-6 月)</h3>
+                        <ul class="list-disc list-inside space-y-2 text-sm">
+                            <li>完善 MVP 功能，优化用户体验</li>
+                            <li>集成真实的 IoT 设备数据源或第三方 API</li>
+                            <li>支持跨链碳信用交易 (初步探索)</li>
+                            <li>扩展 AI 验证模型的覆盖范围</li>
+                            <li>与早期种子用户进行试点合作</li>
+                        </ul>
+                    </div>
+                    <div class="card fade-in-element">
+                         <h3 class="text-xl font-semibold mb-4 flex items-center"><i class="fas fa-cogs text-sm mr-2 text-indigo-500"></i>中期 (未来 6-18 月)</h3>
+                        <ul class="list-disc list-inside space-y-2 text-sm">
+                            <li>引入更复杂的 AI 模型 (如预测性分析)</li>
+                            <li>支持更多类型的碳汇项目 (如 CCUS, DAC)</li>
+                            <li>建立去中心化自治组织 (DAO) 治理框架</li>
+                            <li>实现与其他 DeFi 协议的互操作性</li>
+                            <li>拓展国际市场</li>
+                        </ul>
+                    </div>
+                    <div class="card fade-in-element">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center"><i class="fas fa-globe-asia text-sm mr-2 text-indigo-500"></i>长期 (未来 18+ 月)</h3>
+                        <ul class="list-disc list-inside space-y-2 text-sm">
+                            <li>成为全球领先的去中心化碳市场基础设施</li>
+                            <li>建立广泛的生态系统合作伙伴网络</li>
+                            <li>推动形成基于 CarbonLedger 的行业标准</li>
+                            <li>利用数据驱动气候政策制定</li>
+                            <li>探索碳负债代币化等前沿领域</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <!-- 团队介绍 Section -->
+            <section id="team" class="text-center">
+                 <h2 class="fade-in-element">团队成员</h2>
+                 <p class="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto fade-in-element">
+                    我们是一支充满激情、技能互补的团队，致力于用技术解决气候变化挑战。
+                 </p>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <!-- 示例 Team Member Card -->
+                    <div class="card fade-in-element text-center">
+                         <img src="https://via.placeholder.com/100/CBD5E0/718096?text=头像" alt="Team Member Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 bg-gray-300 dark:bg-gray-600">
+                        <h4 class="text-xl font-semibold">成员姓名 1</h4>
+                        <p class="text-indigo-500 dark:text-indigo-400">角色 (如: 全栈开发 / AI 专家)</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">专长简介: 区块链技术, 智能合约, ...</p>
+                    </div>
+                     <div class="card fade-in-element text-center">
+                         <img src="https://via.placeholder.com/100/CBD5E0/718096?text=头像" alt="Team Member Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 bg-gray-300 dark:bg-gray-600">
+                        <h4 class="text-xl font-semibold">成员姓名 2</h4>
+                        <p class="text-indigo-500 dark:text-indigo-400">角色 (如: 产品设计 / 市场)</p>
+                         <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">专长简介: 用户体验, 市场分析, ...</p>
+                    </div>
+                     <div class="card fade-in-element text-center">
+                         <img src="https://via.placeholder.com/100/CBD5E0/718096?text=头像" alt="Team Member Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 bg-gray-300 dark:bg-gray-600">
+                        <h4 class="text-xl font-semibold">成员姓名 3</h4>
+                        <p class="text-indigo-500 dark:text-indigo-400">角色 (如: 后端开发 / 算法)</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">专长简介: 数据科学, 云计算, ...</p>
+                    </div>
+                    <!-- Add more team member cards as needed -->
+                 </div>
+             </section>
+
+             <div class="section-separator"></div>
+
+            <!-- Q&A / Thank You Section -->
+            <section id="q-and-a" class="text-center">
+                <div class="fade-in-element">
+                    <h2 class="text-5xl md:text-6xl font-bold mb-6">Q&A</h2>
+                     <p class="text-2xl md:text-3xl text-gray-700 dark:text-gray-300 mb-10">
+                        感谢您的时间和关注！
+                    </p>
+                    <a href="#cover" class="btn">
+                       返回顶部 <i class="fas fa-arrow-up ml-2"></i>
+                    </a>
+                     <p class="mt-8 text-gray-500 dark:text-gray-400">
+                        CarbonLedger | 驱动可信的气候行动
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="text-center py-6 bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+            &copy; 2024 CarbonLedger. All Rights Reserved. (演示项目)
+        </p>
+    </footer>
+
+    <script>
+        // ----- Dark Mode Toggle -----
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const htmlElement = document.documentElement;
+
+        // Function to set theme
+        const setTheme = (theme) => {
+            if (theme === 'dark') {
+                htmlElement.classList.add('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                htmlElement.classList.remove('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+                localStorage.setItem('theme', 'light');
+            }
+        };
+
+        // Check initial theme
+        const storedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (storedTheme) {
+            setTheme(storedTheme);
+        } else {
+            setTheme(prefersDark ? 'dark' : 'light');
+        }
+
+        // Listen for toggle button click
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = htmlElement.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        });
+
+        // Listen for system theme changes (optional)
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+             // Only update if no theme is manually set in localStorage
+             if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+             }
+        });
+
+        // ----- Fade-in Animation on Scroll -----
+        const fadeInElements = document.querySelectorAll('.fade-in-element');
+
+        const observerOptions = {
+            root: null, // relative to the viewport
+            rootMargin: '0px',
+            threshold: 0.1 // trigger when 10% of the element is visible
+        };
+
+        const observerCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Optional: Unobserve after animation to improve performance
+                    // observer.unobserve(entry.target);
+                } else {
+                     // Optional: Remove class if you want elements to fade out when scrolled out of view
+                     // entry.target.classList.remove('is-visible');
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        fadeInElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        // ----- Image Lazy Loading (Example - apply `loading="lazy"` to img tags) -----
+        // Modern browsers support native lazy loading via the `loading="lazy"` attribute on <img> tags.
+        // Added placeholder images with generic src, replace with actual WebP images and add loading="lazy"
+        // Example: <img src="your-image.webp" alt="Descriptive Alt Text" loading="lazy" class="...">
+        // No extra JS needed for basic lazy loading if using the attribute.
+
+        // ----- Smooth Scroll for internal links -----
+        // Added `scroll-smooth` class to <html> tag via Tailwind. No extra JS needed.
+
+    </script>
+
+</body>
+</html>
