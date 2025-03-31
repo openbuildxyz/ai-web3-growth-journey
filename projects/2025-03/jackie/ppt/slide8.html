@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链智付 - 未来展望</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neo-primary: #ff5d56;
+            --neo-secondary: #29ffc9;
+            --neo-accent: #74ee15;
+            --neo-black: #000000;
+            --neo-offset: 4px;
+        }
+        
+        body {
+            background-color: #fbf8ef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .neo-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .neo-badge {
+            background-color: var(--neo-primary);
+            color: white;
+            border: 3px solid black;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            position: relative;
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+            transform: rotate(-1deg);
+        }
+        
+        .roadmap-container {
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: black;
+            z-index: 0;
+        }
+        
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .roadmap-dot {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border: 3px solid black;
+            border-radius: 50%;
+            left: -37px;
+            top: 5px;
+            z-index: 1;
+        }
+        
+        .dot-1 {
+            background-color: var(--neo-primary);
+        }
+        
+        .dot-2 {
+            background-color: var(--neo-secondary);
+        }
+        
+        .dot-3 {
+            background-color: var(--neo-accent);
+        }
+        
+        .dot-4 {
+            background-color: #ffdb58;
+        }
+        
+        .milestone-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border: 2px solid black;
+            font-size: 0.875rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tag-q3 {
+            background-color: rgba(255, 93, 86, 0.2);
+        }
+        
+        .tag-q4 {
+            background-color: rgba(41, 255, 201, 0.2);
+        }
+        
+        .tag-2025 {
+            background-color: rgba(116, 238, 21, 0.2);
+        }
+        
+        .vision-card {
+            border: 3px solid black;
+            background-color: rgba(255, 219, 88, 0.1);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            position: relative;
+        }
+        
+        .vision-badge {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background-color: #ffdb58;
+            padding: 0.25rem 0.75rem;
+            border: 2px solid black;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-5xl">
+        <div class="neo-card">
+            <div class="mb-4">
+                <span class="neo-badge text-lg">未来展望</span>
+            </div>
+            
+            <h1 class="text-4xl font-bold mb-8">链智付发展路线图</h1>
+            
+            <div class="roadmap-container">
+                <div class="roadmap-line"></div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-dot dot-1"></div>
+                    <span class="milestone-tag tag-q3">2024年 Q3</span>
+                    <h3 class="text-2xl font-bold mb-2">API服务市场</h3>
+                    <p class="text-lg">允许服务提供商上架和推广自己的API，形成多样化的API服务生态系统</p>
+                    <ul class="mt-2 space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>服务提供商入驻系统</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>自动化服务质量监控</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>多种服务发现机制</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-dot dot-2"></div>
+                    <span class="milestone-tag tag-q4">2024年 Q4</span>
+                    <h3 class="text-2xl font-bold mb-2">服务组合</h3>
+                    <p class="text-lg">支持多API串联调用，允许用户创建复杂工作流，实现更高级的自动化场景</p>
+                    <ul class="mt-2 space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>可视化工作流编辑器</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>条件分支与循环支持</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>组合服务模板市场</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-dot dot-3"></div>
+                    <span class="milestone-tag tag-2025">2025年 Q1</span>
+                    <h3 class="text-2xl font-bold mb-2">批量交易结算</h3>
+                    <p class="text-lg">优化链上操作，通过批量处理降低每次API调用的gas成本，提高经济效益</p>
+                    <ul class="mt-2 space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>ZK-Rollup扩容整合</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>批量交易优化</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>多链结算系统</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="roadmap-item mb-0">
+                    <div class="roadmap-dot dot-4"></div>
+                    <span class="milestone-tag tag-2025">2025年 Q2</span>
+                    <h3 class="text-2xl font-bold mb-2">去中心化治理</h3>
+                    <p class="text-lg">由社区决定平台发展方向和服务标准，实现真正的社区自治</p>
+                    <ul class="mt-2 space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>治理代币发行</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>提案与投票系统</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>多签名金库管理</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="vision-card">
+                <span class="vision-badge">长期愿景</span>
+                <div class="pt-3">
+                    <h3 class="text-2xl font-bold mb-3">成为Web3世界的API超市</h3>
+                    <p class="text-lg">我们希望链智付成为Web3世界标准化的API调用与支付解决方案，让各种区块链应用都能无缝接入任何外部服务，真正实现区块链的价值互联。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

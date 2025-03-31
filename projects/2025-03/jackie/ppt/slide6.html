@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链智付 - 应用场景</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neo-primary: #ff5d56;
+            --neo-secondary: #29ffc9;
+            --neo-accent: #74ee15;
+            --neo-black: #000000;
+            --neo-offset: 4px;
+        }
+        
+        body {
+            background-color: #fbf8ef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .neo-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .neo-badge {
+            background-color: var(--neo-primary);
+            color: white;
+            border: 3px solid black;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            position: relative;
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+            transform: rotate(-1deg);
+        }
+        
+        .scenario-card {
+            border: 3px solid black;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+        }
+        
+        .scenario-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 3rem;
+            opacity: 0.15;
+        }
+        
+        .scenario-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 0.5rem;
+            border: 2px solid black;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+        
+        .badge-defi {
+            background-color: rgba(255, 93, 86, 0.2);
+        }
+        
+        .badge-nft {
+            background-color: rgba(41, 255, 201, 0.2);
+        }
+        
+        .badge-gaming {
+            background-color: rgba(116, 238, 21, 0.2);
+        }
+        
+        .badge-social {
+            background-color: rgba(255, 219, 88, 0.2);
+        }
+        
+        .connect-line {
+            position: absolute;
+            width: 2px;
+            background-color: black;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-5xl">
+        <div class="neo-card">
+            <div class="mb-4">
+                <span class="neo-badge text-lg">应用场景</span>
+            </div>
+            
+            <h1 class="text-4xl font-bold mb-8">链智付应用案例</h1>
+            
+            <div class="relative pl-8">
+                <div class="connect-line"></div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <span class="scenario-badge badge-defi">DeFi数据分析</span>
+                    <h3 class="text-2xl font-bold mb-3">实时市场数据分析</h3>
+                    <p class="text-lg mb-3">交易员可以预授权代币，然后随时调用市场数据分析API，获取实时交易信号和市场指标，无需每次都确认交易。</p>
+                    <div class="text-sm bg-gray-100 p-3 border-l-4 border-blue-500">
+                        <p class="font-bold">用户价值：</p>
+                        <p>在波动市场中，无需浪费时间在交易确认上，抓住每一个交易时机</p>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <span class="scenario-badge badge-nft">NFT创作</span>
+                    <h3 class="text-2xl font-bold mb-3">NFT元数据生成</h3>
+                    <p class="text-lg mb-3">NFT创建者可以一次授权，多次调用图像处理API，实时生成和修改NFT元数据，创作过程更为流畅。</p>
+                    <div class="text-sm bg-gray-100 p-3 border-l-4 border-blue-500">
+                        <p class="font-bold">用户价值：</p>
+                        <p>创作者可以专注于艺术创作，而不是处理重复的区块链交易</p>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <span class="scenario-badge badge-gaming">区块链游戏</span>
+                    <h3 class="text-2xl font-bold mb-3">游戏内实时服务</h3>
+                    <p class="text-lg mb-3">游戏开发者预授权后，游戏可无缝调用随机数生成、地图创建等外部服务，无需中断游戏体验。</p>
+                    <div class="text-sm bg-gray-100 p-3 border-l-4 border-blue-500">
+                        <p class="font-bold">用户价值：</p>
+                        <p>玩家可以享受流畅的游戏体验，不会因为交易确认而打断游戏流程</p>
+                    </div>
+                </div>
+                
+                <div class="scenario-card mb-0">
+                    <div class="scenario-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="scenario-badge badge-social">去中心化社交</span>
+                    <h3 class="text-2xl font-bold mb-3">内容审核与翻译</h3>
+                    <p class="text-lg mb-3">社交应用可以在用户授权下自动调用内容审核、翻译等API，在保持去中心化的同时提供丰富功能。</p>
+                    <div class="text-sm bg-gray-100 p-3 border-l-4 border-blue-500">
+                        <p class="font-bold">用户价值：</p>
+                        <p>用户可以在去中心化社交平台获得与中心化平台同样丰富的功能</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

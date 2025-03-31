@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链智付 - 团队信息</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neo-primary: #ff5d56;
+            --neo-secondary: #29ffc9;
+            --neo-accent: #74ee15;
+            --neo-black: #000000;
+            --neo-offset: 4px;
+        }
+        
+        body {
+            background-color: #fbf8ef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .neo-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .neo-badge {
+            background-color: var(--neo-primary);
+            color: white;
+            border: 3px solid black;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            position: relative;
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+            transform: rotate(-1deg);
+        }
+        
+        .team-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-accent {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 3px solid black;
+            top: -50px;
+            right: -50px;
+            border-radius: 50%;
+            z-index: 0;
+            background-color: var(--neo-secondary);
+            opacity: 0.3;
+        }
+        
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border: 3px solid black;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid black;
+            background-color: white;
+            font-size: 1.25rem;
+            box-shadow: 2px 2px 0 0 black;
+            transition: all 0.2s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 0 black;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border: 2px solid black;
+            background-color: white;
+        }
+        
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+            color: var(--neo-primary);
+        }
+        
+        .thanks-card {
+            background-color: rgba(255, 219, 88, 0.1);
+            border: 3px solid black;
+            padding: 1.5rem;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-5xl">
+        <div class="neo-card">
+            <div class="mb-4">
+                <span class="neo-badge text-lg">团队信息</span>
+            </div>
+            
+            <h1 class="text-4xl font-bold mb-8 text-center">项目团队</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="team-card">
+                    <div class="team-accent"></div>
+                    <div class="avatar">
+                        <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Jackie">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Jackie</h3>
+                    <p class="text-lg mb-3">开发者</p>
+                    <p class="mb-4">Web3开发爱好者，致力于将区块链技术带入日常应用，简化用户体验。</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">联系我们</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold">电子邮件</p>
+                            <p>contact@chainpaygate.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold">网站</p>
+                            <p>www.chainpaygate.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold">Discord社区</p>
+                            <p>discord.gg/chainpaygate</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h4 class="text-xl font-bold mb-3">项目灵感来源</h4>
+                        <p class="text-lg">AI³ Growth Journey 3月迷你黑客松</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="thanks-card">
+                <h3 class="text-2xl font-bold mb-3">感谢您的关注！</h3>
+                <p class="text-lg">链智付是一个2小时内使用AI构建的概念项目，旨在解决Web3世界中API调用与支付的痛点问题。</p>
+                <p class="text-lg mt-2">我们欢迎各种形式的合作与反馈，一起构建更美好的Web3生态！</p>
+                
+                <div class="mt-4">
+                    <span class="inline-block px-3 py-1 bg-gray-200 rounded-full text-sm font-semibold mr-2">#MCP</span>
+                    <span class="inline-block px-3 py-1 bg-gray-200 rounded-full text-sm font-semibold mr-2">#Web3</span>
+                    <span class="inline-block px-3 py-1 bg-gray-200 rounded-full text-sm font-semibold mr-2">#区块链</span>
+                    <span class="inline-block px-3 py-1 bg-gray-200 rounded-full text-sm font-semibold">#API支付</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链智付 - 演示案例</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neo-primary: #ff5d56;
+            --neo-secondary: #29ffc9;
+            --neo-accent: #74ee15;
+            --neo-black: #000000;
+            --neo-offset: 4px;
+        }
+        
+        body {
+            background-color: #fbf8ef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .neo-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .neo-badge {
+            background-color: var(--neo-primary);
+            color: white;
+            border: 3px solid black;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            position: relative;
+            box-shadow: 2px 2px 0 0 var(--neo-black);
+            transform: rotate(-1deg);
+        }
+        
+        .demo-card {
+            background-color: white;
+            border: 3px solid black;
+            box-shadow: var(--neo-offset) var(--neo-offset) 0 0 var(--neo-black);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .demo-img {
+            border: 2px solid black;
+            max-width: 100%;
+            height: auto;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-step {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border: 2px solid black;
+            margin-right: 0.75rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-1 {
+            background-color: rgba(255, 93, 86, 0.2);
+        }
+        
+        .step-2 {
+            background-color: rgba(41, 255, 201, 0.2);
+        }
+        
+        .step-3 {
+            background-color: rgba(116, 238, 21, 0.2);
+        }
+        
+        .demo-cta {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--neo-accent);
+            color: black;
+            border: 2px solid black;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            box-shadow: 3px 3px 0 0 black;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .demo-cta:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 0 black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-5xl">
+        <div class="neo-card">
+            <div class="mb-4">
+                <span class="neo-badge text-lg">演示案例</span>
+            </div>
+            
+            <h1 class="text-4xl font-bold mb-6">链智付演示示例</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="demo-card">
+                    <h3 class="text-2xl font-bold mb-4">天气数据查询</h3>
+                    <div class="demo-img bg-gray-100 h-40 flex items-center justify-center">
+                        <i class="fas fa-cloud-sun text-6xl text-gray-400"></i>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number step-1">1</div>
+                        <div>
+                            <p class="font-bold">用户预授权代币</p>
+                            <p class="text-sm text-gray-600">一次性授权10个代币用于多次天气查询</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number step-2">2</div>
+                        <div>
+                            <p class="font-bold">多次查询不同城市天气</p>
+                            <p class="text-sm text-gray-600">每次查询自动从授权额度中扣除0.1代币</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number step-3">3</div>
+                        <div>
+                            <p class="font-bold">查看授权余额</p>
+                            <p class="text-sm text-gray-600">实时查看剩余授权额度，低于阈值时提醒</p>
+                        </div>
+                    </div>
+                    
+                    <button class="demo-cta">
+                        查看演示
+                    </button>
+                </div>
+                
+                <div class="demo-card">
+                    <h3 class="text-2xl font-bold mb-4">文件格式转换</h3>
+                    <div class="demo-img bg-gray-100 h-40 flex items-center justify-center">
+                        <i class="fas fa-file-export text-6xl text-gray-400"></i>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number step-1">1</div>
+                        <div>
+                            <p class="font-bold">预授权代币</p>
+                            <p class="text-sm text-gray-600">为批量文件转换授权20个代币</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number step-2">2</div>
+                        <div>
+                            <p class="font-bold">批量提交多个文件转换任务</p>
+                            <p class="text-sm text-gray-600">系统自动处理并按文件大小按比例扣费</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-step">
+                        <div class="step-number step-3">3</div>
+                        <div>
+                            <p class="font-bold">获取转换结果</p>
+                            <p class="text-sm text-gray-600">所有文件完成后自动通知，无需人工确认</p>
+                        </div>
+                    </div>
+                    
+                    <button class="demo-cta">
+                        查看演示
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <div class="demo-card">
+                    <h3 class="text-2xl font-bold mb-4">FAQ知识库</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="col-span-1">
+                            <div class="demo-img bg-gray-100 h-40 flex items-center justify-center">
+                                <i class="fas fa-robot text-6xl text-gray-400"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="col-span-2">
+                            <div class="demo-step">
+                                <div class="step-number step-1">1</div>
+                                <div>
+                                    <p class="font-bold">预授权后</p>
+                                    <p class="text-sm text-gray-600">用户预授权50个代币，启用AI知识库访问权限</p>
+                                </div>
+                            </div>
+                            
+                            <div class="demo-step">
+                                <div class="step-number step-2">2</div>
+                                <div>
+                                    <p class="font-bold">多次向知识库提问</p>
+                                    <p class="text-sm text-gray-600">每次提问自动扣费，类似使用预付费的AI助手服务</p>
+                                </div>
+                            </div>
+                            
+                            <div class="demo-step">
+                                <div class="step-number step-3">3</div>
+                                <div>
+                                    <p class="font-bold">按使用量付费</p>
+                                    <p class="text-sm text-gray-600">根据问题复杂度和回答长度，按实际使用量计费</p>
+                                </div>
+                            </div>
+                            
+                            <button class="demo-cta mt-4">
+                                查看演示
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

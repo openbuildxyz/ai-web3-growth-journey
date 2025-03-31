@@ -1,0 +1,24 @@
+{
+  "name": "chain-pay-gate-frontend",
+  "version": "1.0.0",
+  "description": "链智付前端 - 通用MCP支付网关",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@web3modal/ethereum": "2.7.1",
+    "@web3modal/react": "2.7.1",
+    "ethers": "5.7.2",
+    "next": "15.2.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "wagmi": "1.4.13"
+  }
+}
