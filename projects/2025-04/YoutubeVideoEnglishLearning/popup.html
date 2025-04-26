@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 350px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+    }
+
+    .wallet-section {
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+    }
+    .wallet-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .wallet-status {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .wallet-address {
+      font-size: 12px;
+      color: #1a73e8;
+      word-break: break-all;
+      margin-bottom: 8px;
+    }
+    .connect-wallet-btn {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .connect-wallet-btn:hover {
+      background-color: #1557b0;
+    }
+
+
+
+    .word-form {
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 8px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .word-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .video-group {
+      margin-bottom: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .video-title {
+      padding: 10px;
+      background-color: #e9ecef;
+      font-weight: bold;
+      font-size: 14px;
+      color: #495057;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .word-item {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      background-color: white;
+    }
+    .word-item:last-child {
+      border-bottom: none;
+    }
+    .word-info {
+      flex: 1;
+      margin-right: 10px;
+    }
+    .word-text {
+      font-size: 14px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .translation-result {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+      padding: 4px 0;
+      border-top: 1px dashed #eee;
+    }
+    .video-info {
+      font-size: 12px;
+      color: #666;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 250px;
+    }
+    .timestamp {
+      color: #1a73e8;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background-color: #e8f0fe;
+    }
+    .timestamp:hover {
+      background-color: #d2e3fc;
+    }
+    .play-button, .translate-button, .delete-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: 8px;
+      width: auto;
+    }
+    .play-button {
+      color: #1a73e8;
+    }
+    .translate-button {
+      color: #1a73e8;
+    }
+    .delete-button {
+      color: #dc3545;
+      opacity: 0;
+    }
+    .word-item:hover .delete-button {
+      opacity: 1;
+    }
+    .word-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .settings {
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+    }
+    .settings-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .voice-settings {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    select {
+      padding: 4px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .speed-control label {
+      font-size: 12px;
+    }
+    .speed-control input {
+      width: 60px;
+    }
+    .confirm-delete {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #fff;
+      border: 1px solid #dc3545;
+      border-radius: 4px;
+      padding: 4px 8px;
+      display: none;
+      z-index: 1;
+    }
+    .confirm-delete.show {
+      display: flex;
+      gap: 8px;
+    }
+    .confirm-delete button {
+      padding: 2px 6px;
+      margin: 0;
+      font-size: 12px;
+      width: auto;
+    }
+    .confirm-delete .yes {
+      background-color: #dc3545;
+    }
+    .confirm-delete .no {
+      background-color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wallet-section">
+    <div class="wallet-title">钱包连接</div>
+    <div class="wallet-status" id="walletStatus">未连接</div>
+    <div class="wallet-address" id="walletAddress"></div>
+    <button class="connect-wallet-btn" id="connectWalletBtn">连接钱包</button>
+  </div>
+
+  <div class="settings">
+    <div class="settings-title">语音设置</div>
+    <div class="voice-settings">
+      <select id="voiceSelect">
+        <option value="">加载中...</option>
+      </select>
+      <div class="speed-control">
+        <label for="rateInput">语速:</label>
+        <input type="number" id="rateInput" min="0.5" max="2" step="0.1" value="1">
+      </div>
+    </div>
+  </div>
+  <div class="word-form">
+    <input type="text" id="wordInput" placeholder="输入生词">
+    <input type="text" id="meaningInput" placeholder="输入释义">
+    <button id="addWord">添加生词</button>
+  </div>
+  <div class="word-list" id="wordList">
+    <!-- 生词列表将在这里动态生成 -->
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
