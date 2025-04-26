@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>无界女性 - ALiveMe</title>
+    <link rel="icon" href="../public/aliveme/aliveme logo.jpg" type="image/jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.js"></script>
+    <link href="../styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar py-3">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="../index.html" class="text-2xl font-bold text-primary flex items-center">
+                <img src="../public/aliveme/aliveme logo.jpg" alt="ALiveMe Logo" class="h-8 mr-2">
+                ALiveMe
+            </a>
+            <div class="hidden md:flex space-x-4">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="oh-card.html" class="nav-link">OH卡</a>
+
+                <a href="life-exchange.html" class="nav-link">交换人生</a>
+                <a href="women-unlimited.html" class="nav-link">无界女性</a>
+            </div>
+            <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <div class="mobile-menu hidden absolute top-full left-0 right-0 bg-white shadow-md py-4 px-4 md:hidden">
+                <a href="../index.html" class="block py-2 hover:text-primary">首页</a>
+                <a href="oh-card.html" class="block py-2 hover:text-primary">OH卡</a>
+
+                <a href="life-exchange.html" class="block py-2 hover:text-primary">交换人生</a>
+                <a href="women-unlimited.html" class="block py-2 hover:text-primary">无界女性</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">无界女性</h1>
+                    <p class="text-xl md:text-2xl mb-6">突破边界，绽放自我</p>
+                    <p class="text-lg mb-8">为女性创造一个开放、包容、互助的交流平台，连接各行各业的优秀女性。</p>
+                </div>
+                <div class="md:w-1/2 fade-in" style="animation-delay: 0.3s">
+                    <img src="../public/aliveme/aliveme介绍与内测现场.jpg" alt="无界女性活动照片" class="rounded-lg shadow-xl mx-auto" style="max-height: 500px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section bg-light">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center mb-16">无界女性百人大会</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.1s">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">活动亮点</h3>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li class="mb-2">跨界对话：连接科技、心理、人文领域女性</li>
+                        <li class="mb-2">经验分享：职场发展、个人成长经验交流</li>
+                        <li class="mb-2">资源对接：搭建合作与发展的桥梁</li>
+                    </ul>
+                </div>
+
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.2s">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">参与收获</h3>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li class="mb-2">拓展人脉圈层</li>
+                        <li class="mb-2">获取成长机遇</li>
+                        <li class="mb-2">提升个人影响力</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 fade-in" style="animation-delay: 0.3s">
+                <h3 class="text-xl font-bold mb-4">无界女性百人大会是什么？</h3>
+                <p class="mb-4">无界女性百人大会是ALiveMe打造的标志性活动，致力于为女性创造一个开放、包容、互助的交流平台。我们邀请来自不同行业、不同领域的女性精英，分享她们的成长故事、职业经验和人生感悟，共同探讨女性在当代社会中的角色和发展。</p>
+                <p class="mb-4">通过这个平台，我们希望能够打破行业壁垒，连接不同领域的优秀女性，促进跨界交流与合作，共同创造更多可能性。</p>
+                <h3 class="text-xl font-bold mb-4 mt-6">活动安排</h3>
+                <p>我们将于5月24日举办产品发布会暨上海无界女性百人大会，诚邀各界女性精英参与。活动将包括主题演讲、圆桌讨论、互动工作坊等环节，为参与者提供丰富多样的交流机会。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-1/3 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-6">加入我们</h3>
+                    <p class="mb-4">邮箱：sunnyz689@163.com</p>
+                    <p class="mb-4">微信：sunnyz689</p>
+                    <p>地址：base上海+国内旅行+线上社群活跃</p>
+                </div>
+                <div class="w-full md:w-1/3 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-6">关注我们</h3>
+                    <div class="flex flex-col items-center md:items-start">
+                        <img src="../public/aliveme/qrcode.jpg" alt="微信公众号二维码" class="w-32 h-32 mb-4">
+                        <p>扫码关注微信公众号</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3">
+                    <h3 class="text-xl font-bold mb-6">快速链接</h3>
+                    <ul>
+                        <li class="mb-3"><a href="../index.html#about" class="hover:text-accent">关于我们</a></li>
+                        <li class="mb-3"><a href="../index.html#team" class="hover:text-accent">主理人</a></li>
+                        <li class="mb-3"><a href="../index.html#timeline" class="hover:text-accent">发展历程</a></li>
+                        <li class="mb-3"><a href="../index.html#features" class="hover:text-accent">特色服务</a></li>
+                        <li><a href="../index.html#partners" class="hover:text-accent">合作伙伴</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700">
+                <span>ICP备案/许可证号：</span>
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="text-blue-600 hover:underline">闽ICP备2025094014号-1</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

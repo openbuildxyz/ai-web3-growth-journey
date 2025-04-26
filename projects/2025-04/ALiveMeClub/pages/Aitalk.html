@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>AI对话窗口 - ALiveMe</title>
+    <link rel="icon" href="../public/aliveme/aliveme logo.jpg" type="image/jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.js"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* 全局样式优化 */
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 0;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 聊天容器样式优化 */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin: 16px;
+            height: calc(100vh - 240px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        /* 用户信息区域样式优化 */
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 16px;
+            border-radius: 20px;
+            margin: 16px 16px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wallet-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6c47ff 0%, #10a37f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(108, 71, 255, 0.2);
+        }
+
+        .wallet-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .wallet-address {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .wallet-balance {
+            font-size: 14px;
+            color: #666;
+            background: linear-gradient(135deg, #10a37f 0%, #6c47ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        /* 输入区域样式优化 */
+        .input-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid rgba(229, 229, 229, 0.5);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin: 0;
+            border-radius: 0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid rgba(229, 229, 229, 0.5);
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .input-area input:focus {
+            border-color: #10a37f;
+            box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);
+        }
+
+        .input-area button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #10a37f 0%, #6c47ff 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 163, 127, 0.2);
+        }
+
+        .input-area button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 163, 127, 0.3);
+        }
+
+        .input-area button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 消息样式优化 */
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            position: relative;
+            line-height: 1.5;
+            font-size: 14px;
+            animation: messageAppear 0.3s ease-out;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, #10a37f 0%, #6c47ff 100%);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 12px rgba(16, 163, 127, 0.2);
+        }
+
+        .ai-message {
+            background: rgba(255, 255, 255, 0.9);
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .message-timestamp {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        /* 输入指示器样式优化 */
+        .typing-indicator {
+            display: flex;
+            gap: 6px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            width: fit-content;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #10a37f 0%, #6c47ff 100%);
+            border-radius: 50%;
+            animation: typing 1s infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* 社群推荐样式优化 */
+        .community-recommendations {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .community-recommendation {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(229, 229, 229, 0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .community-recommendation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            border-color: #6c47ff;
+        }
+
+        .community-emoji {
+            width: 32px;
+            height: 32px;
+            background: rgba(108, 71, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-right: 12px;
+        }
+
+        .community-details {
+            flex: 1;
+        }
+
+        .community-name {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+            font-size: 14px;
+        }
+
+        .community-stats {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* 社群详情卡片样式优化 */
+        .community-detail-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 12px;
+            border: 1px solid rgba(229, 229, 229, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .community-detail-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+        }
+
+        .community-detail-emoji {
+            width: 40px;
+            height: 40px;
+            background: rgba(108, 71, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 16px;
+        }
+
+        .community-detail-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .community-detail-stats {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .community-detail-content {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .community-detail-slogan {
+            font-size: 14px;
+            font-style: italic;
+            color: #6c47ff;
+            margin: 12px 0;
+            padding: 12px;
+            background: rgba(108, 71, 255, 0.05);
+            border-radius: 12px;
+            line-height: 1.5;
+        }
+
+        /* 二维码样式优化 */
+        .community-qr-code {
+            max-width: 180px;
+            height: auto;
+            margin: 12px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .qr-code-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar py-3">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="../index.html" class="text-2xl font-bold text-primary flex items-center">
+                <img src="../public/aliveme/aliveme logo.jpg" alt="ALiveMe Logo" class="h-8 mr-2">
+                ALiveMe
+            </a>
+            <div class="hidden md:flex space-x-4 ml-200 items-center">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="oh-card.html" class="nav-link">OH卡</a>
+                <a href="life-exchange.html" class="nav-link">交换人生</a>
+                <a href="women-unlimited.html" class="nav-link">无界女性</a>
+                <a href="Aitalk.html" class="nav-link rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-md ml-15">AI+Web3助手</a>
+                <a href="#" id="connect-wallet-btn" class="nav-link rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-md">连接钱包</a>
+                <a href="#" id="sign-message-btn" class="nav-link rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-md ml-4 hidden">签署消息</a>
+                <div id="user-info-navbar" class="flex items-center ml-4 hidden">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg">0x</div>
+                    <span class="ml-2 text-gray-800 font-semibold">0xC2d8...F6Db</span>
+                </div>
+            </div>
+            <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto">
+        <div class="header">
+            <div class="user-profile">
+                <div class="wallet-avatar">0x</div>
+                <div class="wallet-info">
+                    <div class="wallet-address">0xC2d8...F6Db</div>
+                    <div class="wallet-balance">余额: <span id="balance">10.00 A0GI</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-container" id="chat"></div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="输入消息..." autocomplete="off">
+            <button id="send-btn">发送</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://lf-coze-web-cdn.coze.cn/obj/coze-web-cn/coze-plugin-web-chat/v1.2.0-beta.8/index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chat');
+            const userInput = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
+            const balanceElement = document.getElementById('balance');
+            let isTyping = false;
+            let cozeClient = null;
+
+            const communityData = {
+                'weekly-hackathon': {
+                    emoji: '🚀',
+                    name: '周周黑客松',
+                    stats: '活跃成员: 2.8k',
+                    description: '周周黑客松是一个 AI 产品创造者社区，致力于帮助创造者从 0 到 1 实现最小可行产品 MVP，并快速找到他们的前 100 个用户，享受创造的乐趣。',
+                    slogan: '花 1 周时间，创造 1 个最小可行产品，解决 1 个生活痛点，也许就是下 1 个改变世界的起点。'
+                },
+                'openbuild': {
+                    emoji: '👥',
+                    name: 'OpenBuild',
+                    stats: '活跃成员: 3.2k',
+                    description: 'OpenBuild 是一个面向 Web3 开发者的开源社区。我们致力于为开发者提供高质量的系统性内容和活动，同时连接 Web2 和 Web3，帮助开发者在 Web3 取得成功。'
+                },
+                '0g-ai': {
+                    emoji: '🤖',
+                    name: '0g.ai',
+                    stats: '活跃成员: 2.5k',
+                    description: '全球最大的AI Layer1区块链，通过区块链技术为AI提供基础设施，让AI变得更加透明、可信，并实现真正的去中心化。'
+                }
+            };
+
+            // 初始化 Coze Chat SDK
+            function initCozeSDK() {
+                if (cozeClient) {
+                    cozeClient.destroy();
+                }
+
+                cozeClient = new CozeWebSDK.WebChatClient({
+                    config: {
+                        type: 'bot',
+                        botId: '7497515863705665573',
+                        isIframe: false,
+                    },
+                    userInfo: {
+                        id: 'user_' + Math.random().toString(36).substr(2, 9),
+                        url: 'https://lf-coze-web-cdn.coze.cn/obj/coze-web-cn/obric/coze/favicon.1970.png',
+                        nickname: '用户',
+                    },
+                    ui: {
+                        base: {
+                            layout: 'pc',
+                            lang: 'zh-CN'
+                        }
+                    }
+                });
+            }
+
+            function formatTimestamp() {
+                const now = new Date();
+                return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+
+            function createCommunityDetailCard(communityId) {
+                const community = communityData[communityId];
+                const card = document.createElement('div');
+                card.className = 'community-detail-card';
+                
+                let html = `
+                    <div class="community-detail-header">
+                        <div class="community-detail-emoji">${community.emoji}</div>
+                        <div class="community-detail-title">
+                            <div class="community-detail-name">${community.name}</div>
+                            <div class="community-detail-stats">${community.stats}</div>
+                        </div>
+                    </div>
+                    <div class="community-detail-content">
+                        ${community.description}
+                    </div>
+                `;
+
+                if (community.slogan) {
+                    html += `
+                        <div class="community-detail-slogan">
+                            ${community.slogan}
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                return card;
+            }
+
+            function createCommunityRecommendations() {
+                const container = document.createElement('div');
+                container.className = 'community-recommendations';
+
+                Object.entries(communityData).forEach(([id, community]) => {
+                    const card = document.createElement('div');
+                    card.className = 'community-recommendation';
+                    card.innerHTML = `
+                        <div class="community-emoji">${community.emoji}</div>
+                        <div class="community-details">
+                            <div class="community-name">${community.name}</div>
+                            <div class="community-stats">${community.stats}</div>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => {
+                        addMessage(`让我为您详细介绍"${community.name}"：`, false);
+                        const detailMessage = document.createElement('div');
+                        detailMessage.classList.add('message', 'ai-message');
+                        detailMessage.appendChild(createCommunityDetailCard(id));
+                        chatContainer.appendChild(detailMessage);
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    });
+                    container.appendChild(card);
+                });
+
+                return container;
+            }
+
+            function showTypingIndicator() {
+                if (isTyping) return;
+                isTyping = true;
+                
+                const typingDiv = document.createElement('div');
+                typingDiv.classList.add('typing-indicator');
+                typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                chatContainer.appendChild(typingDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                return typingDiv;
+            }
+
+            function removeTypingIndicator(typingDiv) {
+                if (typingDiv && typingDiv.parentNode) {
+                    typingDiv.parentNode.removeChild(typingDiv);
+                }
+                isTyping = false;
+            }
+
+            function addMessage(text, isUser, includeRecommendations = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+                
+                const messageContent = document.createElement('div');
+                messageContent.textContent = text;
+                messageDiv.appendChild(messageContent);
+                
+                if (includeRecommendations) {
+                    messageDiv.appendChild(createCommunityRecommendations());
+                }
+                
+                const timestamp = document.createElement('div');
+                timestamp.classList.add('message-timestamp');
+                timestamp.textContent = formatTimestamp();
+                messageDiv.appendChild(timestamp);
+                
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            async function handleUserMessage(message) {
+                if (!message) return;
+                
+                addMessage(message, true);
+                userInput.value = '';
+                sendBtn.disabled = true;
+                
+                const typingDiv = showTypingIndicator();
+                
+                const balance = parseFloat(balanceElement.textContent);
+                if (balance <= 0) {
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    removeTypingIndicator(typingDiv);
+                    addMessage('账户为零，请充值后再试', false);
+                } else if (message.toLowerCase().includes('加入') || message.toLowerCase().includes('社群')) {
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    removeTypingIndicator(typingDiv);
+                    addMessage('根据您的需求，为您推荐以下优质社群：', false, true);
+                    // 扣除随机余额
+                    const deduction = (Math.random() * 0.00004 + 0.00001).toFixed(5);
+                    const newBalance = (balance - deduction).toFixed(5);
+                    balanceElement.textContent = newBalance + ' A0GI';
+                } else if (message.toLowerCase().includes('新手') || message.toLowerCase().includes('开发者')) {
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    removeTypingIndicator(typingDiv);
+                    addMessage('对于新手开发者，我特别推荐"周周黑客松"社群。这是一个专注于实战学习的开发者社区，每周都有不同主题的黑客松活动，让您可以在实践中快速成长。社区成员都非常友好，乐于分享经验，是新手开发者快速提升的绝佳平台。', false);
+                    // 扣除随机余额
+                    const deduction = (Math.random() * 0.00004 + 0.00001).toFixed(5);
+                    const newBalance = (balance - deduction).toFixed(5);
+                    balanceElement.textContent = newBalance + ' A0GI';
+                } else if (message.toLowerCase().includes('忙') || message.toLowerCase().includes('时间')) {
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    removeTypingIndicator(typingDiv);
+                    addMessage('对于时间紧张的开发者，我建议您加入"周周黑客松"。这个社群采用线上线下联动的学习模式，您可以根据自己的时间安排灵活参与。每周都有不同主题的黑客松活动，您可以选择感兴趣的主题参与，也可以随时暂停。这种灵活的学习方式特别适合工作繁忙的开发者。', false);
+                    // 扣除随机余额
+                    const deduction = (Math.random() * 0.00004 + 0.00001).toFixed(5);
+                    const newBalance = (balance - deduction).toFixed(5);
+                    balanceElement.textContent = newBalance + ' A0GI';
+                } else if (message.toLowerCase().includes('周周黑客松')) {
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    removeTypingIndicator(typingDiv);
+                    const qrMessage = document.createElement('div');
+                    qrMessage.classList.add('message', 'ai-message');
+                    qrMessage.innerHTML = `
+                        <div>这是周周黑客松的二维码，欢迎加入：</div>
+                        <div class="qr-code-container">
+                            <img src="../public/events/周周黑客松二维码.png" alt="周周黑客松二维码" class="community-qr-code">
+                        </div>
+                    `;
+                    chatContainer.appendChild(qrMessage);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    // 扣除随机余额
+                    const deduction = (Math.random() * 0.00004 + 0.00001).toFixed(5);
+                    const newBalance = (balance - deduction).toFixed(5);
+                    balanceElement.textContent = newBalance + ' A0GI';
+                } else {
+                    // 使用 Coze SDK 发送消息
+                    if (cozeClient) {
+                        removeTypingIndicator(typingDiv);
+                        try {
+                            const response = await cozeClient.sendMessage(message);
+                            if (response && response.text) {
+                                addMessage(response.text, false);
+                                // 扣除随机余额
+                                const deduction = (Math.random() * 0.00004 + 0.00001).toFixed(5);
+                                const newBalance = (balance - deduction).toFixed(5);
+                                balanceElement.textContent = newBalance + ' A0GI';
+                            }
+                        } catch (error) {
+                            addMessage('抱歉，AI 响应出现了问题，请稍后再试。', false);
+                            console.error('Coze SDK Error:', error);
+                        }
+                    }
+                }
+                
+                sendBtn.disabled = false;
+            }
+
+            sendBtn.addEventListener('click', function() {
+                const message = userInput.value.trim();
+                handleUserMessage(message);
+            });
+
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const message = userInput.value.trim();
+                    handleUserMessage(message);
+                }
+            });
+
+            // 初始化 Coze SDK
+            initCozeSDK();
+
+            // 添加欢迎消息
+            addMessage('你好！我是AI助手，有什么我可以帮你的吗？', false);
+        });
+    </script>
+</body>
+</html>

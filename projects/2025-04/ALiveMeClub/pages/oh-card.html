@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>OH卡 - ALiveMe</title>
+    <link rel="icon" href="../public/aliveme/aliveme logo.jpg" type="image/jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.js"></script>
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../oh-card.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar py-3">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="../index.html" class="text-2xl font-bold text-primary flex items-center">
+                <img src="../public/aliveme/aliveme logo.jpg" alt="ALiveMe Logo" class="h-8 mr-2">
+                ALiveMe
+            </a>
+            <div class="hidden md:flex space-x-4">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="oh-card.html" class="nav-link">OH卡</a>
+                <a href="life-exchange.html" class="nav-link">交换人生</a>
+                <a href="women-unlimited.html" class="nav-link">无界女性</a>
+            </div>
+            <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <div class="mobile-menu hidden absolute top-full left-0 right-0 bg-white shadow-md py-4 px-4 md:hidden">
+                <a href="../index.html" class="block py-2 hover:text-primary">首页</a>
+                <a href="oh-card.html" class="block py-2 hover:text-primary">OH卡</a>
+                <a href="life-exchange.html" class="block py-2 hover:text-primary">交换人生</a>
+                <a href="women-unlimited.html" class="block py-2 hover:text-primary">无界女性</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with OH Card Game -->
+    <section class="hero-section text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">OH卡</h1>
+                    <p class="text-xl md:text-2xl mb-6">探索内心的窗口</p>
+                    <p class="text-lg mb-8">结合AI生成技术与传统心理学理念，帮助用户探索内心世界。</p>
+                    <button id="start-experience-btn" class="btn-primary">立即体验 OH卡</button>
+                </div>
+                <div class="md:w-1/2 fade-in" style="animation-delay: 0.3s">
+                    <div class="oh-card-mini-container bg-white rounded-lg shadow-lg p-6">
+                        <!-- Step 1: Introduction -->
+                        <div id="step-1" class="oh-card-step active">
+                            <h2 class="text-2xl font-bold mb-6 text-gray-800">开始你的OH卡之旅</h2>
+                            <p class="mb-6 text-gray-700">请在心里回想最近一段时间内心的困惑、卡点或者其他问题，准备好开始体验。</p>
+                            <button id="ready-btn" class="btn-primary">我想好了</button>
+                        </div>
+
+                        <!-- Step 2: Energy Gathering -->
+                        <div id="step-2" class="oh-card-step">
+                            <h2 class="text-2xl font-bold mb-6 text-gray-800">凝聚宇宙能量</h2>
+                            <div class="energy-animation mb-8">
+                                <div class="energy-circle"></div>
+                            </div>
+                            <p class="mb-8 text-gray-700">宇宙能量正在汇聚，准备好抽取你的OH卡了吗？</p>
+                            <button id="draw-card-btn" class="btn-primary">凝聚宇宙能量</button>
+                        </div>
+
+                        <!-- Step 3: Card Drawing -->
+                        <div id="step-3" class="oh-card-step">
+                            <h2 class="text-2xl font-bold mb-6 text-gray-800">你的OH卡</h2>
+                            <div class="cards-preview-container mb-8">
+                                <div class="card-container">
+                                    <div class="card-inner">
+                                        <div class="card-front">
+                                            <img id="card-image" src="../public/material/oh/cards/back.png" alt="OH卡" class="card-img-preview">
+                                        </div>
+                                        <div class="card-back">
+                                            <div id="card-questions" class="p-4 text-white">
+                                                <!-- Questions will be added here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="card-back-preview" class="card-back-preview hidden">
+                                    <div id="card-questions-preview" class="p-4 text-white">
+                                        <!-- Questions will be added here for preview -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="redraw-container mb-4">
+                                <button id="redraw-btn" class="text-sm text-blue-600 hover:underline">我要重抽</button>
+                            </div>
+                            <div id="question-container" class="mb-8">
+                                <h3 class="text-xl font-bold mb-4 text-gray-800">看到这张卡牌的画面，你可以：</h3>
+                                <div id="question-options" class="grid grid-cols-1 gap-4">
+                                    <!-- Question options will be added here -->
+                                </div>
+                            </div>
+                            <div id="final-step" class="hidden">
+                                <p class="mb-4 text-gray-700">恭喜你完成了OH卡体验！</p>
+                                <p class="mb-6 text-gray-700">你可以点击卡片放大查看，或保存卡片作为纪念。</p>
+                                <div class="flex justify-center space-x-4 mb-4">
+                                    <button id="save-card-btn" class="btn-primary">保存卡片</button>
+                                    <button id="restart-btn" class="btn-yellow">再次体验</button>
+                                </div>
+                                <p class="text-sm text-gray-500 text-center">点击卡片可以放大查看</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md">
+            <h3 class="text-xl font-bold mb-4">确认重抽</h3>
+            <p class="mb-6">你确定消耗一半的宇宙能量置换一张新卡吗？</p>
+            <div class="flex justify-end space-x-4">
+                <button id="cancel-redraw" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">算了！</button>
+                <button id="confirm-redraw" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">献祭！</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="relative max-w-4xl w-full">
+            <button id="close-preview" class="absolute top-4 right-4 text-white text-2xl font-bold z-10">&times;</button>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 p-4">
+                <div class="card-preview-large">
+                    <img id="preview-card-image" src="" alt="OH卡预览">
+                </div>
+                <div id="preview-card-back" class="card-back-large">
+                    <div id="preview-card-questions" class="text-white text-lg">
+                        <!-- Questions will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OH Card Process Section -->
+    <section class="section bg-light">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center mb-16">OH卡流程</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.1s">
+                    <div class="feature-icon flex justify-center">
+                        <span class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">确定心中的卡点</h3>
+                    <p class="text-center">思考你最近遇到的困惑或问题</p>
+                </div>
+
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.2s">
+                    <div class="feature-icon flex justify-center">
+                        <span class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">凝聚宇宙能量</h3>
+                    <p class="text-center">抽取你的OH卡</p>
+                </div>
+
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.3s">
+                    <div class="feature-icon flex justify-center">
+                        <span class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">问题引导</h3>
+                    <p class="text-center">让自己代入图片中</p>
+                </div>
+
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.4s">
+                    <div class="feature-icon flex justify-center">
+                        <span class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold">4</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">寻找启发</h3>
+                    <p class="text-center">从图片与问题中找到解决卡点的启发</p>
+                </div>
+
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.5s">
+                    <div class="feature-icon flex justify-center">
+                        <span class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold">5</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">完成体验</h3>
+                    <p class="text-center">拿走你的纪念卡</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OH Card Introduction Section -->
+    <section class="section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center mb-16">OH卡介绍</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.1s">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">主要特点</h3>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li class="mb-2">AI生成独特图像，激发联想</li>
+                        <li class="mb-2">个性化引导问题，深入自我探索</li>
+                        <li class="mb-2">专业心理学支持，确保使用安全</li>
+                    </ul>
+                </div>
+
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.2s">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">使用场景</h3>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li class="mb-2">个人成长探索</li>
+                        <li class="mb-2">团体互动活动</li>
+                        <li class="mb-2">心理咨询辅助工具</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 fade-in" style="animation-delay: 0.3s">
+                <h3 class="text-xl font-bold mb-4">OH卡是什么？</h3>
+                <p class="mb-4">OH卡是一种创新的心理工具，结合AI生成技术与传统心理学理念，帮助用户探索内心世界。通过精心设计的图像和引导问题，OH卡能够激发用户的联想和思考，帮助他们更好地理解自己的情绪、想法和需求。</p>
+                <p>无论是个人使用还是团体活动，OH卡都能够创造一个安全、开放的空间，让参与者自由表达，深入探索内心世界，发现自我成长的可能性。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-1/3 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-6">加入我们</h3>
+                    <p class="mb-4">邮箱：sunnyz689@163.com</p>
+                    <p class="mb-4">微信：sunnyz689</p>
+                    <p>地址：base上海+国内旅行+线上社群活跃</p>
+                </div>
+                <div class="w-full md:w-1/3 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-6">关注我们</h3>
+                    <div class="flex flex-col items-center md:items-start">
+                        <img src="../public/aliveme/qrcode.jpg" alt="微信公众号二维码" class="w-32 h-32 mb-4">
+                        <p>扫码关注微信公众号</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3">
+                    <h3 class="text-xl font-bold mb-6">快速链接</h3>
+                    <ul>
+                        <li class="mb-3"><a href="../index.html#about" class="hover:text-accent">关于我们</a></li>
+                        <li class="mb-3"><a href="../index.html#team" class="hover:text-accent">主理人</a></li>
+                        <li class="mb-3"><a href="../index.html#timeline" class="hover:text-accent">发展历程</a></li>
+                        <li class="mb-3"><a href="../index.html#features" class="hover:text-accent">特色服务</a></li>
+                        <li><a href="../index.html#partners" class="hover:text-accent">合作伙伴</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700">
+                <span>ICP备案/许可证号：</span>
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="text-blue-600 hover:underline">闽ICP备2025094014号-1</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+    <script src="../oh-card.js"></script>
+    <script>
+        // Additional script for the integrated OH card experience
+        document.addEventListener('DOMContentLoaded', function() {
+            const startExperienceBtn = document.getElementById('start-experience-btn');
+
+            if (startExperienceBtn) {
+                startExperienceBtn.addEventListener('click', function() {
+                    // Scroll to the OH card container and show the first step
+                    const ohCardContainer = document.querySelector('.oh-card-mini-container');
+                    if (ohCardContainer) {
+                        ohCardContainer.scrollIntoView({ behavior: 'smooth' });
+
+                        // Highlight the container
+                        ohCardContainer.classList.add('highlight');
+                        setTimeout(() => {
+                            ohCardContainer.classList.remove('highlight');
+                        }, 1000);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

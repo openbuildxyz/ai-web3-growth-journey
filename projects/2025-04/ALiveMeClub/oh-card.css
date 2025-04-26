@@ -1,0 +1,290 @@
+/* OH Card Game Styles */
+.oh-card-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+}
+
+.oh-card-mini-container {
+    min-height: 400px;
+    max-width: 100%;
+    transition: all 0.3s ease;
+}
+
+.oh-card-mini-container.highlight {
+    box-shadow: 0 0 20px var(--yellow);
+    transform: scale(1.02);
+}
+
+.oh-card-step {
+    display: none;
+}
+
+.oh-card-step.active {
+    display: block;
+}
+
+/* Energy Animation */
+.energy-animation {
+    position: relative;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.energy-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--yellow) 0%, var(--primary) 100%);
+    box-shadow: 0 0 30px var(--yellow);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.8);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+/* Card Styles */
+.cards-preview-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card-container {
+    perspective: 1000px;
+    width: 220px;
+    height: 330px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-front {
+    background-color: white;
+}
+
+.card-img-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.card-back {
+    background-image: url('../public/material/oh/cards/back.png');
+    background-size: cover;
+    background-position: center;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+.card-back p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+.card-back-preview {
+    width: 220px;
+    height: 330px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background-image: url('../public/material/oh/cards/back.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.card-back-preview.hidden {
+    display: none;
+}
+
+.card-back-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-back-content p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+/* Large Preview Styles */
+.card-preview-large {
+    width: 300px;
+    height: 450px;
+    max-width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-preview-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.card-back-large {
+    width: 300px;
+    height: 450px;
+    max-width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background-image: url('../public/material/oh/cards/back.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.card-back-large p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+/* Card Animation */
+@keyframes cardDraw {
+    0% {
+        transform: translateY(50px) rotate(0deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.card-drawn {
+    animation: cardDraw 0.5s ease-out forwards;
+}
+
+/* Question Options */
+.question-option {
+    background-color: white;
+    color: var(--text-dark);
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.question-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    background-color: var(--accent);
+    color: white;
+}
+
+.question-option.selected {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Modal */
+#confirmation-modal {
+    transition: opacity 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card-container {
+        width: 250px;
+        height: 375px;
+    }
+
+    .card-back p {
+        font-size: 16px;
+    }
+
+    .question-option {
+        padding: 12px;
+    }
+}

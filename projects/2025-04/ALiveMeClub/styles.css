@@ -1,0 +1,483 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary: #4CAF50;    /* Green */
+    --secondary: #2196F3;  /* Blue */
+    --accent: #FFD700;     /* Yellow */
+    --yellow: #FFD700;     /* More vibrant yellow */
+    --bg-light: #f7f9f7;
+    --text-dark: #2c3e50;
+    
+    /* 主理人卡片主题色 */
+    --card-gradient-start: var(--secondary);
+    --card-gradient-end: var(--primary);
+    --badge-gradient-start: var(--accent);
+    --badge-gradient-end: var(--primary);
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--text-dark);
+    overflow-x: hidden;
+    font-size: 1.15rem; /* 增大基础字体大小 */
+}
+
+/* 移动端适配优化 */
+@media (max-width: 768px) {
+    body {
+        font-size: 1.1rem;
+    }
+    
+    .section {
+        padding: 4rem 0;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-section {
+        min-height: 60vh;
+    }
+    
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        padding-left: 60px;
+        padding-right: 0;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content::before,
+    .timeline-item:nth-child(even) .timeline-content::before {
+        left: -50px;
+    }
+    
+    .card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .grid {
+        gap: 1rem;
+    }
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.section {
+    padding: 6rem 0;
+}
+
+.section-title {
+    position: relative;
+    margin-bottom: 3rem;
+    font-weight: 700;
+    font-size: 2.4rem; /* 增大标题字体 */
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 70px;
+    height: 4px;
+    background-color: var(--accent);
+}
+
+.section-title.centered::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card.yellow-accent {
+    border-left: 4px solid var(--yellow);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.timeline {
+    position: relative;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background-color: var(--primary);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.timeline-item:nth-child(odd) {
+    padding-right: 50%;
+}
+
+.timeline-item:nth-child(even) {
+    padding-left: 50%;
+}
+
+.timeline-content {
+    position: relative;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-content::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 4px solid var(--primary);
+    border-radius: 50%;
+}
+
+.timeline-item:nth-child(odd) .timeline-content::before {
+    right: -60px;
+}
+
+.timeline-item:nth-child(even) .timeline-content::before {
+    left: -60px;
+}
+
+.team-card {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.team-header {
+    padding: 25px 30px;
+    background: linear-gradient(135deg, var(--card-gradient-start) 0%, var(--card-gradient-end) 100%);
+    color: white;
+    border-radius: 16px 16px 0 0;
+}
+
+.profile-img-container {
+    width: 140px;
+    height: 140px;
+    margin: -70px auto 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--badge-gradient-start) 0%, var(--badge-gradient-end) 100%);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    margin-top: 8px;
+}
+
+.team-content {
+    padding: 30px;
+    text-align: center;
+}
+
+.team-bio {
+    margin-top: 20px;
+    line-height: 1.7;
+    color: #4B5563;
+}
+
+.team-bio p {
+    margin-bottom: 15px;
+}
+
+.team-bio p:last-child {
+    margin-bottom: 0;
+}
+
+.partner-logo {
+    height: 80px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 4rem 0;
+}
+
+.navbar {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.mobile-menu {
+    z-index: 999;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 1.1rem;
+}
+
+.nav-link {
+    color: var(--text-dark);
+    font-weight: 500;
+    margin: 0 1rem;
+    transition: color 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-yellow {
+    background-color: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--text-dark);
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-yellow:hover {
+    background-color: #e6c300;
+    border-color: #e6c300;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #3d8b40;
+    border-color: #3d8b40;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+/* Animation classes */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Interactive elements */
+.interactive-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.interactive-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .timeline::before {
+        left: 30px;
+    }
+
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        padding-left: 80px;
+        padding-right: 0;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::before,
+    .timeline-item:nth-child(even) .timeline-content::before {
+        left: -50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 4rem 0;
+    }
+
+    body {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5rem !important;
+    }
+
+    .hero-section p {
+        font-size: 1.2rem !important;
+    }
+
+    .card {
+        margin-bottom: 1.5rem;
+    }
+
+    .timeline-content {
+        padding: 1rem;
+    }
+
+    .team-member img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* 新增样式 */
+.yellow-bg {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.yellow-text {
+    color: var(--yellow);
+}
+
+.yellow-border {
+    border: 2px solid var(--yellow);
+}
+
+.energy-section {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(33, 150, 243, 0.1) 50%, rgba(255, 215, 0, 0.1) 100%);
+}
+
+.energy-card {
+    padding: 2rem;
+    border-radius: 12px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.energy-card.green {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-left: 4px solid var(--primary);
+}
+
+.energy-card.blue {
+    background-color: rgba(33, 150, 243, 0.1);
+    border-left: 4px solid var(--secondary);
+}
+
+.energy-card.yellow {
+    background-color: rgba(255, 215, 0, 0.1);
+    border-left: 4px solid var(--yellow);
+}
+
+.energy-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.energy-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.energy-card.green .energy-icon {
+    color: var(--primary);
+}
+
+.energy-card.blue .energy-icon {
+    color: var(--secondary);
+}
+
+.energy-card.yellow .energy-icon {
+    color: var(--yellow);
+}
+
+.collaboration-section {
+    padding: 5rem 0;
+}
+
+.collaboration-card {
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    transition: all 0.3s ease;
+    border-top: 4px solid var(--yellow);
+}
+
+.collaboration-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.collaboration-icon {
+    font-size: 2.5rem;
+    color: var(--yellow);
+    margin-bottom: 1.5rem;
+}

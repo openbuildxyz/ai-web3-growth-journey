@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>ALiveMe - 爱自己、活出真我</title>
+    <link rel="icon" href="public/aliveme/aliveme logo.jpg" type="image/jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar py-3">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="#" class="text-2xl font-bold text-primary flex items-center">
+                <img src="public/aliveme/aliveme logo.jpg" alt="ALiveMe Logo" class="h-8 mr-2">
+                ALiveMe
+            </a>
+            <div class="hidden md:flex space-x-4 ml-200 items-center">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="pages/oh-card.html" class="nav-link">OH卡</a>
+                <a href="pages/life-exchange.html" class="nav-link">交换人生</a>
+                <a href="pages/women-unlimited.html" class="nav-link">无界女性</a>
+                <a href="pages/Aitalk.html" class="nav-link rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-md ml-15">AI+Web3助手</a>
+                <a href="#" id="connect-wallet-btn" class="nav-link rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-md">连接钱包</a>
+                <a href="#" id="sign-message-btn" class="nav-link rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-md ml-4 hidden">签署消息</a>
+                <div id="user-info-navbar" class="flex items-center ml-4 hidden">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg">0x</div>
+                  <span class="ml-2 text-gray-800 font-semibold">0xC2d8...F6Db</span>
+                </div>
+            </div>
+            <div class="hidden md:flex flex-col fixed right-4 top-1/2 transform -translate-y-1/2 space-y-4 bg-white p-4 rounded-lg shadow-lg">
+                <a href="#about" class="nav-link">关于我们</a>
+                <a href="#team" class="nav-link">主理人</a>
+                <a href="#timeline" class="nav-link">发展历程</a>
+                <a href="#features" class="nav-link">特色服务</a>
+                <a href="#partners" class="nav-link">合作伙伴</a>
+            </div>
+            <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <div class="mobile-menu hidden absolute top-full left-0 right-0 bg-white shadow-md py-4 px-4 md:hidden">
+                <a href="#about" class="block py-2 hover:text-primary">关于我们</a>
+                <a href="#team" class="block py-2 hover:text-primary">主理人</a>
+                <a href="#timeline" class="block py-2 hover:text-primary">发展历程</a>
+                <a href="#features" class="block py-2 hover:text-primary">特色服务</a>
+                <a href="#partners" class="block py-2 hover:text-primary">合作伙伴</a>
+                <a href="#contact" class="block py-2 hover:text-primary">加入我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section (封面) -->
+    <section class="hero-section text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">ALiveMe</h1>
+                    <p class="text-xl md:text-2xl mb-6">爱自己、活出真我</p>
+                    <p class="text-lg mb-8">融合 AI、心理学与游戏化的名片网社区工具，帮你提升自我认知与人际链接。</p>
+                    <div class="flex flex-col space-y-8">
+                        <div class="flex space-x-4">
+                            <a href="#about" class="btn btn-primary bg-white text-primary hover:bg-gray-100">了解更多</a>
+                            <a href="#contact" class="btn btn-outline-light border-2 border-white px-8 py-3 rounded-full hover:bg-white hover:text-primary transition">加入我们</a>
+                        </div>
+                        <div class="flex justify-start">
+                            <a href="pages/Aitalk.html" class="btn rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white px-8 py-2 hover:from-green-500 hover:to-blue-600 transition-all duration-400 shadow-md w-48 text-center whitespace-nowrap ml-11">AI+Web3助手</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 fade-in" style="animation-delay: 0.3s">
+                    <img src="public/team/sunny在圆桌会议上做主持.jpg" alt="ALiveMe活动照片" class="rounded-lg shadow-xl mx-auto" style="max-height: 500px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. About Section (关于 ALiveMe) -->
+    <section id="about" class="section bg-light">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center mb-16">关于 ALiveMe</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 pr-0 md:pr-10 fade-in">
+                    <h3 class="text-2xl font-bold mb-4">AI心理社区app</h3>
+                    <p class="text-base mb-4">ALiveMe是国内首个AI心理社区，通过AI、心理学和游戏化理念，为用户提供智能社群管理和个人成长服务。</p>
+                    <p class="text-base mb-4">ALiveMe寓意"I Love Me"，用科技读懂自己，用心理学重塑未来。</p>
+                    <div class="flex flex-col space-y-4 mt-6">
+                        <a href="pages/oh-card.html" class="text-primary hover:text-primary-dark">→ 了解并体验：OH卡</a>
+                        <a href="pages/life-exchange.html" class="text-primary hover:text-primary-dark">→ 了解更多：交换人生桌游</a>
+                        <a href="pages/women-unlimited.html" class="text-primary hover:text-primary-dark">→ 了解更多：无界女性活动</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 fade-in" style="animation-delay: 0.3s">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="public/events/2025年上海过年.jpg" alt="ALiveMe活动照片" class="rounded-lg shadow h-40 w-full object-cover">
+                        <img src="public/life-exchange/《交换人生》内测合照2.jpg" alt="ALiveMe活动照片" class="rounded-lg shadow h-40 w-full object-cover">
+                        <img src="public/life-exchange/《交换人生》内测拍照.jpg" alt="ALiveMe活动照片" class="rounded-lg shadow h-40 w-full object-cover">
+                        <img src="public/aliveme/aliveme介绍与内测现场.jpg" alt="ALiveMe活动照片" class="rounded-lg shadow h-40 w-full object-cover">
+                    </div>
+                </div>
+            </div>
+            <!-- 用户路线图 -->
+            <div class="mt-16 fade-in">
+                <img src="public/aliveme/用户路线图.svg" alt="ALiveMe用户路线图" class="w-full max-w-4xl mx-auto transform hover:scale-105 transition-transform duration-300 ease-in-out">
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Team Section (主理人) -->
+    <section id="team" class="section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center mb-16">主理人</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Sunny -->
+                <div class="team-card fade-in">
+                    <div class="decorative-bg decorative-circle"></div>
+                    <div class="team-header">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-2xl font-bold">Sunny林琅</h3>
+                            <span class="role-badge">创始人 & CEO</span>
+                        </div>
+                    </div>
+                    <div class="team-content">
+                        <div class="profile-img-container">
+                            <img src="public/team/sunny个人照3.jpg" alt="Sunny林琅" class="profile-img">
+                        </div>
+                        <div class="team-bio">
+                            <p>AI心理社区ALiveMe创始人，周周黑客松上海主理人，hedy.org开源编程中国区主理人（华东师大与电子科大等合作项目）。</p>
+                            <p>以"人即媒介"理念链接跨领域社群，打造去中心化AI社交名片网，赋能【心理人文类】主理人。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wind -->
+                <div class="team-card fade-in" style="animation-delay: 0.2s">
+                    <div class="decorative-bg decorative-dots"></div>
+                    <div class="team-header">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-2xl font-bold">Wind</h3>
+                            <span class="role-badge">技术负责人</span>
+                        </div>
+                    </div>
+                    <div class="team-content">
+                        <div class="profile-img-container">
+                            <img src="public/team/wind.jpg" alt="Wind" class="profile-img">
+                        </div>
+                        <div class="team-bio">
+                            <p>负责ALiveMe技术架构与开发。金融从业AI agent搭建负责人，2023百度游戏大模王第一名。</p>
+                            <p>18年老游戏玩家，2年AI新玩家，朝着游戏化人生的道路探索。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Timeline Section (发展历程) -->
+    <section id="timeline" class="section bg-light">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center mb-16">发展历程</h2>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-xl mb-2">2024年12月13日</h3>
+                        <p>《交换人生》剧本桌游在40小时内诞生，为用户创造链接的破冰桌游完成初稿设计。</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in" style="animation-delay: 0.2s">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-xl mb-2">2024年12月15日</h3>
+                        <p>《交换人生》剧本桌游首次试玩，获得参与者积极反馈。</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in" style="animation-delay: 0.4s">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-xl mb-2">2025年1月20日</h3>
+                        <p>betterme更名为ALiveme，确立新的品牌定位和发展方向。</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in" style="animation-delay: 0.6s">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-xl mb-2">2025年2月1日</h3>
+                        <p>ALiveme社群idea诞生，确立以AI+心理为核心的社区建设计划。</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in" style="animation-delay: 0.8s">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-xl mb-2">2025年2月4日</h3>
+                        <p>AI+心理首次核心团队会议，确立产品开发路线和技术框架。</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in" style="animation-delay: 1s">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-xl mb-2">2025年5月24日</h3>
+                        <p>ALiveMe产品正式发布会暨上海无界女性百人大会。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Features Section (特色服务) -->
+    <section id="features" class="section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center mb-16">特色服务</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.1s">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">AI心理分析</h3>
+                    <p>通过先进的AI技术，分析用户行为模式和情绪状态，提供个性化的心理健康建议和成长方案。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.2s">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">社区互动</h3>
+                    <p>连接志同道合的用户，通过小组活动、主题讨论和经验分享，共同成长，建立支持网络。</p>
+                </div>
+
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.5s">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">个人成长计划</h3>
+                    <p>根据用户的心理状态和成长目标，制定个性化的成长计划，定期追踪进展并提供反馈。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.6s">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">交互式游戏活动</h3>
+                    <p>开发有意义的交互式游戏，如《交换人生》剧本桌游，为现实活动赋能，促进人与人之间的链接和情感交流。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Partners Section (合作伙伴) -->
+    <section id="partners" class="section yellow-bg">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center centered mb-16">合作伙伴</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.1s">
+                    <div class="flex items-center mb-4">
+                        <img src="public/team/tim.jpg" alt="覃貌Tim" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <h3 class="text-xl font-bold">覃貌Tim</h3>
+                    </div>
+                    <p class="text-gray-700">ALiveMe商业与运营顾问，Zion无代码生态负责人，服务27万开发者与700万用户。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.2s">
+                    <div class="flex items-center mb-4">
+                        <img src="public/team/cherax.jpg" alt="Cherax" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <h3 class="text-xl font-bold">Cherax</h3>
+                    </div>
+                    <p class="text-gray-700">ALiveMe社区理念顾问，生物学硕士，人生阈值理念提出者。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.3s">
+                    <div class="flex items-center mb-4">
+                        <img src="public/team/jackie.jpg" alt="Jackiexiao" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <h3 class="text-xl font-bold">Jackiexiao</h3>
+                    </div>
+                    <p class="text-gray-700">Al产品创造者社区合作伙伴HackathonWeekly帮助创造者从0到1实现最小可行产品(MVP)，覆盖全国六大城市和5000+成员。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.4s">
+                    <div class="flex items-center mb-4">
+                        <img src="public/team/kevin.jpg" alt="Kevin" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <h3 class="text-xl font-bold">Kevin</h3>
+                    </div>
+                    <p class="text-gray-700">ALiveMe技术与海外市场合作伙伴，剑桥访问学者，华威大学AI博士，深圳市人工智能产业协会英国地区负责人。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.5s">
+                    <div class="flex items-center mb-4">
+                        <img src="public/team/李连美.jpg" alt="李连美" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <h3 class="text-xl font-bold">李连美</h3>
+                    </div>
+                    <p class="text-gray-700">大健康产品合作伙伴，上海杏元中医诊所负责人。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.6s">
+                    <div class="flex items-center mb-4">
+                        <img src="public/team/一念.jpg" alt="一念" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <h3 class="text-xl font-bold">一念</h3>
+                    </div>
+                    <p class="text-gray-700">心理测评顾问，专业心理咨询师。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.7s">
+                    <div class="flex items-center mb-4">
+                        <img src="public/team/rina.jpg" alt="Rina" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <h3 class="text-xl font-bold">Rina</h3>
+                    </div>
+                    <p class="text-gray-700">女性社区合作伙伴，她言她语创始人。</p>
+                </div>
+                <div class="card p-6 fade-in interactive-card" style="animation-delay: 0.7s">
+                    <div class="flex items-center mb-4">
+                        <img src="public/team/白熊.png" alt="白熊" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <h3 class="text-xl font-bold">白熊良币厂牌</h3>
+                    </div>
+                    <p class="text-gray-700">去中心化的自我多元认知学园，让好能量人们以自己的方式生⻓，旗舰产品「创变者计划」。</p>
+                </div>
+            </div>
+            <h3 class="text-2xl text-center mb-8">合作机构展示</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.1s">
+                    <img src="public/events/模速空间的现场.jpg" alt="合作伙伴" class="w-full h-48 object-cover">
+                </div>
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.2s">
+                    <img src="public/chinese-medicine/中医系列.jpg" alt="合作伙伴" class="w-full h-48 object-cover">
+                </div>
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.3s">
+                    <img src="public/chinese-medicine/中医诊所负责人.jpg" alt="合作伙伴" class="w-full h-48 object-cover">
+                </div>
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.4s">
+                    <img src="public/events/周周黑客松与gdc大会现场.jpg" alt="合作伙伴" class="w-full h-48 object-cover">
+                </div>
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.5s">
+                    <img src="public/team/sunny在圆桌会议上做主持.jpg" alt="合作伙伴" class="w-full h-48 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Energy Section (三色能量社区) -->
+    <section class="energy-section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center centered mb-16">三色能量社区</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="energy-card green fade-in" style="animation-delay: 0.1s">
+                    <div class="energy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">💯 绿色 Psycho疗愈</h3>
+                    <p class="mb-4">心理文章、匿名信箱，治愈你的每一刻。</p>
+                    <p>通过专业的心理学知识和工具，帮助用户探索自我、理解情绪，并建立健康的心理状态。</p>
+                </div>
+                <div class="energy-card yellow fade-in" style="animation-delay: 0.2s">
+                    <div class="energy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">💫 黄色 Life无界</h3>
+                    <p class="mb-4">人物采访、社区活动，激发归属感。</p>
+                    <p>通过线上线下的社区活动和人物故事分享，建立连接，创造归属感，并提供互助与支持。</p>
+                </div>
+                <div class="energy-card blue fade-in" style="animation-delay: 0.3s">
+                    <div class="energy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">💡 蓝色 Tech前沿</h3>
+                    <p class="mb-4">科技时讯、产品测评，开启成长新起点。</p>
+                    <p>分享前沿科技资讯和创新工具，帮助用户了解并利用最新技术提升自我和工作效率。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Collaboration Section (项目合作介绍) -->
+    <section class="collaboration-section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center centered mb-16">项目合作介绍</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="collaboration-card fade-in" style="animation-delay: 0.1s">
+                    <div class="collaboration-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">中医诊所合作</h3>
+                    <p class="mb-4">上海杏元中医诊所（ALiveMe协办5.1-5.4台湾名医来沪讲座）</p>
+                    <p>我们与上海杏元中医诊所合作，共同推出一系列结合中医与心理健康的讲座和活动，帮助用户全面提升身心健康。</p>
+                </div>
+                <div class="collaboration-card fade-in" style="animation-delay: 0.2s">
+                    <div class="collaboration-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">心理咨询工作室合作</h3>
+                    <p class="mb-4">ALiveMe预计协办上海家庭教育讲座与咨询家访等系列活动</p>
+                    <p>与专业心理咨询工作室合作，提供高质量的心理咨询服务和家庭教育指导，帮助用户解决心理问题和家庭关系困扰。</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="collaboration-card fade-in" style="animation-delay: 0.3s">
+                    <div class="collaboration-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">游戏疗愈与戏剧疗愈</h3>
+                    <p class="mb-4">《交换人生》剧本桌游与其他疗愈游戏合作</p>
+                    <p>与游戏疗愈和戏剧疗愈专家合作，开发创新的体验式活动，如《交换人生》剧本桌游，通过游戏化方式促进自我探索和人际连接。</p>
+                </div>
+                <div class="collaboration-card fade-in" style="animation-delay: 0.4s">
+                    <div class="collaboration-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">合作方式</h3>
+                    <p class="mb-4">1. 通过ALiveMe小程序协助社群管理和活动发布</p>
+                    <p>2. 帮助B2B资源链接，促成合作</p>
+                    <a href="#contact" class="btn-yellow inline-block mt-4">联系我们合作</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Posters Section (活动海报) -->
+    <section class="section bg-light">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl text-center centered mb-16">活动海报</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.1s">
+                    <img src="public/events/无界女性海报.jpg" alt="活动海报" class="w-full h-64 object-cover">
+                </div>
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.2s">
+                    <img src="public/events/周周黑客松与gdc大会现场.jpg" alt="活动海报" class="w-full h-64 object-cover">
+                </div>
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.3s">
+                    <img src="public/charity-camp/AI产品手搓-公益营海报.jpg" alt="活动海报" class="w-full h-64 object-cover">
+                </div>
+                <div class="card overflow-hidden fade-in interactive-card yellow-accent" style="animation-delay: 0.4s">
+                    <img src="public/charity-camp/公益营主讲人介绍2.jpg" alt="活动海报" class="w-full h-64 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-1/3 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-6">加入我们</h3>
+                    <p class="mb-4">邮箱：sunnyz689@163.com</p>
+                    <p class="mb-4">微信：sunnyz689</p>
+                    <p>地址：base上海+国内旅行+线上社群活跃</p>
+                </div>
+                <div class="w-full md:w-1/3 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-6">关注我们</h3>
+                    <div class="flex flex-col items-center md:items-start">
+                        <img src="public/aliveme/qrcode.jpg" alt="微信公众号二维码" class="w-32 h-32 mb-4">
+                        <p>扫码关注微信公众号</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3">
+                    <h3 class="text-xl font-bold mb-6">快速链接</h3>
+                    <ul>
+                        <li class="mb-3"><a href="#about" class="hover:text-accent">关于我们</a></li>
+                        <li class="mb-3"><a href="#team" class="hover:text-accent">主理人</a></li>
+                        <li class="mb-3"><a href="#timeline" class="hover:text-accent">发展历程</a></li>
+                        <li class="mb-3"><a href="#features" class="hover:text-accent">特色服务</a></li>
+                        <li><a href="#partners" class="hover:text-accent">合作伙伴</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <span>ICP备案/许可证号：</span>
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="text-blue-600 hover:underline">闽ICP备2025094014号-1</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="wallet-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden transition-transform duration-300 scale-0">
+      <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-auto p-6 relative transition-transform duration-300 scale-100">
+        <!-- 连接账户内容 -->
+        <div id="wallet-connect-content" class="flex flex-col items-center">
+          <div class="flex items-center mb-4">
+            <div>
+              <div class="text-lg font-semibold">ALiveMe App</div>
+              <!-- <div class="text-xs text-gray-500">localhost:3000</div> -->
+            </div>
+          </div>
+          <div class="w-full border-t pt-4 mb-2">
+            <div class="text-sm text-gray-600 mb-1">可连接账户</div>
+            <div class="flex items-center justify-between bg-gray-100 rounded px-3 py-2 mb-1">
+              <span class="text-xs font-mono">0xc2d8ebaa470d6457719c7cc1edb0368fabfb6db</span>
+            </div>
+            <div class="text-xs text-gray-500 mb-4">Eugene_2 - 账户 01</div>
+          </div>
+          <div class="flex items-center w-full mt-2">
+            <button id="wallet-cancel" class="flex-1 py-2 rounded-lg border border-gray-300 mr-2 text-gray-700 hover:bg-gray-100">取消</button>
+            <button id="wallet-connect" class="flex-1 py-2 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-md">连接</button>
+          </div>
+        </div>
+        <!-- 请求签名内容，初始隐藏 -->
+        <div id="wallet-sign-content" class="flex flex-col items-center hidden">
+          <div class="flex flex-col items-center mb-4 mt-2">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-2">
+              <rect width="48" height="48" rx="24" fill="#E6F9EC"/>
+              <path d="M16 32L32 16" stroke="#22C55E" stroke-width="3" stroke-linecap="round"/>
+              <rect x="20" y="14" width="8" height="20" rx="2" fill="#22C55E"/>
+            </svg>
+            <div class="text-xl font-semibold text-gray-800">请求签名</div>
+          </div>
+          <div class="flex items-center mb-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React App" class="w-7 h-7 mr-2">
+          </div>
+          <div class="w-full mb-2">
+            <div class="text-xs text-gray-500 mb-1">当前钱包</div>
+            <div class="flex items-center bg-gray-100 rounded px-3 py-2 mb-1">
+              <span class="text-xs font-mono">0xc2d8ebaa470d6457719c7cc1edb0368fabfb6db</span>
+              <button class="ml-2 text-gray-400 hover:text-gray-600" title="复制"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><rect x="3" y="3" width="13" height="13" rx="2"/></svg></button>
+            </div>
+            <div class="text-xs text-gray-500 mb-2">Eugene_2 - 账户 01</div>
+          </div>
+          <div class="w-full mb-4">
+            <div class="text-xs text-gray-500 mb-1">数据</div>
+            <div class="bg-gray-100 rounded px-3 py-2 text-xs font-mono break-all">
+              Please sign this message to verify ownership of 0xC2d8ebAa470d6457719c7cc1EDB0368faBfbF6Db at timestamp 1745650288839
+            </div>
+          </div>
+          <div class="flex items-center w-full mt-2">
+            <button id="wallet-sign-cancel" class="flex-1 py-2 rounded-lg border border-gray-300 mr-2 text-gray-700 hover:bg-gray-100">取消</button>
+            <button id="wallet-sign-confirm" class="flex-1 py-2 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-md">确认</button>
+          </div>
+        </div>
+        <!-- 个人信息内容，初始隐藏 -->
+        <div id="wallet-userinfo-content" class="flex flex-col items-center hidden bg-white rounded-xl p-6 w-full max-w-md shadow">
+          <div class="w-full">
+            <div class="text-2xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">个人信息</div>
+            <form class="space-y-6">
+              <div>
+                <label class="block text-gray-800 text-base font-bold mb-1"><span class="text-red-500 mr-1">*</span>用户名</label>
+                <input type="text" class="w-full rounded bg-gray-100 text-gray-900 px-4 py-2 outline-none border border-gray-200 focus:border-blue-400" placeholder="请输入用户名" />
+              </div>
+              <div>
+                <label class="block text-gray-800 text-base font-bold mb-1"><span class="text-red-500 mr-1">*</span>个人标签</label>
+                <input type="text" class="w-full rounded bg-gray-100 text-gray-900 px-4 py-2 outline-none border border-gray-200 focus:border-blue-400" placeholder="请输入个人标签" />
+              </div>
+              <div>
+                <label class="block text-gray-800 text-base font-bold mb-1"><span class="text-red-500 mr-1">*</span>头像</label>
+                <div class="flex items-center">
+                  <label class="w-24 h-24 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded cursor-pointer bg-gray-50 text-gray-400 mr-4">
+                    <span class="text-3xl">+</span>
+                    <span class="text-xs">Upload</span>
+                    <input type="file" class="hidden" />
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="w-24 h-10 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded mt-2 shadow">提交</button>
+            </form>
+          </div>
+        </div>
+        <button id="wallet-modal-close" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+      </div>
+    </div>
+    <!-- 已连接动效弹窗 -->
+    <div id="wallet-connected-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden transition-transform duration-300 scale-0">
+      <div class="bg-white rounded-xl shadow-2xl w-72 h-56 flex flex-col items-center justify-center transition-transform duration-300 scale-100">
+        <svg class="mb-4" width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="28" cy="28" r="28" fill="#E6F9EC"/>
+          <path id="check-anim" d="M16 29L25 38L40 21" stroke="#22C55E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="text-xl font-bold text-green-500">已连接</div>
+      </div>
+    </div>
+    <!-- 等待网络loading弹窗 -->
+    <div id="wallet-loading-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden transition-transform duration-300 scale-0">
+      <div class="bg-white rounded-xl shadow-2xl w-72 h-56 flex flex-col items-center justify-center transition-transform duration-300 scale-100">
+        <svg class="animate-spin mb-4" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle class="opacity-20" cx="24" cy="24" r="20" stroke="#22C55E" stroke-width="6"/>
+          <path d="M44 24a20 20 0 0 0-20-20" stroke="#22C55E" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <div id="wallet-loading-text" class="text-lg font-semibold text-gray-700">正在连接...</div>
+      </div>
+    </div>
+    <style>
+      @keyframes checkmark {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      #check-anim {
+        stroke-dasharray: 40;
+        stroke-dashoffset: 40;
+        animation: checkmark 0.4s ease forwards;
+      }
+    </style>
+    <script>
+      const walletBtn = document.getElementById('connect-wallet-btn');
+      const walletModal = document.getElementById('wallet-modal');
+      const walletCancel = document.getElementById('wallet-cancel');
+      const walletClose = document.getElementById('wallet-modal-close');
+      const walletConnect = document.getElementById('wallet-connect');
+      const walletConnectContent = document.getElementById('wallet-connect-content');
+      const walletSignContent = document.getElementById('wallet-sign-content');
+      const walletSignCancel = document.getElementById('wallet-sign-cancel');
+      const walletUserInfoContent = document.getElementById('wallet-userinfo-content');
+      const walletSignConfirm = document.getElementById('wallet-sign-confirm');
+      const signMsgBtn = document.getElementById('sign-message-btn');
+      const walletConnectedModal = document.getElementById('wallet-connected-modal');
+      const walletLoadingModal = document.getElementById('wallet-loading-modal');
+      const walletLoadingText = document.getElementById('wallet-loading-text');
+      const userInfoForm = document.querySelector('#wallet-userinfo-content form');
+      const userInfoNavbar = document.getElementById('user-info-navbar');
+
+      // 弹窗缩放动画辅助函数
+      function showModal(modal) {
+        modal.classList.remove('hidden');
+        setTimeout(() => modal.classList.remove('scale-0'), 10);
+      }
+      function hideModal(modal) {
+        modal.classList.add('scale-0');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+      }
+
+      walletBtn && walletBtn.addEventListener('click', e => {
+        e.preventDefault();
+        showModal(walletModal);
+        walletConnectContent.classList.remove('hidden');
+        walletSignContent.classList.add('hidden');
+        walletUserInfoContent.classList.add('hidden');
+      });
+      [walletCancel, walletClose].forEach(btn => {
+        btn && btn.addEventListener('click', () => {
+          hideModal(walletModal);
+        });
+      });
+      walletConnect && walletConnect.addEventListener('click', () => {
+        // 连接账户后，先显示loading弹窗
+        hideModal(walletModal);
+        setTimeout(() => {
+          walletLoadingText.textContent = '正在连接...';
+          showModal(walletLoadingModal);
+          setTimeout(() => {
+            hideModal(walletLoadingModal);
+            setTimeout(() => {
+              showModal(walletConnectedModal);
+              setTimeout(() => {
+                hideModal(walletConnectedModal);
+                signMsgBtn.classList.remove('hidden');
+              }, 500);
+            }, 350); // loading弹窗缩放动画结束
+          }, 500); // loading动画持续0.5秒
+        }, 350); // 等待弹窗缩放动画结束
+      });
+      // 签署消息按钮点击，弹出请求签名弹窗
+      signMsgBtn && signMsgBtn.addEventListener('click', e => {
+        e.preventDefault();
+        showModal(walletModal);
+        walletConnectContent.classList.add('hidden');
+        walletSignContent.classList.remove('hidden');
+        walletUserInfoContent.classList.add('hidden');
+      });
+      walletSignCancel && walletSignCancel.addEventListener('click', () => {
+        hideModal(walletModal);
+      });
+      walletSignConfirm && walletSignConfirm.addEventListener('click', () => {
+        // 先关闭请求签名弹窗，弹出loading
+        hideModal(walletModal);
+        setTimeout(() => {
+          walletLoadingText.textContent = '正在确认...';
+          showModal(walletLoadingModal);
+          setTimeout(() => {
+            hideModal(walletLoadingModal);
+            setTimeout(() => {
+              showModal(walletModal);
+              walletSignContent.classList.add('hidden');
+              walletUserInfoContent.classList.remove('hidden');
+            }, 350); // loading弹窗缩放动画结束
+          }, 500); // loading动画持续0.5秒
+        }, 350); // 请求签名弹窗缩放动画结束
+      });
+      // 个人信息表单提交loading和已提交动效
+      userInfoForm && userInfoForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        hideModal(walletModal);
+        setTimeout(() => {
+          walletLoadingText.textContent = '正在提交...';
+          showModal(walletLoadingModal);
+          setTimeout(() => {
+            walletLoadingText.textContent = '已提交';
+            setTimeout(() => {
+              hideModal(walletLoadingModal);
+              signMsgBtn.classList.add('hidden');
+              userInfoNavbar.classList.remove('hidden');
+            }, 500);
+          }, 500);
+        }, 350);
+      });
+    </script>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

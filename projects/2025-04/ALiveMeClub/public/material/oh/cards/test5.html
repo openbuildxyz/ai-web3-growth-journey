@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片覆盖和文字添加</title>
+    <style>
+        #canvas {
+            border: 1px solid black;
+        }
+        .container {
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>上传图片并覆盖</h2>
+        
+        <p>请选择作为 <strong>底图</strong> 的图片：</p>
+        <input type="file" id="baseImage" accept="image/*"><br><br>
+        
+        <p>请选择作为 <strong>覆盖图</strong> 的图片（这张图片将会叠加在底图上方）：</p>
+        <input type="file" id="overlayImage" accept="image/*"><br><br>
+
+        <p>添加多个文本</p>
+        <div id="textInputs"></div>
+        <button onclick="addTextUnit()">添加文字单位</button><br><br>
+
+        <p>调整底图位置：</p>
+        <label for="xPos">X 轴:</label>
+        <input type="range" id="xPos" min="-500" max="500" value="0"><br>
+        <label for="yPos">Y 轴:</label>
+        <input type="range" id="yPos" min="-500" max="500" value="0"><br>
+
+        <label for="scale">底图缩放:</label>
+        <input type="range" id="scale" min="0.5" max="2" step="0.1" value="1"><br><br>
+
+        <canvas id="canvas" width="500" height="500"></canvas><br><br>
+
+        <button onclick="downloadImage()">下载预览图片</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

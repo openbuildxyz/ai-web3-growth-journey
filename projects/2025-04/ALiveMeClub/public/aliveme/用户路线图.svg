@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa" rx="10" ry="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">ALiveMe 用户路线图</text>
+  
+  <!-- First Flow: 以圈链接人 -->
+  <rect x="50" y="80" width="700" height="240" fill="#e3f2fd" rx="10" ry="10" stroke="#2196f3" stroke-width="2"/>
+  <text x="400" y="110" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#1565c0">以圈链接人 🔗</text>
+  <text x="400" y="140" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333">了解ALiveMe产品（自创科技心理实验，与合作活动）</text>
+  
+  <!-- First Flow Steps -->
+  <circle cx="150" cy="190" r="40" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+  <text x="150" y="195" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">知识圈或</text>
+  <text x="150" y="215" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">社交圈</text>
+  
+  <circle cx="400" cy="190" r="40" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+  <text x="400" y="195" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">圈内</text>
+  <text x="400" y="215" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">社群名片网</text>
+  
+  <circle cx="650" cy="190" r="40" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+  <text x="650" y="195" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">标签索引</text>
+  <text x="650" y="215" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">链接人</text>
+  
+  <!-- First Flow Arrows -->
+  <line x1="190" y1="190" x2="360" y2="190" stroke="#1976d2" stroke-width="2"/>
+  <polygon points="358,185 370,190 358,195" fill="#1976d2"/>
+  
+  <line x1="440" y1="190" x2="610" y2="190" stroke="#1976d2" stroke-width="2"/>
+  <polygon points="608,185 620,190 608,195" fill="#1976d2"/>
+  
+  <!-- First Flow Descriptions -->
+  <text x="150" y="260" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" width="180">每个微信社群配一个圈</text>
+  
+  <text x="400" y="260" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" width="180">点开圈之后可以看到</text>
+  <text x="400" y="280" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" width="180">该社群的名片网</text>
+  
+  <text x="650" y="260" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" width="180">可以标签索引搜到</text>
+  <text x="650" y="280" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" width="180">自己想链接的人</text>
+  
+  <!-- Second Flow: 以人链接圈 -->
+  <rect x="50" y="340" width="700" height="240" fill="#e8f5e9" rx="10" ry="10" stroke="#4caf50" stroke-width="2"/>
+  <text x="400" y="370" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#2e7d32">以人链接圈 🔗</text>
+  <text x="400" y="400" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333">认识新朋友添加微信并发送自己的ALiveMe名片</text>
+  
+  <!-- Second Flow Steps - SWAPPED POSITIONS -->
+  <circle cx="550" cy="470" r="40" fill="#c8e6c9" stroke="#388e3c" stroke-width="2"/>
+  <text x="550" y="470" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">查看</text>
+  <text x="550" y="490" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">对方信息</text>
+  
+  <circle cx="250" cy="470" r="40" fill="#c8e6c9" stroke="#388e3c" stroke-width="2"/>
+  <text x="250" y="470" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">链接到</text>
+  <text x="250" y="490" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">社群</text>
+  
+  <!-- Second Flow Arrow - REVERSED -->
+  <line x1="510" y1="470" x2="290" y2="470" stroke="#388e3c" stroke-width="2"/>
+  <polygon points="292,465 280,470 292,475" fill="#388e3c"/>
+  
+  <!-- Second Flow Descriptions - SWAPPED -->
+  <text x="550" y="540" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" width="180">可以看到对方信息及对方</text>
+  <text x="550" y="560" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" width="180">管理及加入的社群</text>
+  
+  <text x="250" y="540" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333" width="180">可以链接到社群</text>
+  
+  <!-- Connecting Lines Between Flows - BRIGHT YELLOW ARROWS -->
+  <!-- From 标签索引链接人 to 查看对方信息 -->
+  <path d="M650,230 Q700,350 550,430" stroke="#FFD700" stroke-width="3" fill="none"/>
+  <polygon points="545,425 540,440 555,435" fill="#FFD700"/>
+  
+  <!-- From 链接到社群 to 知识圈或社交圈 - COMPLETING THE LOOP -->
+  <path d="M250,430 Q200,350 150,230" stroke="#FFD700" stroke-width="3" fill="none"/>
+  <polygon points="145,235 140,220 155,225" fill="#FFD700"/>
+  
+  <!-- Flow Direction Indicators -->
+  <text x="710" y="350" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#FFD700" transform="rotate(90 710,350)">→</text>
+  <text x="90" y="350" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#FFD700" transform="rotate(-90 90,350)">→</text>
+</svg>
