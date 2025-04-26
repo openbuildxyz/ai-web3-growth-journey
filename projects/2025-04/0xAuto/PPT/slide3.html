@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0xAuto - How It Works</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Basic styles */
+        body {
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 900px;
+            padding: 40px;
+            text-align: center;
+        }
+        .text-accent { color: #0ea5e9; }
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+
+        /* Workflow steps styling */
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem; /* 24px */
+            margin-top: 2rem; /* 32px */
+        }
+        .workflow-step {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem; /* 24px */
+            transition: all 0.3s ease;
+            opacity: 0; /* Start hidden for staggered animation */
+            transform: translateY(15px);
+        }
+        .workflow-step:hover {
+            transform: translateY(-5px) scale(1.03);
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.2);
+        }
+        .step-icon {
+            font-size: 2rem; /* 32px */
+            margin-bottom: 0.75rem; /* 12px */
+            color: var(--accent-color, #0ea5e9);
+        }
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem; /* 8px */
+            font-size: 1.1rem; /* Slightly larger */
+        }
+        .step-description {
+            font-size: 0.9rem;
+            color: #cbd5e1; /* slate-300 */
+        }
+        /* Staggered animation for steps */
+        .fade-in .workflow-step {
+            animation: fadeInStep 0.5s ease-out forwards;
+        }
+        @keyframes fadeInStep {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Apply delays */
+        .fade-in .workflow-step:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in .workflow-step:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in .workflow-step:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in .workflow-step:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in .workflow-step:nth-child(5) { animation-delay: 0.5s; }
+        .fade-in .workflow-step:nth-child(6) { animation-delay: 0.6s; }
+
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <h1 class="text-3xl md:text-4xl font-bold mb-6">Simple Steps to Automation</h1>
+        <p class="text-lg text-gray-400 mb-10">Set up your automated crypto strategies in minutes.</p>
+
+        <div class="workflow-grid">
+            <!-- Step 1: Configure Agent -->
+            <div class="workflow-step">
+                <div class="step-icon"><i class="fas fa-cogs"></i></div>
+                <div class="step-title">Configure Agent</div>
+                <div class="step-description">Define behavior using Models, MCP, A2A & ENV variables.</div>
+            </div>
+            <!-- Step 2: Debug Prompt -->
+            <div class="workflow-step">
+                <div class="step-icon"><i class="fas fa-terminal"></i></div>
+                <div class="step-title">Refine Prompt</div>
+                <div class="step-description">Test and optimize your instructions for the Agent.</div>
+            </div>
+            <!-- Step 3: Configure Trigger -->
+            <div class="workflow-step">
+                <div class="step-icon"><i class="fas fa-stopwatch"></i></div>
+                <div class="step-title">Set Trigger</div>
+                <div class="step-description">Activate on schedule (timed) or specific events.</div>
+            </div>
+            <!-- Step 4: Run Agent -->
+            <div class="workflow-step">
+                <div class="step-icon"><i class="fas fa-play-circle"></i></div>
+                <div class="step-title">Launch Agent</div>
+                <div class="step-description">Deploy your automated strategy.</div>
+            </div>
+            <!-- Step 5: Monitor Execution -->
+            <div class="workflow-step">
+                <div class="step-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="step-title">Monitor</div>
+                <div class="step-description">Track performance and execution logs in real-time.</div>
+            </div>
+            <!-- Step 6: Analyze Results -->
+            <div class="workflow-step">
+                <div class="step-icon"><i class="fas fa-search-dollar"></i></div>
+                <div class="step-title">Analyze</div>
+                <div class="step-description">Review results and iterate for better performance.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // Add keyboard navigation listeners within the iframe
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          window.parent.postMessage('navigateNext', '*');
+        } else if (e.key === 'ArrowLeft') {
+          window.parent.postMessage('navigatePrev', '*');
+        }
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Pixelify+Sans:wght@400..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .font-pixel {
+    font-family: 'Pixelify Sans', monospace;
+    font-synthesis: none;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Optional: Style scrollbars for cyberpunk feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--b3));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--p));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--pf));
+}
+
+/* Keep media query for dark mode if needed for specific overrides,
+   but base theme switching is handled by daisyUI/Tailwind */
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+     Potentially add specific dark-mode overrides here if needed later
+  }
+}
+*/
+
+/* Let Tailwind's preflight handle base body styles */
+
+/* Removed global heading font override to allow specific utilities like font-pixel to work */
+
+/* Add a subtle grid background for arcade feel */
+/* Body styling is now handled primarily by @layer base and Tailwind preflight */
+/* Keep scrollbar styles if desired */
+
+.ant-bubble-content {
+  font-size: 1.25rem !important;
+}

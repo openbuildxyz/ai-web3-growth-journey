@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0xAuto - Advantages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Basic styles */
+        body {
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 900px;
+            padding: 40px;
+            text-align: center;
+        }
+        .text-accent { color: #0ea5e9; }
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+
+        /* Advantages list styling */
+        .advantages-list {
+            margin-top: 2.5rem; /* 40px */
+            text-align: left;
+            max-width: 700px; /* Constrain width */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .advantage-item {
+            display: flex;
+            align-items: flex-start; /* Align icon with first line of text */
+            gap: 1rem; /* 16px */
+            margin-bottom: 1.75rem; /* 28px */
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        .advantage-icon {
+            font-size: 1.5rem; /* 24px */
+            color: var(--accent-color, #0ea5e9);
+            margin-top: 0.1em; /* Align icon slightly better */
+            flex-shrink: 0; /* Prevent icon shrinking */
+            width: 30px; /* Fixed width for alignment */
+            text-align: center;
+        }
+        .advantage-text {
+            font-size: 1.1rem; /* 17.6px */
+            line-height: 1.7;
+            color: #e2e8f0; /* slate-200 */
+        }
+        .advantage-text strong {
+            font-weight: 600;
+            color: #f8fafc; /* slate-50 */
+        }
+
+        /* Staggered animation */
+        .fade-in .advantage-item {
+            animation: fadeInAdvantage 0.5s ease-out forwards;
+        }
+        @keyframes fadeInAdvantage {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in .advantage-item:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in .advantage-item:nth-child(2) { animation-delay: 0.25s; }
+        .fade-in .advantage-item:nth-child(3) { animation-delay: 0.4s; }
+
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <h1 class="text-3xl md:text-4xl font-bold mb-6">Why Choose 0xAuto?</h1>
+        <p class="text-lg text-gray-400 mb-10">Gain a competitive edge with powerful, user-friendly automation.</p>
+
+        <div class="advantages-list">
+            <!-- Advantage 1: Narrative Alignment -->
+            <div class="advantage-item">
+                <div class="advantage-icon"><i class="fas fa-rocket"></i></div>
+                <div class="advantage-text">
+                    <strong>Ride the AI Wave:</strong> Built on <strong class="text-accent">MCP & A2A</strong>, aligning with the dominant AI narrative in Crypto for maximum relevance and potential.
+                </div>
+            </div>
+
+            <!-- Advantage 2: Interoperability -->
+            <div class="advantage-item">
+                <div class="advantage-icon"><i class="fas fa-link"></i></div>
+                <div class="advantage-text">
+                    <strong>Universal Protocols:</strong> MCP and A2A enable <strong class="text-accent">easy integration</strong> for other projects, fostering a wider ecosystem without framework lock-in.
+                </div>
+            </div>
+
+            <!-- Advantage 3: Ease of Use -->
+            <div class="advantage-item">
+                <div class="advantage-icon"><i class="fas fa-magic"></i></div>
+                <div class="advantage-text">
+                    <strong>User-Friendly:</strong> Simple configuration, intuitive prompt debugging, and ready-to-use templates allow users to <strong class="text-accent">get started quickly</strong>.
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional: Call to action or final thought -->
+        <p class="mt-12 text-xl text-gray-300">
+            Start automating your crypto journey today!
+        </p>
+
+    </div>
+
+    <script>
+      // Add keyboard navigation listeners within the iframe
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          // Optionally, prevent going past the last slide or loop
+          // window.parent.postMessage('navigateNext', '*');
+        } else if (e.key === 'ArrowLeft') {
+          window.parent.postMessage('navigatePrev', '*');
+        }
+      });
+    </script>
+</body>
+</html>
