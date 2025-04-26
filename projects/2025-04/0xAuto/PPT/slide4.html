@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0xAuto - Use Cases</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Basic styles */
+        body {
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 1000px; /* Wider container for cases */
+            padding: 40px;
+            text-align: center;
+        }
+        .text-accent { color: #0ea5e9; }
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+
+        /* Use Case Card Styling */
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+            gap: 2rem; /* 32px */
+            margin-top: 2.5rem; /* 40px */
+        }
+        .case-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem; /* 32px */
+            text-align: left;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        .case-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2);
+        }
+        .case-icon {
+            font-size: 2.5rem; /* 40px */
+            margin-bottom: 1rem; /* 16px */
+            color: var(--accent-color, #0ea5e9);
+            display: inline-block; /* Center icon if needed */
+        }
+        .case-title {
+            font-weight: 700;
+            font-size: 1.25rem; /* 20px */
+            margin-bottom: 0.75rem; /* 12px */
+        }
+        .case-flow {
+            font-size: 0.9rem;
+            color: #cbd5e1; /* slate-300 */
+            line-height: 1.6;
+        }
+        .case-flow .step {
+            display: inline-block;
+            margin: 0 0.25rem; /* 4px */
+        }
+        .case-flow .arrow {
+            color: var(--accent-color, #0ea5e9);
+            opacity: 0.7;
+            margin: 0 0.3rem;
+        }
+
+        /* Staggered animation for cards */
+        .fade-in .case-card {
+            animation: fadeInCard 0.5s ease-out forwards;
+        }
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in .case-card:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in .case-card:nth-child(2) { animation-delay: 0.25s; }
+        .fade-in .case-card:nth-child(3) { animation-delay: 0.4s; }
+
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">Powerful Automation Use Cases</h1>
+        <p class="text-lg text-gray-400 mb-10">Leverage AI and automation for diverse crypto tasks.</p>
+
+        <div class="case-grid">
+            <!-- Case 1: Auto Shitcoin Hunting -->
+            <div class="case-card">
+                <div class="case-icon"><i class="fas fa-dog"></i></div>
+                <div class="case-title">Auto Shitcoin Hunting</div>
+                <div class="case-flow">
+                    <span class="step">Twitter Trigger</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">Find CA</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP Sentiment Analysis</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP CA Alert</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">Agent Decision</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP Wallet Trade</span>
+                </div>
+            </div>
+
+            <!-- Case 2: Candlestick Quant Trading -->
+            <div class="case-card">
+                <div class="case-icon"><i class="fas fa-chart-bar"></i></div>
+                <div class="case-title">Candlestick Quant Trading</div>
+                <div class="case-flow">
+                    <span class="step">K-Line Trigger</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP K-Line Analysis</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP/A2A Strategy</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">Agent Decision</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP Wallet (DEX/CEX)</span>
+                </div>
+            </div>
+
+            <!-- Case 3: Automated News Writing -->
+            <div class="case-card">
+                <div class="case-icon"><i class="fas fa-newspaper"></i></div>
+                <div class="case-title">Automated News Writing</div>
+                <div class="case-flow">
+                    <span class="step">K-Line/KOL Trigger</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP News Analysis</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP News Judgement</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">Agent Decision</span> <i class="fas fa-arrow-right arrow"></i>
+                    <span class="step">MCP Auto-Publish</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // Add keyboard navigation listeners within the iframe
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          window.parent.postMessage('navigateNext', '*');
+        } else if (e.key === 'ArrowLeft') {
+          window.parent.postMessage('navigatePrev', '*');
+        }
+      });
+    </script>
+</body>
+</html>

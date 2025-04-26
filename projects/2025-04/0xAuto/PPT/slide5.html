@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0xAuto - Technology Stack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Basic styles */
+        body {
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 900px;
+            padding: 40px;
+            text-align: center;
+        }
+        .text-accent { color: #0ea5e9; }
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+
+        /* Tech stack grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem; /* 32px */
+            margin-top: 2.5rem; /* 40px */
+        }
+        .tech-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem; /* 24px */
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(15px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px; /* Ensure consistent height */
+        }
+        .tech-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+        }
+        .tech-icon {
+            font-size: 2.5rem; /* 40px */
+            margin-bottom: 1rem; /* 16px */
+            color: var(--accent-color, #0ea5e9);
+        }
+        .tech-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Staggered animation */
+        .fade-in .tech-item {
+            animation: fadeInTech 0.5s ease-out forwards;
+        }
+        @keyframes fadeInTech {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in .tech-item:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in .tech-item:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in .tech-item:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in .tech-item:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in .tech-item:nth-child(5) { animation-delay: 0.5s; }
+        .fade-in .tech-item:nth-child(6) { animation-delay: 0.6s; }
+
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <h1 class="text-3xl md:text-4xl font-bold mb-6">Built with Cutting-Edge Tech</h1>
+        <p class="text-lg text-gray-400 mb-10">Leveraging modern frameworks and AI protocols for robust performance.</p>
+
+        <div class="tech-grid">
+            <!-- Next.js -->
+            <div class="tech-item">
+                <div class="tech-icon"><i class="fas fa-code"></i></div>
+                <div class="tech-name">Next.js</div>
+            </div>
+            <!-- 0G AI -->
+            <div class="tech-item">
+                <div class="tech-icon"><i class="fas fa-brain"></i></div> <!-- Generic AI icon -->
+                <div class="tech-name">0G AI</div>
+            </div>
+            <!-- Vercel AI SDK -->
+            <div class="tech-item">
+                <div class="tech-icon"><i class="fas fa-bolt"></i></div> <!-- Vercel-like icon -->
+                <div class="tech-name">Vercel AI SDK</div>
+            </div>
+            <!-- Prisma -->
+            <div class="tech-item">
+                <div class="tech-icon"><i class="fas fa-database"></i></div>
+                <div class="tech-name">Prisma</div>
+            </div>
+            <!-- MCP -->
+            <div class="tech-item">
+                <div class="tech-icon"><i class="fas fa-network-wired"></i></div> <!-- Protocol icon -->
+                <div class="tech-name">MCP</div>
+            </div>
+            <!-- A2A -->
+            <div class="tech-item">
+                <div class="tech-icon"><i class="fas fa-robot"></i></div> <!-- Agent icon -->
+                <div class="tech-name">A2A</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // Add keyboard navigation listeners within the iframe
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          window.parent.postMessage('navigateNext', '*');
+        } else if (e.key === 'ArrowLeft') {
+          window.parent.postMessage('navigatePrev', '*');
+        }
+      });
+    </script>
+</body>
+</html>
