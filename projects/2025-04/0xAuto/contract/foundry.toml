@@ -1,0 +1,12 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+
+[rpc_endpoints]
+galileo = "https://evmrpc-testnet.0g.ai"
+
+[etherscan]
+galileo = { key = "", url = "https://chainscan-galileo.0g.ai/" }

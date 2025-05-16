@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0xAuto - Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Link to shared slide styles if created, or rely on index.html styles -->
+    <style>
+        /* Basic styles inherited or defined in index.html */
+        body {
+            background-color: transparent; /* Allow index.html background to show */
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars within iframe */
+        }
+        .container {
+            max-width: 900px;
+            padding: 40px;
+            text-align: center;
+        }
+        .text-accent {
+            color: #0ea5e9; /* 0xAuto accent color */
+        }
+        /* Basic button style */
+        .btn {
+            background-color: var(--accent-color, #0ea5e9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
+        }
+        /* Simple fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        /* Floating animation for logo */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+         /* Pulse animation for dots */
+        @keyframes pulseDots {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .pulse > div > div {
+            animation: pulseDots 1.5s infinite ease-in-out;
+        }
+        .pulse > div > div:nth-child(2) { animation-delay: 0.2s; }
+        .pulse > div > div:nth-child(3) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <div class="floating mb-12">
+            <img src="logo.svg" alt="0xAuto Logo" class="h-24 mx-auto">
+        </div>
+
+        <h1 class="text-5xl md:text-6xl font-bold mb-4">0xAuto</h1>
+        <h2 class="text-2xl md:text-3xl font-light text-gray-300 mb-8">
+            Automate Your <span class="text-accent font-semibold">Crypto Strategy!</span>
+        </h2>
+
+        <hr class="border-gray-700 max-w-sm mx-auto my-10">
+
+        <p class="text-lg text-gray-400">
+            Effortlessly execute and manage your crypto activities.
+        </p>
+
+        <div class="mt-12">
+            <button class="btn" id="nextBtn">
+                <span>Discover How</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <div class="pulse mt-16">
+            <div class="flex justify-center gap-3">
+                <div class="w-3 h-3 bg-gray-500 rounded-full"></div>
+                <div class="w-3 h-3 bg-gray-500 rounded-full"></div>
+                <div class="w-3 h-3 bg-gray-500 rounded-full"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const nextButton = document.getElementById('nextBtn');
+        if (nextButton) {
+          nextButton.addEventListener('click', () => {
+            // Send message to parent frame to navigate next
+            window.parent.postMessage('navigateNext', '*'); // Use '*' for simplicity, specify origin in production
+          });
+        }
+
+        // Add keyboard navigation listeners within the iframe
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight' || e.key === ' ') {
+            window.parent.postMessage('navigateNext', '*');
+          } else if (e.key === 'ArrowLeft') {
+            window.parent.postMessage('navigatePrev', '*');
+          }
+        });
+      });
+    </script>
+</body>
+</html>
