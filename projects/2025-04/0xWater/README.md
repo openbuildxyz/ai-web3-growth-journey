@@ -27,4 +27,5 @@
   - 技术栈：后端开发 AI大模型
   - 微信：qp_9654
   - github: https://github.com/kylin-feng
-  - 人工智能开发者 | 开源爱好者
+  - 人工智能开发者 | 开源爱好者 
+  
