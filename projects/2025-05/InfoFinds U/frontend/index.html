@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoFinds U</title>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap">
+    <style>
+        :root {
+            --bg-dark: #0c0e14;
+            --bg-card: #15182b;
+            --text-primary: #e9ecff;
+            --text-secondary: #8b93b8;
+            --accent-blue: #00d8ff;
+            --accent-purple: #bf00ff;
+            --accent-green: #00ff95;
+            --accent-gradient: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        body {
+            font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 216, 255, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 75% 75%, rgba(191, 0, 255, 0.15) 0%, transparent 40%);
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin-top: 40px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .tech-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .tech-header h1 {
+            font-size: 2.4rem;
+            margin: 0;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tech-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            height: 3px;
+            width: 50%;
+            background: var(--accent-gradient);
+            transform: translateX(-50%);
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-header.bg-primary {
+            background: var(--accent-gradient) !important;
+        }
+
+        .card-header.bg-info {
+            background: linear-gradient(135deg, #0072ff, #00c6ff) !important;
+        }
+
+        .card-header.bg-success {
+            background: linear-gradient(135deg, #00b09b, #96c93d) !important;
+        }
+
+        .card-header.bg-dark {
+            background: linear-gradient(135deg, #232526, #414345) !important;
+        }
+
+        .card-header.bg-secondary {
+            background: linear-gradient(135deg, #4b6cb7, #182848) !important;
+        }
+
+        .btn {
+            border-radius: 4px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease-out;
+            transform: skewX(-15deg);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background-image: var(--accent-gradient);
+            box-shadow: 0 4px 15px rgba(0, 216, 255, 0.3);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            box-shadow: 0 4px 15px rgba(0, 176, 155, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            box-shadow: 0 4px 15px rgba(75, 108, 183, 0.3);
+        }
+
+        .btn-light {
+            background: linear-gradient(135deg, #485563, #29323c);
+            color: var(--text-primary);
+            box-shadow: 0 4px 15px rgba(72, 85, 99, 0.3);
+        }
+
+        .btn-outline-light {
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(0, 216, 255, 0.1);
+            color: var(--accent-blue);
+        }
+
+        .nav-pills .nav-link {
+            color: var(--text-secondary);
+            font-weight: 500;
+            border-radius: 4px;
+            padding: 0.75rem 1.25rem;
+            margin: 0 0.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pills .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .nav-pills .nav-link.active {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 216, 255, 0.3);
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            transition: all 0.3s;
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 0.2rem rgba(0, 216, 255, 0.25);
+            color: var(--text-primary);
+        }
+
+        .form-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 40%;
+            background: var(--accent-gradient);
+        }
+
+        .offer-card {
+            backdrop-filter: blur(10px);
+            background-color: rgba(21, 24, 43, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Chat styles */
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+        
+        .chat-message {
+            position: relative;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            max-width: 85%;
+            word-break: break-word;
+            font-size: 0.95rem;
+        }
+        
+        /* 确保两种消息类型都可见 */
+        .chat-user {
+            align-self: flex-end;
+            background-color: rgba(0, 216, 255, 0.15);
+            border-bottom-right-radius: 0;
+            border: 1px solid rgba(0, 216, 255, 0.3);
+        }
+        
+        .chat-agent {
+            align-self: flex-start;
+            background-color: rgba(191, 0, 255, 0.15);
+            border-bottom-left-radius: 0;
+            border: 1px solid rgba(191, 0, 255, 0.3);
+        }
+        
+        .chat-message small {
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            font-size: 0.7rem;
+        }
+
+        /* Agent按钮样式 */
+        .agent-buttons {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .agent-button {
+            padding: 6px 12px;
+            background: rgba(0, 216, 255, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .agent-button.confirm {
+            background: rgba(0, 255, 149, 0.2);
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .agent-button.cancel {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+            border-color: #ff4757;
+        }
+
+        .agent-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 状态提示 */
+        .status-display {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background-color: rgba(21, 24, 43, 0.9);
+            color: var(--text-primary);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            font-weight: 500;
+            transform: translateY(0);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Alert styles */
+        .alert {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--accent-blue);
+            color: var(--text-primary);
+            padding: 12px 15px;
+        }
+
+        .alert-info {
+            border-color: var(--accent-blue);
+        }
+
+        .alert-success {
+            border-color: var(--accent-green);
+        }
+
+        .alert-warning {
+            border-color: #ffc107;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .badge.bg-primary {
+            background: var(--accent-gradient) !important;
+        }
+
+        #dealStatus {
+            margin-top: 20px;
+            display: none;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(0, 216, 255, 0.2);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(0, 216, 255, 0.4);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            .chat-message {
+                max-width: 90%;
+            }
+        }
+
+        /* 禁用的按钮样式 */
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-image: none !important;
+            background-color: #666 !important;
+        }
+
+        /* 交易卡片样式 */
+        .deal-card {
+            transition: all 0.3s ease;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        /* 价格输入容器 */
+        .price-input-container {
+            display: flex;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .price-input {
+            flex: 1;
+        }
+
+        .agent-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .agent-button {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .agent-button.confirm {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white;
+        }
+
+        .agent-button.confirm:hover:not(:disabled) {
+            box-shadow: 0 4px 15px rgba(0, 176, 155, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .agent-button.cancel {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+        }
+
+        .agent-button.cancel:hover:not(:disabled) {
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* 交易状态标签 */
+        .badge {
+            padding: 8px 12px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tech-header">
+            <h1>InfoFinds U</h1>
+        </div>
+
+        <!-- 用户信息 -->
+        <div id="userInfoCard" class="card mb-4 hidden">
+            <div class="card-header bg-dark">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">当前用户</h5>
+                    <button id="logoutBtn" class="btn btn-outline-light btn-sm">退出登录</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <p><strong>用户名:</strong> <span id="currentUsername"></span></p>
+                <p><strong>以太坊地址:</strong> <span id="currentEthAddress"></span></p>
+                <p><strong>AI助手:</strong> <span id="currentAgentName"></span></p>
+            </div>
+        </div>
+        
+        <!-- 登录/注册表单 -->
+        <div id="authCard" class="card mb-4">
+            <div class="card-header bg-primary">
+                <h4 class="mb-0">用户登录/注册</h4>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-pills mb-3" id="authTabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="login-tab" data-bs-toggle="pill" href="#login">登录</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="register-tab" data-bs-toggle="pill" href="#register">注册</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!-- 登录表单 -->
+                    <div class="tab-pane fade show active" id="login">
+                        <div class="mb-3">
+                            <label for="loginUsername" class="form-label">用户名</label>
+                            <input type="text" class="form-control" id="loginUsername">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">密码</label>
+                            <input type="password" class="form-control" id="loginPassword">
+                        </div>
+                        <button id="loginBtn" class="btn btn-primary">登录</button>
+                    </div>
+                    
+                    <!-- 注册表单 -->
+                    <div class="tab-pane fade" id="register">
+                        <div class="mb-3">
+                            <label for="registerUsername" class="form-label">用户名</label>
+                            <input type="text" class="form-control" id="registerUsername">
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">密码</label>
+                            <input type="password" class="form-control" id="registerPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerAgentName" class="form-label">AI助手名称</label>
+                            <input type="text" class="form-control" id="registerAgentName" placeholder="例如：市场顾问小明">
+                            <small class="text-muted">你将通过这个AI助手完成所有买卖操作</small>
+                        </div>
+                        <button id="registerBtn" class="btn btn-primary">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 功能区域 -->
+        <div id="functionsArea" class="hidden">
+            <!-- 导航 -->
+            <ul class="nav nav-pills mb-3" id="mainTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="agent-chat-tab" data-bs-toggle="pill" data-bs-target="#agent-chat-panel" type="button" role="tab">AI助手</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="market-requests-tab" data-bs-toggle="pill" data-bs-target="#market-requests-panel" type="button" role="tab">市场需求</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="market-products-tab" data-bs-toggle="pill" data-bs-target="#market-products-panel" type="button" role="tab">市场产品</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="my-deals-tab" data-bs-toggle="pill" data-bs-target="#my-deals-panel" type="button" role="tab">我的交易</button>
+                </li>
+            </ul>
+            
+            <!-- 标签内容 -->
+            <div class="tab-content">
+                <!-- AI助手面板 -->
+                <div class="tab-pane fade show active" id="agent-chat-panel">
+                    <div class="card">
+                   
+                        <div class="card-body">
+                            <div class="chat-container" id="chatContainer"></div>
+                            <div class="chat-input">
+                                <input type="text" id="messageInput" placeholder="告诉AI你的需求...">
+                                <button class="btn btn-primary" id="sendMessage">发送</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 市场需求面板 -->
+                <div class="tab-pane fade" id="market-requests-panel">
+                    <!-- 需求标签栏 -->
+                    <ul class="nav nav-tabs mb-3" id="requestsTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="market-requests-list-tab" data-bs-toggle="tab" data-bs-target="#market-requests-list-panel" type="button" role="tab">市场需求列表</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="my-requests-tab" data-bs-toggle="tab" data-bs-target="#my-requests-panel" type="button" role="tab">我发布的需求</button>
+                        </li>
+                    </ul>
+                    
+                    <!-- 需求标签内容 -->
+                    <div class="tab-content" id="requestsTabContent">
+                        <!-- 市场需求列表面板 -->
+                        <div class="tab-pane fade show active" id="market-requests-list-panel" role="tabpanel">
+                            <p class="text-muted mb-3">以下是市场上所有的需求，您可以提供报价</p>
+                            <button id="refreshMarketRequests" class="btn btn-secondary mb-3">刷新需求列表</button>
+                            <div id="marketRequestsList">
+                                <div class="alert alert-info">正在加载需求列表...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 我的需求列表面板 -->
+                        <div class="tab-pane fade" id="my-requests-panel" role="tabpanel">
+                            <p class="text-muted mb-3">以下是您通过AI助手或自己发布的所有需求</p>
+                            <button id="refreshMyRequests" class="btn btn-secondary mb-3">刷新我的需求</button>
+                            <div id="myRequestsList">
+                                <div class="alert alert-info">正在加载您的需求...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 交易状态 -->
+                    <div id="dealStatus" class="card mt-4" style="display: none;">
+                        <div class="card-header bg-success">
+                            <h4 class="mb-0">交易状态</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="dealDetails"></div>
+                            <button id="confirmReceived" class="btn btn-success mt-3">确认收货</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 市场产品面板 -->
+                <div class="tab-pane fade" id="market-products-panel">
+                    <!-- 产品标签栏 -->
+                    <ul class="nav nav-tabs mb-3" id="productsTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="market-products-list-tab" data-bs-toggle="tab" data-bs-target="#market-products-list-panel" type="button" role="tab">市场产品列表</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="my-products-tab" data-bs-toggle="tab" data-bs-target="#my-products-panel" type="button" role="tab">我发布的产品</button>
+                        </li>
+                    </ul>
+                    
+                    <!-- 产品标签内容 -->
+                    <div class="tab-content" id="productsTabContent">
+                        <!-- 市场产品列表面板 -->
+                        <div class="tab-pane fade show active" id="market-products-list-panel" role="tabpanel">
+                            <p class="text-muted mb-3">以下是市场上所有的产品，您可以直接购买</p>
+                            <button id="refreshMarketProducts" class="btn btn-secondary mb-3">刷新产品列表</button>
+                            <div id="marketProductsList">
+                                <div class="alert alert-info">正在加载产品列表...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 我的产品列表面板 -->
+                        <div class="tab-pane fade" id="my-products-panel" role="tabpanel">
+                            <p class="text-muted mb-3">以下是您通过AI助手或自己发布的所有产品</p>
+                            <button id="refreshMyProducts" class="btn btn-secondary mb-3">刷新我的产品</button>
+                            <div id="myProductsList">
+                                <div class="alert alert-info">正在加载您的产品...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- "我的交易"面板 -->
+                <div class="tab-pane fade" id="my-deals-panel">
+                    <h4 class="section-title">我的交易列表</h4>
+                    <p class="text-muted mb-3">以下是您参与的所有交易，包括作为买家和卖家的交易</p>
+                    <button id="refreshDeals" class="btn btn-secondary mb-3">刷新交易列表</button>
+                    
+                    <!-- 交易类别标签 -->
+                    <ul class="nav nav-tabs mb-3" id="dealsTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="all-deals-tab" data-bs-toggle="tab" data-bs-target="#all-deals-panel" type="button" role="tab">全部交易</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pending-deals-tab" data-bs-toggle="tab" data-bs-target="#pending-deals-panel" type="button" role="tab">进行中</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="completed-deals-tab" data-bs-toggle="tab" data-bs-target="#completed-deals-panel" type="button" role="tab">已完成</button>
+                        </li>
+                    </ul>
+                    
+                    <!-- 交易列表内容 -->
+                    <div class="tab-content" id="dealsTabContent">
+                        <!-- 全部交易面板 -->
+                        <div class="tab-pane fade show active" id="all-deals-panel" role="tabpanel">
+                            <div id="allDealsList">
+                                <div class="alert alert-info">正在加载交易列表...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 进行中交易面板 -->
+                        <div class="tab-pane fade" id="pending-deals-panel" role="tabpanel">
+                            <div id="pendingDealsList">
+                                <div class="alert alert-info">正在加载进行中的交易...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 已完成交易面板 -->
+                        <div class="tab-pane fade" id="completed-deals-panel" role="tabpanel">
+                            <div id="completedDealsList">
+                                <div class="alert alert-info">正在加载已完成的交易...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 状态提示 -->
+    <div id="statusDisplay" class="status-display" style="display: none;"></div>
+
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/axios.min.js"></script>
+    <script>
+        // 全局变量
+        const API_BASE_URL = 'http://localhost:3000';
+        let currentUser = null;
+        let sessionId = null;
+        let currentDealId = null;
+
+        // 显示临时状态
+        function showStatus(message, isError = false) {
+            const statusDisplay = document.getElementById('statusDisplay');
+            statusDisplay.textContent = message;
+            statusDisplay.style.borderColor = isError ? '#ff4757' : 'var(--accent-blue)';
+            statusDisplay.style.display = 'block';
+            
+            setTimeout(() => {
+                statusDisplay.style.opacity = '0';
+                setTimeout(() => {
+                    statusDisplay.style.display = 'none';
+                    statusDisplay.style.opacity = '1';
+                }, 300);
+            }, 3000);
+        }
+
+        // 检查登录状态
+        function checkAuth() {
+            const savedSession = localStorage.getItem('sessionId');
+            if (savedSession) {
+                sessionId = savedSession;
+                
+                // 验证会话是否有效
+                axios.get(`${API_BASE_URL}/user`, {
+                    headers: { Authorization: sessionId }
+                })
+                .then(response => {
+                    currentUser = response.data;
+                    updateUIAfterLogin();
+                })
+                .catch(() => {
+                    // 会话无效，清除存储
+                    localStorage.removeItem('sessionId');
+                });
+            }
+        }
+
+        // 登录后更新UI
+        function updateUIAfterLogin() {
+            // 显示用户信息
+            document.getElementById('userInfoCard').classList.remove('hidden');
+            document.getElementById('authCard').classList.add('hidden');
+            document.getElementById('functionsArea').classList.remove('hidden');
+            
+            // 更新用户信息
+            document.getElementById('currentUsername').textContent = currentUser.username;
+            document.getElementById('currentEthAddress').textContent = currentUser.ethAddress;
+            document.getElementById('currentAgentName').textContent = currentUser.agentName;
+            document.getElementById('agentNameDisplay').textContent = currentUser.agentName;
+            
+            // 加载初始数据
+            loadChatHistory();
+            refreshMyRequests();
+            refreshMarketRequests();
+            refreshMarketProducts();
+            refreshMyProducts();
+        }
+
+        // 登出后更新UI
+        function updateUIAfterLogout() {
+            document.getElementById('userInfoCard').classList.add('hidden');
+            document.getElementById('authCard').classList.remove('hidden');
+            document.getElementById('functionsArea').classList.add('hidden');
+        }
+
+        // 注册
+        async function register() {
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const agentName = document.getElementById('registerAgentName').value;
+            
+            if (!username || !password) {
+                showStatus('请填写用户名和密码', true);
+                return;
+            }
+            
+            try {
+                const response = await axios.post(`${API_BASE_URL}/register`, {
+                    username,
+                    password,
+                    agentName
+                });
+                
+                showStatus('注册成功，请登录');
+                
+                // 切换到登录标签
+                document.getElementById('login-tab').click();
+                
+                // 填充登录表单
+                document.getElementById('loginUsername').value = username;
+                document.getElementById('loginPassword').value = password;
+            } catch (error) {
+                showStatus(`注册失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+
+        // 登录
+        async function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!username || !password) {
+                showStatus('请填写用户名和密码', true);
+                return;
+            }
+            
+            try {
+                const response = await axios.post(`${API_BASE_URL}/login`, {
+                    username,
+                    password
+                });
+                
+                sessionId = response.data.sessionId;
+                currentUser = response.data.user;
+                
+                // 保存会话ID
+                localStorage.setItem('sessionId', sessionId);
+                
+                // 设置请求头
+                axios.defaults.headers.common['Authorization'] = sessionId;
+                
+                showStatus('登录成功');
+                updateUIAfterLogin();
+            } catch (error) {
+                showStatus(`登录失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+
+        // 登出
+        async function logout() {
+            try {
+                await axios.post(`${API_BASE_URL}/logout`);
+                localStorage.removeItem('sessionId');
+                sessionId = null;
+                currentUser = null;
+                delete axios.defaults.headers.common['Authorization'];
+                updateUIAfterLogout();
+                showStatus('已退出登录');
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        
+        // 加载聊天历史
+        async function loadChatHistory() {
+            console.log('开始加载聊天历史...');
+            try {
+                console.log('向后端请求聊天历史');
+                const response = await axios.get(`${API_BASE_URL}/agent/chat`);
+                console.log('收到聊天历史数据:', response.data.length, '条消息');
+                const chatHistory = response.data;
+                
+                updateChatUI(chatHistory);
+            } catch (error) {
+                console.error('加载聊天历史失败:', error);
+            }
+        }
+        
+        // 更新聊天UI
+        function updateChatUI(chatHistory) {
+            console.log('更新聊天UI, 消息数量:', chatHistory.length);
+            const chatContainer = document.getElementById('chatContainer');
+            if (!chatContainer) {
+                console.error('找不到聊天容器元素!');
+                return;
+            }
+            
+            chatContainer.innerHTML = '';
+            
+            chatHistory.forEach((chat, index) => {
+                console.log(`渲染第${index+1}条消息, 角色:${chat.role}`);
+                if (chat.role === 'user') {
+                    // 用户消息
+                    const userMessageDiv = document.createElement('div');
+                    userMessageDiv.className = 'chat-message chat-user';
+                    
+                    // 添加文本内容
+                    const textNode = document.createElement('p');
+                    textNode.textContent = chat.message;
+                    userMessageDiv.appendChild(textNode);
+                    
+                    // 添加时间戳
+                    if (chat.timestamp) {
+                        const timeNode = document.createElement('small');
+                        timeNode.className = 'text-muted';
+                        const time = new Date(chat.timestamp);
+                        timeNode.textContent = `${time.getHours()}:${String(time.getMinutes()).padStart(2, '0')}`;
+                        userMessageDiv.appendChild(timeNode);
+                    }
+                    
+                    chatContainer.appendChild(userMessageDiv);
+                } else {
+                    // AI助手消息，使用renderAgentMessage函数
+                    renderAgentMessage(chat);
+                }
+            });
+            
+            // 自动滚动到底部
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            console.log('聊天UI更新完成');
+        }
+        
+        // 发送消息
+        async function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            console.log('尝试发送消息:', message);
+            
+            if (!message) return;
+            
+            // 清空输入框
+            messageInput.value = '';
+            
+            try {
+                // 立即显示用户消息
+                const chatContainer = document.getElementById('chatContainer');
+                const userMessageDiv = document.createElement('div');
+                userMessageDiv.className = 'chat-message chat-user';
+                
+                // 添加文本内容
+                const textNode = document.createElement('p');
+                textNode.textContent = message;
+                userMessageDiv.appendChild(textNode);
+                
+                // 添加时间
+                const timeNode = document.createElement('small');
+                timeNode.className = 'text-muted';
+                const time = new Date();
+                timeNode.textContent = `${time.getHours()}:${String(time.getMinutes()).padStart(2, '0')}`;
+                userMessageDiv.appendChild(timeNode);
+                
+                chatContainer.appendChild(userMessageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                console.log('向后端发送消息请求...');
+                // 发送到后端
+                const response = await axios.post(`${API_BASE_URL}/agent/chat`, { message });
+                console.log('收到后端响应:', response.data);
+                
+                // 渲染Agent回复
+                renderAgentMessage({
+                    role: 'agent',
+                    message: response.data.message,
+                    timestamp: Date.now()
+                });
+            } catch (error) {
+                console.error('消息发送失败:', error);
+                showStatus(`消息发送失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+
+        // 修改AI助手消息渲染函数，让确认/取消按钮点击后置灰
+        function renderAgentMessage(chat) {
+            console.log('渲染AI助手消息:', chat);
+            const chatContainer = document.getElementById('chatContainer');
+            const agentMessageDiv = document.createElement('div');
+            agentMessageDiv.className = 'chat-message chat-agent';
+            
+            // 创建消息文本元素
+            const messageTextDiv = document.createElement('p');
+            messageTextDiv.textContent = chat.message;
+            agentMessageDiv.appendChild(messageTextDiv);
+            
+            // 检查是否需要添加按钮
+            if (chat.message.includes('您想购买这个商品吗') || 
+                chat.message.includes('您想向这位买家提供您的商品') || 
+                chat.message.includes('您想发布一个购买需求吗') ||
+                chat.message.includes('您想发布一个销售信息吗')) {
+                
+                console.log('添加确认/取消按钮');
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.className = 'agent-buttons';
+                
+                // 创建确认按钮
+                const confirmBtn = document.createElement('button');
+                confirmBtn.className = 'agent-button confirm';
+                confirmBtn.textContent = '确认';
+                confirmBtn.addEventListener('click', function() {
+                    console.log('确认按钮点击');
+                    // 禁用按钮，防止重复点击
+                    confirmBtn.disabled = true;
+                    cancelBtn.disabled = true;
+                    
+                    // 发送确认消息
+                    document.getElementById('messageInput').value = '是';
+                    sendMessage();
+                });
+                buttonsDiv.appendChild(confirmBtn);
+                
+                // 创建取消按钮
+                const cancelBtn = document.createElement('button');
+                cancelBtn.className = 'agent-button cancel';
+                cancelBtn.textContent = '取消';
+                cancelBtn.addEventListener('click', function() {
+                    console.log('取消按钮点击');
+                    // 禁用按钮，防止重复点击
+                    confirmBtn.disabled = true;
+                    cancelBtn.disabled = true;
+                    
+                    // 发送取消消息
+                    document.getElementById('messageInput').value = '否';
+                    sendMessage();
+                });
+                buttonsDiv.appendChild(cancelBtn);
+                
+                // 添加按钮到消息中
+                agentMessageDiv.appendChild(buttonsDiv);
+            }
+            // 检查是否需要添加价格输入按钮
+            else if (chat.message.includes('请提供您的预算') || 
+                     chat.message.includes('请提供您的售价')) {
+                
+                console.log('添加价格输入');
+                const priceDiv = document.createElement('div');
+                priceDiv.className = 'price-input-container';
+                
+                const priceInput = document.createElement('input');
+                priceInput.type = 'number';
+                priceInput.step = '0.001';
+                priceInput.placeholder = '输入ETH价格';
+                priceInput.className = 'form-control price-input';
+                priceDiv.appendChild(priceInput);
+                
+                const priceBtn = document.createElement('button');
+                priceBtn.className = 'btn btn-sm btn-primary price-submit-btn';
+                priceBtn.textContent = '提交价格';
+                priceBtn.addEventListener('click', function() {
+                    console.log('提交价格按钮点击, 价格:', priceInput.value);
+                    // 禁用按钮，防止重复点击
+                    priceBtn.disabled = true;
+                    
+                    // 发送价格消息
+                    document.getElementById('messageInput').value = priceInput.value + ' ETH';
+                    sendMessage();
+                });
+                priceDiv.appendChild(priceBtn);
+                
+                agentMessageDiv.appendChild(priceDiv);
+            }
+            
+            // 添加时间戳
+            if (chat.timestamp) {
+                const timeNode = document.createElement('small');
+                timeNode.className = 'text-muted';
+                const time = new Date(chat.timestamp);
+                timeNode.textContent = `${time.getHours()}:${String(time.getMinutes()).padStart(2, '0')}`;
+                agentMessageDiv.appendChild(timeNode);
+            }
+            
+            chatContainer.appendChild(agentMessageDiv);
+            
+            // 滚动到底部
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            console.log('AI助手消息渲染完成');
+        }
+        
+        // 发布需求
+        async function submitRequest() {
+            const description = document.getElementById('requestDescription').value;
+            const expectedPrice = document.getElementById('expectedPrice').value;
+            
+            if (!description || !expectedPrice) {
+                showStatus('请填写商品描述和期望价格', true);
+                return;
+            }
+            
+            try {
+                await axios.post(`${API_BASE_URL}/request`, {
+                    description,
+                    expectedPrice: parseFloat(expectedPrice)
+                });
+                
+                showStatus('需求发布成功');
+                
+                // 清空表单
+                document.getElementById('requestDescription').value = '';
+                document.getElementById('expectedPrice').value = '';
+                
+                // 刷新需求列表
+                refreshMyRequests();
+            } catch (error) {
+                showStatus(`需求发布失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+        
+        // 发布产品
+        async function submitProduct() {
+            const name = document.getElementById('productName').value;
+            const description = document.getElementById('productDescription').value;
+            const price = document.getElementById('productPrice').value;
+            
+            if (!name || !description || !price) {
+                showStatus('请填写产品名称、描述和价格', true);
+                return;
+            }
+            
+            try {
+                await axios.post(`${API_BASE_URL}/products`, {
+                    name,
+                    description,
+                    price: parseFloat(price)
+                });
+                
+                showStatus('产品发布成功');
+                
+                // 清空表单
+                document.getElementById('productName').value = '';
+                document.getElementById('productDescription').value = '';
+                document.getElementById('productPrice').value = '';
+            } catch (error) {
+                showStatus(`产品发布失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+        
+        // 刷新我的需求列表
+        async function refreshMyRequests() {
+            if (!currentUser) return;
+            
+            try {
+                const response = await axios.get(`${API_BASE_URL}/requests`);
+                const requests = response.data;
+                const myRequests = requests.filter(req => req.buyer === currentUser.ethAddress);
+                const myRequestsListEl = document.getElementById('myRequestsList');
+                
+                if (myRequests.length === 0) {
+                    myRequestsListEl.innerHTML = '<div class="alert alert-info">您还没有发布需求</div>';
+                    return;
+                }
+                
+                let requestsHTML = '';
+                for (const request of myRequests) {
+                    // 获取该需求的所有报价
+                    const response = await axios.get(`${API_BASE_URL}/offers`);
+                    const offers = response.data.filter(offer => offer.requestId === request.id);
+                    
+                    requestsHTML += `
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5>${request.description}</h5>
+                                <small class="text-muted">期望价格: ${request.expectedPriceInEth} ETH</small>
+                                ${request.createdByAgent ? '<span class="badge bg-primary">通过AI助手创建</span>' : ''}
+                            </div>
+                            <div class="card-body">
+                                <p>发布时间: ${new Date(request.timestamp).toLocaleString()}</p>
+                                <hr>
+                                <h6>收到的报价 (${offers.length})</h6>
+                                <div class="offers-list">
+                    `;
+                    
+                    if (offers.length === 0) {
+                        requestsHTML += '<p class="text-muted">暂无报价</p>';
+                    } else {
+                        offers.forEach(offer => {
+                            requestsHTML += `
+                                <div class="card offer-card mb-2">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h5 class="card-title">${offer.description}</h5>
+                                                <p class="card-text">卖家: ${offer.sellerName} (${offer.seller.substring(0, 8)}...)</p>
+                                                <p class="card-text text-muted">报价时间: ${new Date(offer.timestamp).toLocaleString()}</p>
+                                            </div>
+                                            <div class="text-end">
+                                                <h4 class="text-primary">${offer.priceInEth} ETH</h4>
+                                                <button class="btn btn-sm btn-primary deal-btn" data-offer-id="${offer.id}">成交</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    requestsHTML += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                myRequestsListEl.innerHTML = requestsHTML;
+                
+                // 为每个"成交"按钮添加点击事件
+                document.querySelectorAll('.deal-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const offerId = e.target.dataset.offerId;
+                        await createDeal(offerId);
+                    });
+                });
+            } catch (error) {
+                showStatus(`获取需求失败: ${error.message}`, true);
+            }
+        }
+        
+        // 获取并显示所有市场需求
+        async function refreshMarketRequests() {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/requests`);
+                const requests = response.data;
+                const marketRequestsListEl = document.getElementById('marketRequestsList');
+                
+                if (requests.length === 0) {
+                    marketRequestsListEl.innerHTML = '<div class="alert alert-info">市场上暂无需求</div>';
+                    return;
+                }
+                
+                let requestsHTML = '';
+                for (const request of requests) {
+                    // 显示所有需求，包括自己的（但只有别人的需求可以报价）
+                    const isOwn = currentUser && request.buyer === currentUser.ethAddress;
+                    
+                    // 获取该需求的所有报价
+                    const offersResponse = await axios.get(`${API_BASE_URL}/offers`);
+                    const offers = offersResponse.data.filter(offer => offer.requestId === request.id);
+                    
+                    requestsHTML += `
+                        <div class="card mb-3 ${isOwn ? 'border-info' : ''}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title">${request.description}</h5>
+                                        <p class="card-text">买家: ${request.buyerName} 
+                                            ${isOwn ? '<span class="badge bg-info">我的需求</span>' : `<span class="text-muted">(${request.buyer.substring(0, 8)}...)</span>`}</p>
+                                        <p class="card-text">期望价格: <span class="text-primary">${request.expectedPriceInEth} ETH</span></p>
+                                        <p class="card-text text-muted">发布时间: ${new Date(request.timestamp).toLocaleString()}</p>
+                                        ${request.createdByAgent ? '<span class="badge bg-primary">通过AI助手创建</span>' : ''}
+                                    </div>
+                                    <div>
+                                        ${isOwn ? '' : `<button class="btn btn-sm btn-primary offer-btn" data-request-id="${request.id}" data-request-desc="${request.description}">提交报价</button>`}
+                                    </div>
+                                </div>
+                                
+                                ${!isOwn && offers.length > 0 ? `
+                                <hr>
+                                <h6>我的报价</h6>
+                                <div class="my-offers-list">
+                                ${offers.filter(o => currentUser && o.seller === currentUser.ethAddress).map(offer => `
+                                    <div class="card offer-card mb-2">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <h5 class="card-title">${offer.description}</h5>
+                                                    <p class="card-text text-muted">报价时间: ${new Date(offer.timestamp).toLocaleString()}</p>
+                                                </div>
+                                                <div class="text-end">
+                                                    <h4 class="text-primary">${offer.priceInEth} ETH</h4>
+                                                    <button class="btn btn-sm btn-success deal-btn" data-offer-id="${offer.id}">成交</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                marketRequestsListEl.innerHTML = requestsHTML;
+                
+                // 为每个"报价"按钮添加点击事件
+                document.querySelectorAll('.offer-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const requestId = e.target.dataset.requestId;
+                        const requestDesc = e.target.dataset.requestDesc;
+                        showOfferForm(requestId, requestDesc);
+                    });
+                });
+                
+                // 为每个"成交"按钮添加点击事件
+                document.querySelectorAll('.deal-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const offerId = e.target.dataset.offerId;
+                        await createDeal(offerId);
+                    });
+                });
+            } catch (error) {
+                showStatus(`获取需求失败: ${error.message}`, true);
+            }
+        }
+
+        // 获取并显示所有市场产品
+        async function refreshMarketProducts() {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/products`);
+                const products = response.data;
+                const marketProductsListEl = document.getElementById('marketProductsList');
+                
+                if (products.length === 0) {
+                    marketProductsListEl.innerHTML = '<div class="alert alert-info">市场上暂无产品</div>';
+                    return;
+                }
+                
+                let productsHTML = '';
+                products.forEach(product => {
+                    // 显示所有产品，包括自己的（标记区别）
+                    const isOwn = currentUser && product.seller === currentUser.ethAddress;
+                    
+                    productsHTML += `
+                        <div class="card mb-3 ${isOwn ? 'border-success' : ''}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title">${product.name}</h5>
+                                        <p class="card-text">${product.description || '无描述'}</p>
+                                        <p class="card-text">卖家: ${product.sellerName} 
+                                            ${isOwn ? '<span class="badge bg-success">我的产品</span>' : `<span class="text-muted">(${product.seller.substring(0, 8)}...)</span>`}</p>
+                                        <p class="card-text text-muted">发布时间: ${new Date(product.timestamp).toLocaleString()}</p>
+                                        ${product.createdByAgent ? '<span class="badge bg-primary">通过AI助手创建</span>' : ''}
+                                    </div>
+                                    <div>
+                                        <h4 class="text-primary mb-3">${product.priceInEth} ETH</h4>
+                                        ${isOwn ? '' : `
+                                        <button class="btn btn-sm btn-success buy-product-btn" data-product-id="${product.id}">购买</button>
+                                        <button class="btn btn-sm btn-primary deal-product-btn" data-product-id="${product.id}">成交</button>
+                                        `}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                marketProductsListEl.innerHTML = productsHTML;
+                
+                // 为每个"购买"按钮添加点击事件
+                document.querySelectorAll('.buy-product-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const productId = e.target.dataset.productId;
+                        purchaseProduct(productId);
+                    });
+                });
+                
+                // 为每个"成交"按钮添加点击事件
+                document.querySelectorAll('.deal-product-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const productId = e.target.dataset.productId;
+                        dealProduct(productId);
+                    });
+                });
+            } catch (error) {
+                showStatus(`获取产品失败: ${error.message}`, true);
+            }
+        }
+
+        // 产品成交逻辑
+        async function dealProduct(productId) {
+            try {
+                console.log(`开始处理产品成交，产品ID: ${productId}`);
+                const response = await axios.get(`${API_BASE_URL}/products/${productId}`);
+                const product = response.data;
+                console.log(`成功获取产品信息:`, product);
+                
+                if (confirm(`确定与卖家成交 "${product.name}" 吗？价格: ${product.priceEth} ETH`)) {
+                    console.log(`用户确认成交产品，准备发送成交请求`);
+                    
+                    // 创建成交请求
+                    console.log(`发送产品成交请求，产品ID: ${productId}, 当前用户信息:`, 
+                                {userId: currentUser?.id, username: currentUser?.username});
+                    
+                    const dealResponse = await axios.post(`${API_BASE_URL}/product-deal`, {
+                        productId: parseInt(productId)
+                    });
+                    
+                    console.log(`成交请求成功，返回数据:`, dealResponse.data);
+                    const dealData = dealResponse.data;
+                    currentDealId = dealData.dealId;
+                    
+                    // 显示交易状态区域
+                    document.getElementById('dealStatus').style.display = 'block';
+                    
+                    // 更新交易详情
+                    document.getElementById('dealDetails').innerHTML = `
+                        <div class="alert alert-success">
+                            <p>恭喜！您已成功完成交易</p>
+                        </div>
+                        <p><strong>交易ID:</strong> ${dealData.dealId}</p>
+                        <p><strong>交易哈希:</strong> ${dealData.txHash}</p>
+                        <p><strong>买家:</strong> ${dealData.buyer}</p>
+                        <p><strong>卖家:</strong> ${dealData.seller}</p>
+                        <p><strong>金额:</strong> ${dealData.amount} ETH</p>
+                        <p class="text-warning">注意: 货款已锁定在智能合约中。请在收到商品后点击"确认收货"完成交易。</p>
+                    `;
+                    
+                    // 切换到"市场需求"标签，显示交易状态
+                    document.getElementById('market-requests-tab').click();
+                    
+                    showStatus('成交成功，请等待卖家发货');
+                }
+            } catch (error) {
+                console.error('产品成交失败:', error);
+                console.error('错误详情:', error.response?.data || error.message);
+                showStatus(`成交失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+        
+        // 获取并显示我的产品列表
+        async function refreshMyProducts() {
+            if (!currentUser) return;
+            
+            try {
+                const response = await axios.get(`${API_BASE_URL}/products`);
+                const products = response.data;
+                const myProducts = products.filter(product => product.seller === currentUser.ethAddress);
+                const myProductsListEl = document.getElementById('myProductsList');
+                
+                if (myProducts.length === 0) {
+                    myProductsListEl.innerHTML = '<div class="alert alert-info">您还没有发布产品</div>';
+                    return;
+                }
+                
+                let productsHTML = '';
+                myProducts.forEach(product => {
+                    productsHTML += `
+                        <div class="card offer-card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text">${product.description || '无描述'}</p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="card-text text-muted">发布时间: ${new Date(product.timestamp).toLocaleString()}</p>
+                                    <h5 class="text-primary">${product.priceInEth} ETH</h5>
+                                </div>
+                                ${product.createdByAgent ? '<span class="badge bg-primary">通过AI助手创建</span>' : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                myProductsListEl.innerHTML = productsHTML;
+            } catch (error) {
+                showStatus(`获取我的产品失败: ${error.message}`, true);
+            }
+        }
+
+        // 购买产品
+        async function purchaseProduct(productId) {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/products/${productId}`);
+                const product = response.data;
+                
+                if (confirm(`确定购买 "${product.name}" 吗？价格: ${product.priceInEth} ETH`)) {
+                    // 创建交易（直接购买）
+                    const dealResponse = await axios.post(`${API_BASE_URL}/purchase`, {
+                        productId: parseInt(productId)
+                    });
+                    
+                    const dealData = dealResponse.data;
+                    currentDealId = dealData.dealId;
+                    
+                    // 显示交易状态区域
+                    document.getElementById('dealStatus').style.display = 'block';
+                    
+                    // 更新交易详情
+                    document.getElementById('dealDetails').innerHTML = `
+                        <div class="alert alert-success">
+                            <p>恭喜！您已成功购买商品</p>
+                        </div>
+                        <p><strong>交易ID:</strong> ${dealData.dealId}</p>
+                        <p><strong>交易哈希:</strong> ${dealData.txHash}</p>
+                        <p><strong>买家:</strong> ${dealData.buyer}</p>
+                        <p><strong>卖家:</strong> ${dealData.seller}</p>
+                        <p><strong>金额:</strong> ${dealData.amount} ETH</p>
+                        <p class="text-warning">注意: 货款已锁定在智能合约中。请在收到商品后点击"确认收货"完成交易。</p>
+                    `;
+                    
+                    // 切换到"市场需求"标签，显示交易状态
+                    document.getElementById('market-requests-tab').click();
+                    
+                    showStatus('购买成功，请等待卖家发货');
+                }
+            } catch (error) {
+                showStatus(`购买失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+
+        // 显示报价表单
+        function showOfferForm(requestId, requestDesc) {
+            document.getElementById('selectedRequest').innerHTML = `
+                <div class="alert alert-info mb-3">
+                    <p><strong>需求:</strong> ${requestDesc}</p>
+                </div>
+            `;
+            document.getElementById('selectedRequestId').value = requestId;
+            document.getElementById('offerForm').classList.remove('hidden');
+        }
+        
+        // 隐藏报价表单
+        function hideOfferForm() {
+            document.getElementById('offerForm').classList.add('hidden');
+            document.getElementById('offerDescription').value = '';
+            document.getElementById('offerPrice').value = '';
+        }
+
+        // 提交报价
+        async function submitOffer() {
+            const description = document.getElementById('offerDescription').value;
+            const priceStr = document.getElementById('offerPrice').value;
+            const requestId = document.getElementById('selectedRequestId').value;
+            
+            if (!description || !priceStr) {
+                showStatus('请填写商品描述和价格', true);
+                return;
+            }
+            
+            const price = parseFloat(priceStr);
+            
+            try {
+                const response = await axios.post(`${API_BASE_URL}/offer`, {
+                    description,
+                    price,
+                    requestId: parseInt(requestId)
+                });
+                
+                showStatus('报价提交成功');
+                
+                // 清空表单并隐藏
+                hideOfferForm();
+            } catch (error) {
+                showStatus(`报价提交失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+
+        // 创建交易（锁款）
+        async function createDeal(offerId) {
+            try {
+                const response = await axios.post(`${API_BASE_URL}/deal`, {
+                    offerId
+                });
+                
+                const data = response.data;
+                currentDealId = data.dealId;
+                
+                // 显示交易状态区域
+                document.getElementById('dealStatus').style.display = 'block';
+                
+                // 更新交易详情
+                document.getElementById('dealDetails').innerHTML = `
+                    <p><strong>交易ID:</strong> ${data.dealId}</p>
+                    <p><strong>交易哈希:</strong> ${data.txHash}</p>
+                    <p><strong>买家:</strong> ${data.buyer}</p>
+                    <p><strong>卖家:</strong> ${data.seller}</p>
+                    <p><strong>金额:</strong> ${data.amount} ETH</p>
+                    <p class="text-warning">注意: 货款已锁定在智能合约中。请在收到商品后点击"确认收货"完成交易。</p>
+                `;
+                
+                showStatus('锁款成功，请在收到商品后确认收货');
+                
+                // 禁用所有成交按钮
+                document.querySelectorAll('.deal-btn').forEach(btn => {
+                    btn.disabled = true;
+                    btn.textContent = '已成交';
+                });
+                
+                // 刷新我的交易列表
+                if (document.getElementById('my-deals-tab').classList.contains('active')) {
+                    refreshDeals();
+                }
+            } catch (error) {
+                showStatus(`创建交易失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+
+        // 确认收货（放款）
+        async function confirmReceived() {
+            if (!currentDealId) {
+                showStatus('没有进行中的交易', true);
+                return;
+            }
+            
+            try {
+                const confirmButton = document.getElementById('confirmReceived');
+                // 禁用按钮，防止重复点击
+                confirmButton.disabled = true;
+                confirmButton.textContent = '处理中...';
+                
+                const response = await axios.post(`${API_BASE_URL}/release`, {
+                    dealId: currentDealId
+                });
+                
+                showStatus('确认收货成功，款项已转给卖家');
+                
+                document.getElementById('dealDetails').innerHTML += `
+                    <div class="alert alert-success mt-3">
+                        <p><strong>交易已完成!</strong></p>
+                        <p>放款交易哈希: ${response.data.txHash}</p>
+                    </div>
+                `;
+                
+                // 更新按钮文本
+                confirmButton.textContent = '已确认';
+            } catch (error) {
+                showStatus(`确认收货失败: ${error.response?.data?.error || error.message}`, true);
+                
+                // 重新启用按钮
+                const confirmButton = document.getElementById('confirmReceived');
+                confirmButton.disabled = false;
+                confirmButton.textContent = '确认收货';
+            }
+        }
+
+        // 按Enter键发送消息
+        function handleEnterKeyPress(e) {
+            if (e.key === 'Enter') {
+                console.log('检测到Enter键按下, 触发消息发送');
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // 加载并展示用户的交易列表
+        async function refreshDeals() {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/deals`);
+                const deals = response.data;
+                
+                // 分类交易
+                const pendingDeals = deals.filter(deal => deal.status === 'pending');
+                const completedDeals = deals.filter(deal => deal.status === 'completed');
+                
+                // 渲染全部交易列表
+                renderDealsList(deals, 'allDealsList');
+                
+                // 渲染进行中交易列表
+                renderDealsList(pendingDeals, 'pendingDealsList');
+                
+                // 渲染已完成交易列表
+                renderDealsList(completedDeals, 'completedDealsList');
+            } catch (error) {
+                console.error('获取交易列表失败:', error);
+                showStatus(`获取交易列表失败: ${error.response?.data?.error || error.message}`, true);
+            }
+        }
+        
+        // 渲染交易列表
+        function renderDealsList(deals, containerId) {
+            const container = document.getElementById(containerId);
+            
+            if (deals.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">暂无交易记录</div>';
+                return;
+            }
+            
+            let dealsHTML = '';
+            
+            deals.forEach(deal => {
+                const isBuyer = deal.isBuyer;
+                const counterparty = isBuyer ? '卖家' : '买家';
+                const counterpartyAddress = isBuyer ? deal.sellerAddress : deal.buyerAddress;
+                const role = isBuyer ? '买家' : '卖家';
+                const statusText = deal.status === 'pending' ? '进行中' : '已完成';
+                const statusClass = deal.status === 'pending' ? 'text-warning' : 'text-success';
+                
+                dealsHTML += `
+                    <div class="card mb-3 deal-card">
+                        <div class="card-header bg-dark">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>交易 #${deal.dealId}</div>
+                                <div class="badge bg-${deal.status === 'pending' ? 'warning' : 'success'}">${statusText}</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>您的角色:</strong> ${role}</p>
+                                    <p><strong>${counterparty}:</strong> ${counterpartyAddress.substring(0, 8)}...</p>
+                                    <p><strong>金额:</strong> ${deal.amountEth} ETH</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>交易时间:</strong> ${new Date(deal.timestamp).toLocaleString()}</p>
+                                    <p><strong>交易哈希:</strong> ${deal.txHash.substring(0, 10)}...</p>
+                                    <p class="${statusClass}"><strong>状态:</strong> ${statusText}</p>
+                                </div>
+                            </div>
+                            ${deal.isBuyer && deal.status === 'pending' ? `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-success confirm-received-btn" data-deal-id="${deal.dealId}">确认收货</button>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = dealsHTML;
+            
+            // 为确认收货按钮添加事件
+            document.querySelectorAll('.confirm-received-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const dealId = e.target.dataset.dealId;
+                    currentDealId = parseInt(dealId);
+                    
+                    // 禁用按钮防止重复点击
+                    btn.disabled = true;
+                    btn.textContent = '处理中...';
+                    
+                    try {
+                        await confirmReceived();
+                        // 成功后刷新列表
+                        refreshDeals();
+                    } catch (error) {
+                        // 失败后恢复按钮状态
+                        btn.disabled = false;
+                        btn.textContent = '确认收货';
+                    }
+                });
+            });
+        }
+
+        // 辅助调试函数，确认DOM元素存在
+        function checkElement(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                console.log(`✅ 元素已找到: #${id}`);
+                return true;
+            } else {
+                console.error(`❌ 元素未找到: #${id}`);
+                return false;
+            }
+        }
+
+        // 修复聊天容器结构
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('============= 页面加载完成, DOM ready =============');
+            
+            // 检查关键元素是否存在
+            console.log('检查关键DOM元素:');
+            checkElement('agent-chat-tab');
+            checkElement('market-requests-tab');
+            checkElement('market-products-tab');
+            checkElement('my-deals-tab');
+            checkElement('agent-chat-panel');
+            checkElement('chatContainer');
+            checkElement('messageInput');
+            checkElement('sendMessage');
+            
+            // 配置需求Tab切换
+            const requestsTabEl = document.getElementById('requestsTab');
+            if (requestsTabEl) {
+                const requestTabElements = requestsTabEl.querySelectorAll('.nav-link');
+                requestTabElements.forEach(tabEl => {
+                    tabEl.addEventListener('click', function() {
+                        console.log('需求标签切换触发:', this.id);
+                        // 移除其他标签的激活状态
+                        requestTabElements.forEach(el => {
+                            el.classList.remove('active');
+                            const targetId = el.getAttribute('data-bs-target');
+                            const targetEl = document.querySelector(targetId);
+                            if (targetEl) {
+                                targetEl.classList.remove('show', 'active');
+                            }
+                        });
+                        
+                        // 激活当前标签
+                        this.classList.add('active');
+                        const targetId = this.getAttribute('data-bs-target');
+                        const targetEl = document.querySelector(targetId);
+                        if (targetEl) {
+                            targetEl.classList.add('show', 'active');
+                        }
+                    });
+                });
+            }
+            
+            // 配置产品Tab切换
+            const productsTabEl = document.getElementById('productsTab');
+            if (productsTabEl) {
+                const productTabElements = productsTabEl.querySelectorAll('.nav-link');
+                productTabElements.forEach(tabEl => {
+                    tabEl.addEventListener('click', function() {
+                        console.log('产品标签切换触发:', this.id);
+                        // 移除其他标签的激活状态
+                        productTabElements.forEach(el => {
+                            el.classList.remove('active');
+                            const targetId = el.getAttribute('data-bs-target');
+                            const targetEl = document.querySelector(targetId);
+                            if (targetEl) {
+                                targetEl.classList.remove('show', 'active');
+                            }
+                        });
+                        
+                        // 激活当前标签
+                        this.classList.add('active');
+                        const targetId = this.getAttribute('data-bs-target');
+                        const targetEl = document.querySelector(targetId);
+                        if (targetEl) {
+                            targetEl.classList.add('show', 'active');
+                        }
+                    });
+                });
+            }
+            
+            // 检查登录状态
+            checkAuth();
+
+            // 标签切换逻辑 - 使用Bootstrap 5的方式
+            const mainTabsEl = document.getElementById('mainTabs');
+            if (!mainTabsEl) {
+                console.error('找不到主标签容器!');
+            } else {
+                console.log('找到主标签容器，配置标签切换事件');
+                const tabElements = mainTabsEl.querySelectorAll('.nav-link');
+                console.log(`找到${tabElements.length}个标签元素`);
+                
+                tabElements.forEach(tabEl => {
+                    console.log(`为标签 ${tabEl.id} 添加点击事件`);
+                    tabEl.addEventListener('click', function() {
+                        console.log('主标签切换触发:', this.id, '目标:', this.getAttribute('data-bs-target'));
+                        try {
+                            // 移除其他标签的激活状态
+                            tabElements.forEach(el => {
+                                el.classList.remove('active');
+                                const targetId = el.getAttribute('data-bs-target');
+                                const targetEl = document.querySelector(targetId);
+                                if (targetEl) {
+                                    targetEl.classList.remove('show', 'active');
+                                }
+                            });
+                            
+                            // 激活当前标签
+                            this.classList.add('active');
+                            const targetId = this.getAttribute('data-bs-target');
+                            console.log('尝试激活目标面板:', targetId);
+                            const targetEl = document.querySelector(targetId);
+                            if (targetEl) {
+                                targetEl.classList.add('show', 'active');
+                                console.log('目标面板激活成功');
+                            } else {
+                                console.error('找不到目标面板:', targetId);
+                            }
+                            
+                            // 如果是交易标签，刷新数据
+                            if (this.id === 'my-deals-tab') {
+                                console.log('检测到交易标签，触发刷新');
+                                refreshDeals();
+                            }
+                        } catch (error) {
+                            console.error('标签切换发生错误:', error);
+                        }
+                    });
+                });
+            }
+            
+            // AI助手功能
+            const sendBtn = document.getElementById('sendMessage');
+            if (sendBtn) {
+                console.log('找到发送按钮，添加点击事件');
+                sendBtn.addEventListener('click', function(event) {
+                    console.log('发送按钮点击事件触发, 事件对象:', event.type);
+                    sendMessage();
+                });
+            } else {
+                console.error('找不到发送按钮元素!');
+            }
+            
+            const msgInput = document.getElementById('messageInput');
+            if (msgInput) {
+                console.log('找到消息输入框，添加键盘事件');
+                msgInput.addEventListener('keypress', function(e) {
+                    console.log('消息输入框键盘事件:', e.key, e.keyCode);
+                    handleEnterKeyPress(e);
+                });
+            } else {
+                console.error('找不到消息输入框元素!');
+            }
+            
+            // 切换标签
+            console.log('绑定登录/注册切换事件');
+            try {
+                document.getElementById('login-tab')?.addEventListener('click', function(e) {
+                    console.log('切换到登录标签');
+                    e.preventDefault();
+                    document.getElementById('login').classList.add('show', 'active');
+                    document.getElementById('register').classList.remove('show', 'active');
+                    this.classList.add('active');
+                    document.getElementById('register-tab').classList.remove('active');
+                });
+                
+                document.getElementById('register-tab')?.addEventListener('click', function(e) {
+                    console.log('切换到注册标签');
+                    e.preventDefault();
+                    document.getElementById('register').classList.add('show', 'active');
+                    document.getElementById('login').classList.remove('show', 'active');
+                    this.classList.add('active');
+                    document.getElementById('login-tab').classList.remove('active');
+                });
+            } catch (error) {
+                console.error('绑定登录/注册标签切换事件失败:', error);
+            }
+            
+            // 恢复其他事件处理器绑定
+            try {
+                console.log('绑定认证相关按钮事件');
+                document.getElementById('registerBtn')?.addEventListener('click', register);
+                document.getElementById('loginBtn')?.addEventListener('click', login);
+                document.getElementById('logoutBtn')?.addEventListener('click', logout);
+            } catch (error) {
+                console.error('绑定认证相关按钮事件失败:', error);
+            }
+            
+            try {
+                console.log('绑定需求功能按钮事件');
+                document.getElementById('submitRequest')?.addEventListener('click', submitRequest);
+                document.getElementById('refreshMyRequests')?.addEventListener('click', refreshMyRequests);
+                document.getElementById('refreshMarketRequests')?.addEventListener('click', refreshMarketRequests);
+                document.getElementById('confirmReceived')?.addEventListener('click', confirmReceived);
+            } catch (error) {
+                console.error('绑定需求功能按钮事件失败:', error);
+            }
+            
+            try {
+                console.log('绑定产品功能按钮事件');
+                document.getElementById('refreshMarketProducts')?.addEventListener('click', refreshMarketProducts);
+                document.getElementById('submitOffer')?.addEventListener('click', submitOffer);
+                document.getElementById('cancelOffer')?.addEventListener('click', hideOfferForm);
+                document.getElementById('submitProduct')?.addEventListener('click', submitProduct);
+                document.getElementById('refreshMyProducts')?.addEventListener('click', refreshMyProducts);
+            } catch (error) {
+                console.error('绑定产品功能按钮事件失败:', error);
+            }
+            
+            try {
+                console.log('绑定交易列表刷新按钮事件');
+                document.getElementById('refreshDeals')?.addEventListener('click', refreshDeals);
+            } catch (error) {
+                console.error('绑定交易列表刷新按钮事件失败:', error);
+            }
+            
+            console.log('所有事件绑定完成');
+        });
+    </script>
+</body>
+</html> 
