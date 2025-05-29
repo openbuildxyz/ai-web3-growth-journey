@@ -1,0 +1,26 @@
+{
+  "title": "2025-04 mini hackathon",
+  "defaultOpen": true,
+  "pages": [
+      "activity-review",
+      "open-memory",
+      "0xauto",
+      "video-to-nft",
+      "block-recruit",
+      "youtube-video-english-learning",
+      "way-to-universe",
+      "aliveme-club",
+      "nft-ai-analytics",
+      "trilingo"
+  ],
+  "activity-review": "活动回顾",
+  "open-memory": "OpenMemory (一等奖)",
+  "0xauto": "0xAuto (二等奖)",
+  "video-to-nft": "Video to NFT (三等奖)",
+  "block-recruit": "BlockRecruit (最佳Vibe奖)",
+  "youtube-video-english-learning": "YouTube英语学习插件",
+  "way-to-universe": "Way to Universe",
+  "aliveme-club": "ALiveMe.Club",
+  "nft-ai-analytics": "NFT AI Analytics",
+  "trilingo": "Trilingo"
+}

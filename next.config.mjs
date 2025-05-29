@@ -12,6 +12,16 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'mmbiz.qpic.cn',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   webpack: (config, { isServer }) => {
     config.externals = [...(config.externals || []), './projects/**'];
     
