@@ -1,0 +1,7 @@
+{
+  "name": "ethers-mock",
+  "version": "5.7.2",
+  "description": "模拟的ethers.js库",
+  "main": "index.js",
+  "private": true
+}
