@@ -1,0 +1,26 @@
+{
+  "title": "5月杭州Mini Hackathon项目",
+  "defaultOpen": true,
+  "pages": [
+    "activity-review",
+    "infofinds-u",
+    "shuihu-zhanji",
+    "buffett-ai",
+    "mood-social",
+    "block-recruit-hz",
+    "one-minute-website",
+    "boring-game",
+    "token-risk-analyzer",
+    "hummanta"
+  ],
+  "activity-review": "🎉 活动回顾",
+  "infofinds-u": "🏆 一等奖：InfoFinds U",
+  "shuihu-zhanji": "🥈 二等奖：水浒战记",
+  "buffett-ai": "🥉 三等奖：巴菲特AI",
+  "mood-social": "🎖️ 最佳Vibe奖：心情交友",
+  "block-recruit-hz": "💼 BlockRecruit",
+  "one-minute-website": "🌍 1分钟官网建站",
+  "boring-game": "🎮 BoringGame",
+  "token-risk-analyzer": "🧐 TokenRiskAnalyzer",
+  "hummanta": "🔧 Hummanta"
+} 
