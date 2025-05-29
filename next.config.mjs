@@ -22,6 +22,20 @@ const config = {
       },
     ],
   },
+  // 添加headers配置来解决微信图片防盗链问题
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Referrer-Policy',
+            value: 'no-referrer',
+          },
+        ],
+      },
+    ];
+  },
   webpack: (config, { isServer }) => {
     config.externals = [...(config.externals || []), './projects/**'];
     

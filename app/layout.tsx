@@ -22,11 +22,24 @@ export const metadata: Metadata = {
     apple: '/icon.svg',
   },
   manifest: '/manifest.json',
+  referrer: 'no-referrer',
+  other: {
+    'referrer': 'no-referrer',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'X-XSS-Protection': '1; mode=block',
+  },
 };
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
+      <head>
+        <meta name="referrer" content="no-referrer" />
+        <meta name="referrerpolicy" content="no-referrer" />
+        <meta httpEquiv="referrer" content="no-referrer" />
+        <meta name="format-detection" content="telephone=no" />
+      </head>
       <body className="flex flex-col min-h-screen">
         <RootProvider>{children}</RootProvider>
       </body>
