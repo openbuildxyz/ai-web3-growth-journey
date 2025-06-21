@@ -1,0 +1,89 @@
+@use "design-system";
+
+.confirm-add-suggested-token {
+  &__header {
+    display: flex;
+  }
+
+  &__token {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__balance {
+    flex: 0 0 30%;
+    min-width: 0;
+  }
+
+  &__token-list {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  &__token-list-item {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-top: 8px;
+    box-sizing: border-box;
+  }
+
+  &__data {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+  }
+
+  &__name {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__token-icon {
+    margin-right: 12px;
+    flex: 0 0 auto;
+  }
+
+  &.page-container {
+    $height-screen-sm-min: 720px;
+
+    transition: margin-top 0.3s ease-in-out, margin-bottom 0.3s ease-in-out;
+
+    @media screen and (min-width: design-system.$screen-sm-min) and (min-height: $height-screen-sm-min) {
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+
+    @include design-system.screen-sm-min {
+      max-height: 100%;
+    }
+
+    &.confirm-add-suggested-token--has-app-header-multichain {
+      @media screen and (min-width: design-system.$screen-sm-min) and (min-height: $height-screen-sm-min) {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .page-container {
+    &__content {
+      padding: 16px;
+    }
+
+    &__header {
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+
+    &__title {
+      text-align: center;
+      margin: 0;
+    }
+  }
+}
+
+.confirm-add-suggested-token--has-app-header-multichain {
+  border-radius: 0 0 2px 2px;
+}

@@ -1,0 +1,114 @@
+.yalc
+yalc.lock
+
+npm-debug.log
+yarn-error.log
+node_modules
+package-lock.json
+
+audit.json
+
+app/bower_components
+test/bower_components
+package
+.eslintcache
+
+# IDEs
+.idea
+.sublime-project
+
+*.bak
+
+# VIM
+*.swp
+*.swo
+
+temp
+.tmp
+.sass-cache
+.DS_Store
+app/.DS_Store
+
+storybook-build/
+coverage/
+jest-coverage/
+dist
+builds*/
+builds.zip
+development/ts-migration-dashboard/build
+
+test-artifacts
+test-builds
+build-artifacts
+
+#ignore css output and sourcemaps
+ui/css/output/
+
+notes.txt
+
+.nyc_output
+
+# MetaMask configuration
+.metamaskrc
+.metamaskprodrc
+
+# Customized manifest configuration
+.manifest-overrides*.json
+
+# Test results
+test-results/
+
+# This file is used to authenticate with the GitHub Package registry, to
+# enable the use of @metamask preview builds.
+.npmrc
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+development/generate-attributions/.yarn/*
+
+# MetaMask
+.metamask/*
+
+# Playwright
+public/playwright
+lavamoat/**/policy-debug.json
+
+# Attributions
+licenseInfos.json
+
+# Branding
+/app/images/branding
+
+# API Spec tests
+html-report/
+html-report-multichain/
+
+/changed-files
+
+# UI Integration tests
+test/integration/config/assets
+
+# Added by Task Master AI
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev-debug.log
+# Dependency directories
+node_modules/
+# Environment variables
+.env
+# Editor directories and files
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific

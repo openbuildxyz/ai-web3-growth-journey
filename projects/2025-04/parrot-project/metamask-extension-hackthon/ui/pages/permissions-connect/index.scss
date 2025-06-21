@@ -1,0 +1,72 @@
+@use "design-system";
+
+@import 'choose-account/index';
+@import 'connect-page/index';
+@import 'snaps/snap-install/index';
+@import 'snaps/snap-update/index';
+@import 'snaps/snap-result/index';
+@import 'snaps/snaps-connect/index';
+
+.permissions-connect {
+  $height-screen-sm-min: 720px;
+
+  $width-screen-sm-min: 85vw;
+  $width-screen-md-min: 80vw;
+  $width-screen-lg-min: 62vw;
+
+  // prevent overflow-x
+  max-width: 100%;
+  position: relative;
+  background: var(--color-background-default);
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+
+  @include design-system.screen-sm-min {
+    width: $width-screen-sm-min;
+
+    .page-container {
+      max-height: none;
+      min-height: auto;
+    }
+  }
+
+  @include design-system.screen-md-min {
+    width: $width-screen-md-min;
+  }
+
+  @include design-system.screen-lg-min {
+    width: $width-screen-lg-min;
+  }
+
+  &__top-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 16px 16px 0 16px;
+    align-items: center;
+  }
+
+  &__back {
+    @include design-system.H7;
+
+    color: var(--color-icon-default);
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  &__page-count {
+    @include design-system.H7;
+
+    color: var(--color-text-default);
+    grid-column: 2;
+    justify-self: flex-end;
+    font-weight: bold;
+  }
+}
+
+.permission-approval-container {
+  .page-container__footer {
+    border-top: 0;
+  }
+}

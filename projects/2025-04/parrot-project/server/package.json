@@ -1,0 +1,21 @@
+{
+  "name": "arbitrum-usdc-transfer",
+  "version": "1.0.0",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "vue": "^2.6.14",
+    "vue-router": "^3.6.5",
+    "web3": "^1.10.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-router": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "vue-template-compiler": "^2.6.14"
+  }
+}
