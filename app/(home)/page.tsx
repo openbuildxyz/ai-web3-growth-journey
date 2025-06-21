@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import type { Metadata } from 'next';
+import { BottomNav } from '../components/navigation/bottom-nav';
+import { useMeditationPlayer } from '../../hooks/use-meditation-player';
 
 // export const metadata: Metadata = {
 //   title: '冥想精灵 - AI 驱动的个性化冥想体验',
@@ -14,42 +16,73 @@ export default function HomePage() {
   const [mode, setMode] = useState('放松'); // 冥想模式 (放松, 财富, 健康)
   const [posture, setPosture] = useState('躺姿'); // 姿势
 
+  // 音乐播放器
+  const { isPlaying, timeRemaining, startMeditation, stopMeditation, formatTime } = useMeditationPlayer();
+
   // 处理开始冥想按钮点击
-  const handleStartMeditation = () => {
-    // TODO: 这里将在后续的 Story 中实现调用 /api/guidance 的逻辑
-    console.log('开始冥想，设置:', {
-      duration,
-      mode,
-      posture
-    });
-    alert(`即将开始 "${mode}" 冥想引导...\n时长: ${duration}分钟\n模式: ${mode}\n姿势: ${posture}`);
+  const handleStartMeditation = async () => {
+    if (isPlaying) {
+      // 如果正在播放，则停止
+      stopMeditation();
+    } else {
+      // 开始冥想
+      console.log('开始冥想，设置:', {
+        duration,
+        mode,
+        posture
+      });
+
+      try {
+        await startMeditation({ mode: mode as '放松' | '财富' | '健康', duration });
+      } catch (error) {
+        console.error('开始冥想失败:', error);
+        alert('播放音乐失败，请检查浏览器音频权限设置');
+      }
+    }
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-amber-50 via-green-50 to-emerald-100 dark:from-stone-900 dark:via-green-950 dark:to-emerald-950">
+    <div
+      className="flex flex-col min-h-screen"
+      style={{
+        background: 'linear-gradient(to top, #4a5d2a, #8fa072)'
+      }}
+    >
       {/* 自然背景纹理 */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-20">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-green-200 dark:bg-green-800 rounded-full blur-2xl" />
-        <div className="absolute top-32 right-16 w-24 h-24 bg-amber-200 dark:bg-amber-800 rounded-full blur-xl" />
-        <div className="absolute bottom-20 left-20 w-40 h-40 bg-emerald-200 dark:bg-emerald-800 rounded-full blur-3xl" />
-        <div className="absolute bottom-40 right-8 w-28 h-28 bg-yellow-200 dark:bg-yellow-800 rounded-full blur-xl" />
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-30">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-white/20 rounded-full blur-2xl" />
+        <div className="absolute top-32 right-16 w-24 h-24 bg-white/15 rounded-full blur-xl" />
+        <div className="absolute bottom-20 left-20 w-40 h-40 bg-white/25 rounded-full blur-3xl" />
+        <div className="absolute bottom-40 right-8 w-28 h-28 bg-white/10 rounded-full blur-xl" />
       </div>
 
       {/* 主要内容 */}
-      <div className="relative z-10 flex-1 flex flex-col p-4 pt-12">
+      <div className="relative z-10 flex-1 flex flex-col p-4 pt-12 pb-24">
         {/* 大圆形按钮 */}
         <div className="flex-shrink-0 flex justify-center mb-8">
           <button
             onClick={handleStartMeditation}
-            className="w-48 h-48 rounded-full shadow-2xl transition-all duration-300 transform
-                     bg-gradient-to-br from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 hover:scale-105 active:scale-95
+            className={`w-48 h-48 rounded-full shadow-2xl transition-all duration-300 transform
+                     ${isPlaying
+                ? 'bg-gradient-to-br from-red-400 to-red-500 hover:from-red-500 hover:to-red-600'
+                : 'bg-gradient-to-br from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600'
+              } hover:scale-105 active:scale-95
                      border-4 border-white/30 backdrop-blur-sm
-                     flex items-center justify-center"
+                     flex items-center justify-center`}
           >
             <div className="text-center text-white">
-              <div className="text-2xl mb-2">🧘‍♀️</div>
-              <div className="text-lg font-medium">开始冥想</div>
-              <div className="text-sm opacity-90 mt-1">{duration}分钟 · {mode}</div>
+              <div className="text-2xl mb-2">
+                {isPlaying ? '⏸️' : '🧘‍♀️'}
+              </div>
+              <div className="text-lg font-medium">
+                {isPlaying ? '停止冥想' : '开始冥想'}
+              </div>
+              <div className="text-sm opacity-90 mt-1">
+                {isPlaying
+                  ? `剩余 ${formatTime(timeRemaining)}`
+                  : `${duration}分钟 · ${mode}`
+                }
+              </div>
             </div>
           </button>
         </div>
@@ -58,138 +91,132 @@ export default function HomePage() {
         <div className="flex-1 space-y-6">
 
           {/* 设置滑块区域 */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* 时长设置 - 滑动选择器 */}
-            <div className="bg-white/60 dark:bg-black/20 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/30">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-medium text-stone-700 dark:text-stone-300">时长</span>
-                <span className="text-sm text-stone-600 dark:text-stone-400">{duration} 分钟</span>
-              </div>
+            <div className="relative">
+              {/* 滑块条 */}
+              <div
+                className="relative h-12 rounded-full flex items-center cursor-pointer shadow-lg"
+                style={{
+                  background: 'linear-gradient(to right, #e5e7b3, #d4d6a0, #c3c58d)'
+                }}
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect()
+                  const x = e.clientX - rect.left
+                  const width = rect.width
+                  if (x < width / 3) setDuration(5)
+                  else if (x < width * 2 / 3) setDuration(10)
+                  else setDuration(15)
+                }}
+              >
+                {/* 高亮光标 - 在文字下方 */}
+                <div
+                  className="absolute rounded-full transition-all duration-300 z-10 shadow-xl"
+                  style={{
+                    width: '32%',
+                    height: '36px',
+                    left: duration === 5 ? '1%' : duration === 10 ? '34%' : '67%',
+                    top: '6px',
+                    background: 'linear-gradient(135deg, #ffd700, #ffed4e, #ffd700)',
+                    border: '3px solid #ffffff',
+                    boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3)'
+                  }}
+                ></div>
 
-              <div className="relative">
-                <div className="flex justify-between text-xs text-stone-500 dark:text-stone-400 mb-2">
-                  <span>5</span>
-                  <span>10</span>
-                  <span>15</span>
-                </div>
-
-                <div className="relative bg-green-100 dark:bg-green-800 h-6 rounded-full flex items-center">
-                  {/* 分隔线 */}
-                  <div className="absolute left-1/3 top-1/2 transform -translate-y-1/2 w-px h-3 bg-stone-300 dark:bg-stone-600"></div>
-                  <div className="absolute left-2/3 top-1/2 transform -translate-y-1/2 w-px h-3 bg-stone-300 dark:bg-stone-600"></div>
-
-                  {/* 滑动按钮 */}
-                  <div
-                    className="absolute w-5 h-5 bg-green-500 rounded-full shadow-md transition-all duration-300 cursor-pointer"
-                    style={{
-                      left: duration === 5 ? '2px' : duration === 10 ? 'calc(50% - 10px)' : 'calc(100% - 22px)'
-                    }}
-                  ></div>
-
-                  {/* 点击区域 */}
-                  <div
-                    className="w-full h-full cursor-pointer"
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect()
-                      const x = e.clientX - rect.left
-                      const width = rect.width
-                      if (x < width / 3) setDuration(5)
-                      else if (x < width * 2 / 3) setDuration(10)
-                      else setDuration(15)
-                    }}
-                  ></div>
+                {/* 文字选项 - 在光标上方 */}
+                <div className="absolute inset-0 flex items-center justify-around text-sm font-medium text-stone-700 z-20">
+                  <span>5分钟</span>
+                  <span>10分钟</span>
+                  <span>15分钟</span>
                 </div>
               </div>
             </div>
 
             {/* 冥想模式设置 - 滑动选择器 */}
-            <div className="bg-white/60 dark:bg-black/20 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/30">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-medium text-stone-700 dark:text-stone-300">冥想模式</span>
-                <span className="text-sm text-stone-600 dark:text-stone-400">{mode}</span>
-              </div>
+            <div className="relative">
+              {/* 滑块条 */}
+              <div
+                className="relative h-12 rounded-full flex items-center cursor-pointer shadow-lg"
+                style={{
+                  background: 'linear-gradient(to right, #e5e7b3, #d4d6a0, #c3c58d)'
+                }}
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect()
+                  const x = e.clientX - rect.left
+                  const width = rect.width
+                  if (x < width / 3) setMode('放松')
+                  else if (x < width * 2 / 3) setMode('财富')
+                  else setMode('健康')
+                }}
+              >
+                {/* 高亮光标 - 在文字下方 */}
+                <div
+                  className="absolute rounded-full transition-all duration-300 z-10 shadow-xl"
+                  style={{
+                    width: '32%',
+                    height: '36px',
+                    left: mode === '放松' ? '1%' : mode === '财富' ? '34%' : '67%',
+                    top: '6px',
+                    background: 'linear-gradient(135deg, #ffd700, #ffed4e, #ffd700)',
+                    border: '3px solid #ffffff',
+                    boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3)'
+                  }}
+                ></div>
 
-              <div className="relative">
-                <div className="flex justify-between text-xs text-stone-500 dark:text-stone-400 mb-2">
-                  <span>放松</span>
-                  <span>财富</span>
-                  <span>健康</span>
-                </div>
-
-                <div className="relative bg-green-100 dark:bg-green-800 h-6 rounded-full flex items-center">
-                  {/* 分隔线 */}
-                  <div className="absolute left-1/3 top-1/2 transform -translate-y-1/2 w-px h-3 bg-stone-300 dark:bg-stone-600"></div>
-                  <div className="absolute left-2/3 top-1/2 transform -translate-y-1/2 w-px h-3 bg-stone-300 dark:bg-stone-600"></div>
-
-                  {/* 滑动按钮 */}
-                  <div
-                    className="absolute w-5 h-5 bg-green-500 rounded-full shadow-md transition-all duration-300 cursor-pointer"
-                    style={{
-                      left: mode === '放松' ? '2px' : mode === '财富' ? 'calc(50% - 10px)' : 'calc(100% - 22px)'
-                    }}
-                  ></div>
-
-                  {/* 点击区域 */}
-                  <div
-                    className="w-full h-full cursor-pointer"
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect()
-                      const x = e.clientX - rect.left
-                      const width = rect.width
-                      if (x < width / 3) setMode('放松')
-                      else if (x < width * 2 / 3) setMode('财富')
-                      else setMode('健康')
-                    }}
-                  ></div>
+                {/* 文字选项 - 在光标上方 */}
+                <div className="absolute inset-0 flex items-center justify-around text-sm font-medium text-stone-700 z-20">
+                  <span>🧘 放松</span>
+                  <span>💰 财富</span>
+                  <span>💪 健康</span>
                 </div>
               </div>
             </div>
 
             {/* 姿势设置 - 滑动选择器 */}
-            <div className="bg-white/60 dark:bg-black/20 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/30">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-medium text-stone-700 dark:text-stone-300">姿势</span>
-                <span className="text-sm text-stone-600 dark:text-stone-400">{posture}</span>
-              </div>
+            <div className="relative">
+              {/* 滑块条 */}
+              <div
+                className="relative h-12 rounded-full flex items-center cursor-pointer shadow-lg"
+                style={{
+                  background: 'linear-gradient(to right, #e5e7b3, #d4d6a0, #c3c58d)'
+                }}
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect()
+                  const x = e.clientX - rect.left
+                  const width = rect.width
+                  if (x < width / 3) setPosture('坐姿')
+                  else if (x < width * 2 / 3) setPosture('躺姿')
+                  else setPosture('站姿')
+                }}
+              >
+                {/* 高亮光标 - 在文字下方 */}
+                <div
+                  className="absolute rounded-full transition-all duration-300 z-10 shadow-xl"
+                  style={{
+                    width: '32%',
+                    height: '36px',
+                    left: posture === '坐姿' ? '1%' : posture === '躺姿' ? '34%' : '67%',
+                    top: '6px',
+                    background: 'linear-gradient(135deg, #ffd700, #ffed4e, #ffd700)',
+                    border: '3px solid #ffffff',
+                    boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3)'
+                  }}
+                ></div>
 
-              <div className="relative">
-                <div className="flex justify-between text-xs text-stone-500 dark:text-stone-400 mb-2">
-                  <span>坐姿</span>
-                  <span>躺姿</span>
-                  <span>站姿</span>
-                </div>
-
-                <div className="relative bg-green-100 dark:bg-green-800 h-6 rounded-full flex items-center">
-                  {/* 分隔线 */}
-                  <div className="absolute left-1/3 top-1/2 transform -translate-y-1/2 w-px h-3 bg-stone-300 dark:bg-stone-600"></div>
-                  <div className="absolute left-2/3 top-1/2 transform -translate-y-1/2 w-px h-3 bg-stone-300 dark:bg-stone-600"></div>
-
-                  {/* 滑动按钮 */}
-                  <div
-                    className="absolute w-5 h-5 bg-green-500 rounded-full shadow-md transition-all duration-300 cursor-pointer"
-                    style={{
-                      left: posture === '坐姿' ? '2px' : posture === '躺姿' ? 'calc(50% - 10px)' : 'calc(100% - 22px)'
-                    }}
-                  ></div>
-
-                  {/* 点击区域 */}
-                  <div
-                    className="w-full h-full cursor-pointer"
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect()
-                      const x = e.clientX - rect.left
-                      const width = rect.width
-                      if (x < width / 3) setPosture('坐姿')
-                      else if (x < width * 2 / 3) setPosture('躺姿')
-                      else setPosture('站姿')
-                    }}
-                  ></div>
+                {/* 文字选项 - 在光标上方 */}
+                <div className="absolute inset-0 flex items-center justify-around text-sm font-medium text-stone-700 z-20">
+                  <span>🪑 坐姿</span>
+                  <span>🛏️ 躺姿</span>
+                  <span>🧍 站姿</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* 底部导航 */}
+      <BottomNav />
     </div>
   );
 }
