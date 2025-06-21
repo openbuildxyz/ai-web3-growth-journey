@@ -79,22 +79,28 @@ export function IntentionSelector({
     // 成功状态 - 渲染意图按钮列表
     return (
         <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-center">选择您的冥想意图</h2>
-            <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+            <h2 className="text-base font-medium text-center text-stone-700 dark:text-stone-300">选择冥想意图</h2>
+            <div className="space-y-2">
                 {intentions?.map((intention) => (
                     <Button
                         key={intention}
                         variant={selectedIntention === intention ? 'default' : 'outline'}
                         onClick={() => handleIntentionClick(intention)}
-                        className="h-12 text-sm font-medium transition-all duration-200 hover:scale-105"
+                        className={`
+              w-full h-12 text-sm font-medium transition-all duration-200 rounded-xl
+              ${selectedIntention === intention
+                                ? 'bg-green-500 hover:bg-green-600 text-white border-green-500 shadow-md'
+                                : 'bg-white/80 dark:bg-black/40 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-stone-700 hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-300 dark:hover:border-green-700'
+                            }
+            `}
                     >
                         {intention}
                     </Button>
                 ))}
             </div>
             {selectedIntention && (
-                <p className="text-center text-sm text-muted-foreground">
-                    已选择：<span className="font-medium text-foreground">{selectedIntention}</span>
+                <p className="text-center text-xs text-stone-500 dark:text-stone-400">
+                    已选择：<span className="font-medium text-green-600 dark:text-green-400">{selectedIntention}</span>
                 </p>
             )}
         </div>
