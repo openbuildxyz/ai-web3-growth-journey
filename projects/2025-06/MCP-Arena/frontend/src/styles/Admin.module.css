@@ -1,0 +1,376 @@
+.adminContainer {
+  width: 100%;
+}
+
+.title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.notConnected {
+  text-align: center;
+  padding: 2rem;
+  background-color: #ffebee;
+  border-radius: 8px;
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.sortControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1.5rem;
+  height: calc(100vh - 150px);
+  width: 100%;
+  min-height: 500px;
+  position: relative;
+}
+
+.mcpList {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 150px);
+}
+
+.mcpList h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  color: #333;
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+  padding: 0.5rem 0;
+  z-index: 5;
+}
+
+.listHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+  font-weight: 600;
+  color: #555;
+  position: sticky;
+  top: 45px;
+  background-color: #f8f9fa;
+  z-index: 5;
+}
+
+.mcpItem {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.mcpItem:hover {
+  background-color: #f0f0f0;
+}
+
+.mcpItem.selected {
+  background-color: #e3f2fd;
+  border-left: 4px solid #0070f3;
+  padding-left: 0.5rem;
+}
+
+.mcpName {
+  font-weight: 500;
+}
+
+.mcpUsage {
+  text-align: center;
+}
+
+.mcpRating {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.star {
+  color: #ffc107;
+  font-size: 0.9rem;
+  margin-left: 2px;
+}
+
+.smallStar {
+  color: #ffc107;
+  font-size: 0.7rem;
+  margin-left: 1px;
+}
+
+.mcpDetails {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
+}
+
+.mcpDetails h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #333;
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+  padding: 0.5rem 0;
+  z-index: 5;
+}
+
+.noSelection {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  font-style: italic;
+}
+
+.statsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.statsCard {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.statsCard h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.verticalStats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.statItem:last-child {
+  border-bottom: none;
+}
+
+.statLabel {
+  font-weight: 500;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.statCard {
+  background-color: white;
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.statCard h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.statValue {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #0070f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartContainer {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+.wideChart {
+  grid-column: span 2;
+}
+
+.chartContainer h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.barChart {
+  height: 150px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.bar {
+  flex: 1;
+  background-color: #0070f3;
+  margin: 0 2px;
+  min-height: 4px;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+}
+
+.chartLabel {
+  text-align: center;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.ratingDistribution {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ratingBar {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ratingLabel {
+  text-align: right;
+  font-weight: 500;
+}
+
+.ratingBarContainer {
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ratingBarFill {
+  height: 100%;
+  background-color: #ffc107;
+  border-radius: 10px;
+}
+
+.ratingCount {
+  text-align: right;
+  color: #555;
+}
+
+.topRowGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rewardList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rewardList li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.qosList {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+
+.qosList li {
+  padding: 0.3rem 0;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+  
+  .statsContainer {
+    grid-template-columns: 1fr;
+  }
+  
+  .topRowGrid,
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .mcpList {
+    position: static;
+  }
+  
+  .title {
+    position: static;
+  }
+}
