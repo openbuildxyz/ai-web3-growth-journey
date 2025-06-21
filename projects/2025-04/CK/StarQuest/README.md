@@ -2,6 +2,9 @@
 
 ![image](https://github.com/user-attachments/assets/39393a2b-9c9f-4888-8541-956bbf26dd3f)
 
+![mainPage](https://github.com/user-attachments/assets/b6f204ad-2af0-4c87-8e74-ebe1c9bbfada)
+
+
 **StarQuest** 是一款规则上链、结果随机，并通过 AI 增强游戏趣味性的 Web3 游戏，围绕“探索、选择、成长、奖励”展开。玩家将穿越由其他玩家创建的“星岛”，展开一次次充满变数与想象力的星愿旅程。每次选择都记录于链上，每次游戏过程都由 AI 生成独特的图文反馈，最终构成玩家的专属命运轨迹。
 
 ---
