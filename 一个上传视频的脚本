@@ -1,0 +1,85 @@
+// 假设你的 <input type="file" id="videoInput" /> 已存在页面中
+
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('videoInput');
+
+  input.addEventListener('change', async () => {
+    const file = input.files[0];
+
+    if (!file) {
+      alert("请选择一个文件");
+      return;
+    }
+
+    // 检查是否为视频文件
+    if (!file.type.startsWith('video/')) {
+      alert("请上传视频文件！");
+      return;
+    }
+
+    // 构建 FormData 对象
+    const formData = new FormData();
+    formData.append('video', file); // 后端接收字段名为 'video'
+
+    try {
+      // 发起上传请求
+      const response = await fetch('https://your-server.com/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("上传成功", result);
+        alert("视频上传成功！");
+      } else {
+        throw new Error("上传失败：" + response.statusText);
+      }
+    } catch (error) {
+      console.error("上传出错", error);
+      alert("视频上传出错，请检查网络或重试");
+    }
+  });
+});
+// 假设你的 <input type="file" id="videoInput" /> 已存在页面中
+
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('videoInput');
+
+  input.addEventListener('change', async () => {
+    const file = input.files[0];
+
+    if (!file) {
+      alert("请选择一个文件");
+      return;
+    }
+
+    // 检查是否为视频文件
+    if (!file.type.startsWith('video/')) {
+      alert("请上传视频文件！");
+      return;
+    }
+
+    // 构建 FormData 对象
+    const formData = new FormData();
+    formData.append('video', file); // 后端接收字段名为 'video'
+
+    try {
+      // 发起上传请求
+      const response = await fetch('https://your-server.com/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("上传成功", result);
+        alert("视频上传成功！");
+      } else {
+        throw new Error("上传失败：" + response.statusText);
+      }
+    } catch (error) {
+      console.error("上传出错", error);
+      alert("视频上传出错，请检查网络或重试");
+    }
+  });
