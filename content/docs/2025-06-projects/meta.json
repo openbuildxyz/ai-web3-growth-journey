@@ -1,0 +1,20 @@
+{
+  "title": "6月北京Mini Hackathon项目",
+  "defaultOpen": true,
+  "pages": [
+    "activity-review",
+    "mcp-arena",
+    "starquest",
+    "soullink",
+    "academic-review-platform",
+    "mnemovault",
+    "nft-greed-time-lending"
+  ],
+  "activity-review": "🎉 活动回顾",
+  "mcp-arena": "MCP-Arena",
+  "starquest": "StarQuest",
+  "soullink": "SoulLink",
+  "academic-review-platform": "AcademicReviewPlatform",
+  "mnemovault": "MnemoVault",
+  "nft-greed-time-lending": "NFT-Greed-Time-Lending"
+} 
