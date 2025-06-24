@@ -3,7 +3,6 @@ import { RootProvider } from 'fumadocs-ui/provider';
 import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { QueryProvider } from './components/providers/query-provider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -42,11 +41,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <meta name="format-detection" content="telephone=no" />
       </head>
       <body className="flex flex-col min-h-screen">
-        <RootProvider>
-          <QueryProvider>
-            {children}
-          </QueryProvider>
-        </RootProvider>
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );
