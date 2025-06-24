@@ -1,0 +1,16 @@
+{
+  "name": "web3-website-registry",
+  "version": "1.0.0",
+  "description": "Web3组件用于企业官网上链",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "ethers": "^5.8.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
