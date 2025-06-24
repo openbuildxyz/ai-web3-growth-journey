@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+每次对话都将我跟ai的对话记录保存至prompts.md文件
