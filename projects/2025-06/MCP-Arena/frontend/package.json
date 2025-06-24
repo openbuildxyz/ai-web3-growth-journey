@@ -1,0 +1,27 @@
+{
+  "name": "mcp-arena-app",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@rainbow-me/rainbowkit": "^2.2.8",
+    "@tanstack/react-query": "^5.55.3",
+    "echarts": "^5.6.0",
+    "echarts-for-react": "^3.0.2",
+    "next": "^15.3.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "viem": "2.29.2",
+    "wagmi": "^2.15.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.8",
+    "@types/react": "^19.1.8",
+    "eslint-config-next": "^15.1.7",
+    "typescript": "5.5.4"
+  }
+}
