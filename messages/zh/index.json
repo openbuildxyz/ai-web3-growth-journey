@@ -1,0 +1,149 @@
+{
+  "Hero": {
+    "title": "AI+Web3开发者成长计划",
+    "subtitle": "AI³ Growth Journey",
+    "description": "OpenBuild与周周黑客松联合发起亚太区AI+Web3开发者成长计划，每月举办线上Workshop和线下Mini-Hackathon",
+    "developerSignup": "开发者报名",
+    "becomeContributor": "成为共建者",
+    "startExploring": "开始探索"
+  },
+  "HandbookOverview": {
+    "title": "AI³ Growth Journey 介绍",
+    "subtitle": "一场横跨亚太的AI+Web3开发者觉醒运动，通过实战探索前沿技术并构建创新应用",
+    "featuresTitle": "活动特色",
+    "benefitsTitle": "参与收获",
+    "features": {
+      "community": "由亚太顶级社区联合发起",
+      "communityDesc": "OpenBuild (亚太最大的Web3开源社区) 与 周周黑客松 (中国最具活力的AI产品创造者社区) 联合发起",
+      "activities": "横跨亚太的开发者活动",
+      "activitiesDesc": "每月举办线上AI+Web3 Workshop和线下Mini-Hackathon，覆盖中国、泰国、越南、马来西亚、新加坡、印度等地区",
+      "innovation": "AI+Web3融合创新",
+      "innovationDesc": "探索AI Smart Contract、Web3 AI Agent、OnChain Data Insight、AIGC Gaming等前沿主题",
+      "participation": "多元参与机会",
+      "participationDesc": "面向开发者、共建者和赞助商开放，提供黑客松奖金、孵化器对接和投资机会",
+      "duration": "10个月的持续计划",
+      "durationDesc": "从3月开始，未来10个月持续开展，每月解锁一个颠覆性命题",
+      "rewards": "丰厚奖励与独家资源",
+      "rewardsDesc": "限量版「赛博功德」NFT勋章、周周黑客松 X OpenBuild 独家周边、与顶级VC共进深夜泡面局"
+    },
+    "benefits": {
+      "skills": "掌握前沿技术",
+      "skillsDesc": "通过实战项目快速掌握AI+Web3的前沿技术栈和开发经验",
+      "network": "扩展人脉资源",
+      "networkDesc": "与15,000+开发者和顶级投资人建立连接，获取优质项目孵化机会",
+      "opportunity": "发现创新机会",
+      "opportunityDesc": "在AI与Web3碰撞的前沿探索下一个独角兽项目的诞生",
+      "community": "加入开发者社区",
+      "communityDesc": "成为活跃的开发者社区一员，共同推动技术发展与创新应用落地"
+    },
+    "viewDetails": "查看活动详情"
+  },
+  "ContentStructure": {
+    "title": "主题内容",
+    "subtitle": "每月解锁一个颠覆性命题，探索AI与Web3融合的无限可能",
+    "casesTitle": "实战案例",
+    "casesSubtitle": "在案例研究部分，我们提供了三类重要的学习资源",
+    "topics": {
+      "aiSmartContract": "用AI写智能合约",
+      "aiSmartContractDesc": "探索如何使用AI代码助手（如Cursor、Copilot）高效编写和优化智能合约，提升Web3开发效率。",
+      "web3AiAgent": "Web3 AI Agent开发",
+      "web3AiAgentDesc": "学习构建基于区块链的AI代理，实现自动化交易、智能资产管理和去中心化决策系统。",
+      "onchainDataAi": "链上数据AI分析",
+      "onchainDataAiDesc": "掌握使用AI技术分析区块链数据的方法，发掘市场趋势、用户行为模式和DeFi策略优化。",
+      "aiGaming": "AI游戏与AIGC",
+      "aiGamingDesc": "了解如何将AI生成内容与Web3游戏结合，创造独特的游戏资产、动态游戏世界和个性化游戏体验。",
+      "noCodeDapps": "无代码DApp开发",
+      "noCodeDappsDesc": "探索无代码工具构建去中心化应用的可能性，让更多非技术背景的创造者参与Web3创新。"
+    },
+    "cases": {
+      "contractGeneration": "实战案例: 智能合约自动化生成",
+      "contractGenerationDesc": "使用AI辅助设计、编写和审计智能合约，显著提高开发效率和安全性",
+      "tradingAgent": "实战案例: 自主交易AI Agent",
+      "tradingAgentDesc": "构建能够自主进行DeFi交易决策的AI代理，基于链上数据和市场分析",
+      "nftGameAssets": "实战案例: NFT游戏资产生成",
+      "nftGameAssetsDesc": "利用AIGC技术批量创建独特游戏资产，并与区块链集成实现真正所有权"
+    }
+  },
+  "TargetAudience": {
+    "title": "参与对象",
+    "subtitle": "招募开发者、共建者和赞助商，共同探索AI+Web3的未来",
+    "audiences": {
+      "developers": "开发者",
+      "developersDesc": "有编程基础或AI/Web3爱好的技术人员，希望探索AI+Web3的融合创新",
+      "contributors": "共建者",
+      "contributorsDesc": "技术布道者、项目炼金师、活动造浪者等希望共同推动AI+Web3发展的贡献者",
+      "sponsors": "赞助商",
+      "sponsorsDesc": "关注AI+Web3创新领域，希望接触高质量开发者和项目的机构和企业"
+    }
+  },
+  "FAQ": {
+    "title": "常见问题",
+    "subtitle": "关于创建MVP及获取用户的常见疑问解答",
+    "questions": {
+      "cities": {
+        "question": "活动都在哪些城市举办？",
+        "answer": "活动覆盖亚太主要城市，包括曼谷、胡志明、吉隆坡、新加坡、北上广深杭等。线上Workshop不受地域限制，随时参与。"
+      },
+      "background": {
+        "question": "需要哪些技术背景才能参加？",
+        "answer": "适合有编程基础、AIGC能力、产品设计、运营经验，或者Web3/AI爱好者。不同主题对技术背景要求不同，我们会提前告知。"
+      },
+      "benefits": {
+        "question": "参加活动能获得什么？",
+        "answer": "黑客松奖金、孵化器对接、投资机会、限量NFT勋章、独家周边，以及与顶级VC共进深夜泡面局的机会。"
+      },
+      "sponsorship": {
+        "question": "如何成为赞助商？",
+        "answer": "赞助费用8,000美元起，可获得全年品牌曝光、定制主题黑客松、提前锁定优质开发者等权益。联系ian@openbuild.xyz了解详情。"
+      }
+    }
+  },
+  "Sponsors": {
+    "title": "赞助商",
+    "subtitle": "感谢以下合作伙伴对AI³ Growth Journey的大力支持",
+    "contact": "赞助合作请联系: "
+  },
+  "CommunityJoin": {
+    "title": "加入AI³ Growth Journey开发者社区",
+    "description": "与15,000+开发者共同探索AI+Web3前沿技术，参与亚太最具活力的开发者活动，你的项目将穿越20万+开发者网络，直达顶级孵化器与投资人的雷达",
+    "developerSignup": "开发者报名",
+    "becomeContributor": "成为共建者"
+  },
+  "Footer": {
+    "description": "© {year} AI³ Growth Journey by OpenBuild & 周周黑客松",
+    "links": {
+      "handbook": "手册",
+      "resources": "资源",
+      "community": "社区",
+      "gettingStarted": "开始指南",
+      "planningPhase": "规划阶段",
+      "buildingPhase": "构建阶段",
+      "validationPhase": "验证阶段",
+      "launchingPhase": "发布阶段",
+      "caseStudies": "案例研究",
+      "practicalTutorials": "实操教程",
+      "resourceLibrary": "资源库",
+      "contributionGuide": "贡献指南",
+      "github": "GitHub",
+      "officialWebsite": "官网",
+      "wechatAccount": "微信公众号",
+      "socialGroup": "社群"
+    },
+    "contact": "联系我们"
+  },
+  "Navigation": {
+    "home": "首页",
+    "documentation": "文档",
+    "aiWeb3Guide": "AI Web3指南",
+    "blog": "博客",
+    "about": "关于我们",
+    "changelog": "更新日志"
+  },
+  "LanguageSwitcher": {
+    "switchLanguage": "切换语言",
+    "languages": {
+      "en": "English",
+      "zh": "中文"
+    }
+  }
+} 

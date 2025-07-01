@@ -4,55 +4,58 @@ import { Layers, CheckSquare, FileText, Lightbulb, Wrench, UserCheck, Rocket, Li
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/container';
 import { Card } from '@/components/ui/card';
+import { useTranslations } from 'next-intl';
 
 export function ContentStructure() {
+  const t = useTranslations('ContentStructure');
+
   const contentSections = [
     {
       icon: Code,
-      title: "用AI写智能合约",
-      description: "探索如何使用AI代码助手（如Cursor、Copilot）高效编写和优化智能合约，提升Web3开发效率。",
+      title: t('topics.aiSmartContract'),
+      description: t('topics.aiSmartContractDesc'),
       path: "/docs/structure/ai-smart-contract"
     },
     {
       icon: Bot,
-      title: "Web3 AI Agent开发",
-      description: "学习构建基于区块链的AI代理，实现自动化交易、智能资产管理和去中心化决策系统。",
+      title: t('topics.web3AiAgent'),
+      description: t('topics.web3AiAgentDesc'),
       path: "/docs/structure/web3-ai-agent"
     },
     {
       icon: Database,
-      title: "链上数据AI分析",
-      description: "掌握使用AI技术分析区块链数据的方法，发掘市场趋势、用户行为模式和DeFi策略优化。",
+      title: t('topics.onchainDataAi'),
+      description: t('topics.onchainDataAiDesc'),
       path: "/docs/structure/onchain-data-ai"
     },
     {
       icon: Gamepad2,
-      title: "AI游戏与AIGC",
-      description: "了解如何将AI生成内容与Web3游戏结合，创造独特的游戏资产、动态游戏世界和个性化游戏体验。",
+      title: t('topics.aiGaming'),
+      description: t('topics.aiGamingDesc'),
       path: "/docs/structure/ai-gaming-aigc"
     },
     {
       icon: Layers,
-      title: "无代码DApp开发",
-      description: "探索无代码工具构建去中心化应用的可能性，让更多非技术背景的创造者参与Web3创新。",
+      title: t('topics.noCodeDapps'),
+      description: t('topics.noCodeDappsDesc'),
       path: "/docs/structure/no-code-dapps"
     }
   ];
 
   const caseSections = [
     {
-      title: "实战案例: 智能合约自动化生成",
-      description: "使用AI辅助设计、编写和审计智能合约，显著提高开发效率和安全性",
+      title: t('cases.contractGeneration'),
+      description: t('cases.contractGenerationDesc'),
       path: "/docs/cases/ai-contract-generation"
     },
     {
-      title: "实战案例: 自主交易AI Agent",
-      description: "构建能够自主进行DeFi交易决策的AI代理，基于链上数据和市场分析",
+      title: t('cases.tradingAgent'),
+      description: t('cases.tradingAgentDesc'),
       path: "/docs/cases/trading-ai-agent"
     },
     {
-      title: "实战案例: NFT游戏资产生成",
-      description: "利用AIGC技术批量创建独特游戏资产，并与区块链集成实现真正所有权",
+      title: t('cases.nftGameAssets'),
+      description: t('cases.nftGameAssetsDesc'),
       path: "/docs/cases/nft-game-assets"
     }
   ];
@@ -107,9 +110,9 @@ export function ContentStructure() {
           <div className="inline-flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 p-2 mb-4">
             <Sparkles className="h-6 w-6 text-black dark:text-white" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">主题内容</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">{t('title')}</h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            每月解锁一个<strong>颠覆性命题</strong>，探索AI与Web3融合的<strong>无限可能</strong>
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -144,9 +147,9 @@ export function ContentStructure() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-center mb-10"
         >
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">实战案例</h3>
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('casesTitle')}</h3>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            在案例研究部分，我们提供了三类重要的学习资源
+            {t('casesSubtitle')}
           </p>
         </motion.div>
 

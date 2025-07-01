@@ -1,0 +1,183 @@
+{
+  "Hero": {
+    "title": "AI+Web3 Developer Growth Program",
+    "subtitle": "AI³ Growth Journey",
+    "description": "OpenBuild and HackathonWeekly jointly launch the Asia-Pacific AI+Web3 developer growth program, hosting monthly online workshops and offline mini-hackathons",
+    "developerSignup": "Developer Signup",
+    "becomeContributor": "Become a Contributor",
+    "startExploring": "Start Exploring"
+  },
+  "Work": {
+    "title": "How it works",
+    "description": "Discover how Nextify simplifies documentation creation",
+    "steps": "3 EASY STEPS",
+    "step1": {
+      "title": "Clone Nextify Template",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    },
+    "step2": {
+      "title": "Remove Old content",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    },
+    "step3": {
+      "title": "Start new content",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    }
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Common questions and answers about creating MVPs and acquiring users",
+    "questions": {
+      "cities": {
+        "question": "In which cities are the activities held?",
+        "answer": "Activities cover major Asia-Pacific cities, including Bangkok, Ho Chi Minh City, Kuala Lumpur, Singapore, Beijing, Shanghai, Guangzhou, Shenzhen, Hangzhou, etc. Online workshops are not geographically restricted and can be participated in at any time."
+      },
+      "background": {
+        "question": "What technical background is required to participate?",
+        "answer": "Suitable for those with programming background, AIGC capabilities, product design, operational experience, or Web3/AI enthusiasts. Different topics have different technical background requirements, which we will inform in advance."
+      },
+      "benefits": {
+        "question": "What can you get by participating in the activities?",
+        "answer": "Hackathon prizes, incubator connections, investment opportunities, limited NFT badges, exclusive merchandise, and opportunities to have late-night ramen sessions with top VCs."
+      },
+      "sponsorship": {
+        "question": "How to become a sponsor?",
+        "answer": "Sponsorship starts at $8,000, providing year-round brand exposure, customized themed hackathons, early access to high-quality developers, and other benefits. Contact ian@openbuild.xyz for details."
+      }
+    },
+    "support": "Can't find the answer you're looking for? Reach out to our",
+    "supportLink": "customer support team."
+  },
+  "Testimonial": {
+    "title": "What our users say",
+    "description": "Hear from developers who use Nextify"
+  },
+  "Newsletter": {
+    "title": "Join our newsletter",
+    "description": "Keep up to date with related Nextify.",
+    "placeholder": "Enter your email",
+    "submit": "Submit"
+  },
+  "Footer": {
+    "description": "© {year} AI³ Growth Journey by OpenBuild & HackathonWeekly",
+    "links": {
+      "handbook": "Handbook",
+      "resources": "Resources",
+      "community": "Community",
+      "gettingStarted": "Getting Started",
+      "planningPhase": "Planning Phase",
+      "buildingPhase": "Building Phase",
+      "validationPhase": "Validation Phase",
+      "launchingPhase": "Launching Phase",
+      "caseStudies": "Case Studies",
+      "practicalTutorials": "Practical Tutorials",
+      "resourceLibrary": "Resource Library",
+      "contributionGuide": "Contribution Guide",
+      "github": "GitHub",
+      "officialWebsite": "Official Website",
+      "wechatAccount": "WeChat Official Account",
+      "socialGroup": "Social Group"
+    },
+    "contact": "Contact Us"
+  },
+  "Navigation": {
+    "home": "Home",
+    "documentation": "Documentation",
+    "aiWeb3Guide": "AI Web3 Guide",
+    "blog": "Blog",
+    "about": "About Us",
+    "changelog": "Changelog"
+  },
+  "BlogNav": {
+    "computerScience": "Computer Science",
+    "photography": "Photography",
+    "programming": "Programming"
+  },
+  "HandbookOverview": {
+    "title": "AI³ Growth Journey Introduction",
+    "subtitle": "A trans-Pacific AI+Web3 developer awakening movement, exploring cutting-edge technologies and building innovative applications through hands-on experience",
+    "featuresTitle": "Activity Features",
+    "benefitsTitle": "Participation Benefits",
+    "features": {
+      "community": "Jointly launched by top Asia-Pacific communities",
+      "communityDesc": "OpenBuild (Asia-Pacific's largest Web3 open source community) and HackathonWeekly (China's most vibrant AI product creator community) jointly launch",
+      "activities": "Cross-Asia-Pacific developer activities",
+      "activitiesDesc": "Monthly online AI+Web3 workshops and offline mini-hackathons, covering China, Thailand, Vietnam, Malaysia, Singapore, India, and other regions",
+      "innovation": "AI+Web3 Fusion Innovation",
+      "innovationDesc": "Explore cutting-edge topics such as AI Smart Contracts, Web3 AI Agents, OnChain Data Insights, AIGC Gaming, etc.",
+      "participation": "Diverse participation opportunities",
+      "participationDesc": "Open to developers, contributors, and sponsors, providing hackathon prizes, incubator connections, and investment opportunities",
+      "duration": "10-month continuous program",
+      "durationDesc": "Starting from March, continuously conducted for the next 10 months, unlocking a disruptive proposition each month",
+      "rewards": "Rich rewards and exclusive resources",
+      "rewardsDesc": "Limited edition 'Cyber Merit' NFT badges, HackathonWeekly X OpenBuild exclusive merchandise, and late-night ramen sessions with top VCs"
+    },
+    "benefits": {
+      "skills": "Master cutting-edge technologies",
+      "skillsDesc": "Quickly master AI+Web3 cutting-edge technology stacks and development experience through hands-on projects",
+      "network": "Expand network resources",
+      "networkDesc": "Connect with 15,000+ developers and top investors, obtain high-quality project incubation opportunities",
+      "opportunity": "Discover innovation opportunities",
+      "opportunityDesc": "Explore the birth of the next unicorn project at the frontier where AI and Web3 collide",
+      "community": "Join the developer community",
+      "communityDesc": "Become an active member of the developer community, jointly promoting technological development and innovative application implementation"
+    },
+    "viewDetails": "View Activity Details"
+  },
+  "ContentStructure": {
+    "title": "Thematic Content",
+    "subtitle": "Unlock a disruptive proposition every month, exploring the infinite possibilities of AI and Web3 integration",
+    "casesTitle": "Practical Cases",
+    "casesSubtitle": "In the case study section, we provide three important types of learning resources",
+    "topics": {
+      "aiSmartContract": "Writing Smart Contracts with AI",
+      "aiSmartContractDesc": "Explore how to use AI code assistants (such as Cursor, Copilot) to efficiently write and optimize smart contracts, improving Web3 development efficiency.",
+      "web3AiAgent": "Web3 AI Agent Development",
+      "web3AiAgentDesc": "Learn to build blockchain-based AI agents to achieve automated trading, intelligent asset management, and decentralized decision-making systems.",
+      "onchainDataAi": "On-chain Data AI Analysis",
+      "onchainDataAiDesc": "Master methods of using AI technology to analyze blockchain data, discover market trends, user behavior patterns, and DeFi strategy optimization.",
+      "aiGaming": "AI Gaming and AIGC",
+      "aiGamingDesc": "Learn how to combine AI-generated content with Web3 games to create unique game assets, dynamic game worlds, and personalized game experiences.",
+      "noCodeDapps": "No-code DApp Development",
+      "noCodeDappsDesc": "Explore the possibility of building decentralized applications with no-code tools, allowing more non-technical creators to participate in Web3 innovation."
+    },
+    "cases": {
+      "contractGeneration": "Case Study: Smart Contract Automated Generation",
+      "contractGenerationDesc": "Use AI to assist in designing, writing, and auditing smart contracts, significantly improving development efficiency and security",
+      "tradingAgent": "Case Study: Autonomous Trading AI Agent",
+      "tradingAgentDesc": "Build AI agents capable of autonomous DeFi trading decisions based on on-chain data and market analysis",
+      "nftGameAssets": "Case Study: NFT Game Asset Generation",
+      "nftGameAssetsDesc": "Use AIGC technology to batch create unique game assets and integrate with blockchain to achieve true ownership"
+    }
+  },
+  "TargetAudience": {
+    "title": "Target Participants",
+    "subtitle": "Recruiting developers, contributors, and sponsors to jointly explore the future of AI+Web3",
+    "audiences": {
+      "developers": "Developers",
+      "developersDesc": "Technical personnel with programming background or AI/Web3 enthusiasts who want to explore AI+Web3 fusion innovation",
+      "contributors": "Contributors",
+      "contributorsDesc": "Technical evangelists, project alchemists, activity creators, and other contributors who want to jointly promote AI+Web3 development",
+      "sponsors": "Sponsors",
+      "sponsorsDesc": "Institutions and enterprises focusing on AI+Web3 innovation fields, hoping to connect with high-quality developers and projects"
+    }
+  },
+  "Sponsors": {
+    "title": "Sponsors",
+    "subtitle": "Thanks to the following partners for their strong support of AI³ Growth Journey",
+    "contact": "For sponsorship cooperation, please contact: "
+  },
+  "CommunityJoin": {
+    "title": "Join the AI³ Growth Journey Developer Community",
+    "description": "Explore AI+Web3 cutting-edge technologies with 15,000+ developers, participate in Asia-Pacific's most vibrant developer activities, and your project will traverse the 200,000+ developer network, reaching the radar of top incubators and investors",
+    "developerSignup": "Developer Signup",
+    "becomeContributor": "Become a Contributor"
+  },
+  "LanguageSwitcher": {
+    "switchLanguage": "Switch Language",
+    "languages": {
+      "en": "English",
+      "zh": "中文"
+    }
+  }
+} 

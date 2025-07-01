@@ -4,8 +4,11 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
+import { useTranslations } from 'next-intl';
 
 export function CommunityJoin() {
+  const t = useTranslations('CommunityJoin');
+
   return (
     <section className="w-full py-16 px-4 bg-white dark:bg-black relative overflow-hidden">
       {/* Background design elements - simplified */}
@@ -39,24 +42,23 @@ export function CommunityJoin() {
           className="flex flex-col items-center text-center max-w-3xl mx-auto"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">
-            加入AI³ Growth Journey开发者社区
+            {t('title')}
           </h2>
 
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-            与15,000+开发者共同探索AI+Web3前沿技术，参与亚太最具活力的开发者活动，
-            你的项目将穿越20万+开发者网络，直达顶级孵化器与投资人的雷达
+            {t('description')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Button asChild size="lg" className="bg-gradient-to-r from-indigo-600 to-blue-700 hover:from-indigo-700 hover:to-blue-800 text-white shadow-lg px-8">
               <Link href="https://hackathonweekly.feishu.cn/share/base/form/shrcnBjdytUgit8dDtRbPCPoaac">
-                开发者报名 <ArrowRight className="ml-2 h-5 w-5" />
+                {t('developerSignup')} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
 
             <Button asChild size="lg" variant="outline" className="border-2 border-indigo-600 dark:border-indigo-500 text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 px-8">
               <Link href="https://hackathonweekly.feishu.cn/share/base/form/shrcnQzgHo1teYRjmDTUbdpxoWk">
-                成为共建者 <ArrowRight className="ml-2 h-5 w-5" />
+                {t('becomeContributor')} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
