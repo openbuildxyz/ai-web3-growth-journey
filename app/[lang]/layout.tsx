@@ -1,4 +1,5 @@
-import './global.css';
+import '@/app/global.css';
+
 import { I18nProvider, type Translations } from 'fumadocs-ui/i18n';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
@@ -43,7 +44,7 @@ const translationsMap: TranslationsMap = {
 
 // Generate static params for all supported locales
 export function generateStaticParams() {
-  return locales.map((lang) => ({ lang }));
+  return locales.map((lang: string) => ({ lang }));
 }
 
 
@@ -104,7 +105,7 @@ export default async function Layout({
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
       </head>
-      <body>
+      <body className={inter.className}>
         <NextIntlClientProvider 
           locale={lang} 
           messages={messages}

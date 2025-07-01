@@ -1,0 +1,124 @@
+{
+  "Hero": {
+    "title": "Create your ideal documentation website effortlessly with the Nextify",
+    "getStarted": "Get Started",
+    "github": "GitHub"
+  },
+  "Work": {
+    "title": "How it works",
+    "description": "Discover how Nextify simplifies documentation creation",
+    "steps": "3 EASY STEPS",
+    "step1": {
+      "title": "Clone Nextify Template",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    },
+    "step2": {
+      "title": "Remove Old content",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    },
+    "step3": {
+      "title": "Start new content",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    }
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "description": "Find answers to common questions about Nextify",
+    "questions": [
+      {
+        "key": 1,
+        "question": "How this theme is different from others in market?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna"
+      },
+      {
+        "key": 2,
+        "question": "What is your policy on distribution of Devjoy assets?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna"
+      },
+      {
+        "key": 3,
+        "question": "How can I contribute to Devjoy?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna"
+      },
+      {
+        "key": 4,
+        "question": "What other themes do you have?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna"
+      }
+    ],
+    "support": "Can't find the answer you're looking for? Reach out to our",
+    "supportLink": "customer support team."
+  },
+  "Testimonial": {
+    "title": "What our users say",
+    "description": "Hear from developers who use Nextify"
+  },
+  "Newsletter": {
+    "title": "Join our newsletter",
+    "description": "Keep up to date with related Nextify.",
+    "placeholder": "Enter your email",
+    "submit": "Submit"
+  },
+  "Footer": {
+    "description": "Phasellus a nulla in neque lacinia posuere. Etiam auctor facilisis augue vel gravida.",
+    "solution": {
+      "title": "Solution",
+      "marketing": "Marketing",
+      "analytics": "Analytics",
+      "commerce": "Commerce",
+      "insights": "Insights"
+    },
+    "support": {
+      "title": "Support",
+      "pricing": "Pricing",
+      "documentation": "Documentation",
+      "guides": "Guides",
+      "apiStatus": "API Status"
+    },
+    "docs": {
+      "title": "Docs",
+      "pricing": "Pricing",
+      "apiGuide": "API Guide",
+      "apiStatus": "API Status",
+      "devGuide": "Dev Guide"
+    },
+    "company": {
+      "title": "Company",
+      "about": "About",
+      "blog": "Blog",
+      "jobs": "Jobs",
+      "press": "Press",
+      "partners": "Partners"
+    },
+    "social": [
+      {
+        "name": "Github",
+        "url": "https://github.com/officialrajdeepsingh"
+      },
+      {
+        "name": "Facebook",
+        "url": "https://www.facebook.com/officialrajdeepsingh"
+      },
+      {
+        "name": "Website",
+        "url": "https://officialrajdeepsingh.dev"
+      }
+    ],
+    "copyright": "© Copyright 2021. All rights reserved.",
+    "terms": "Terms of Service",
+    "license": "License",
+    "privacy": "Privacy Policy"
+  },
+  "Navigation": {
+    "home": "Home",
+    "documentation": "Documentation",
+    "blog": "Blog",
+    "about": "About us",
+    "changelog": "Change log"
+  },
+  "BlogNav": {
+    "computerScience": "Computer Science",
+    "photography": "Photography",
+    "programming": "Programming"
+  }
+} 

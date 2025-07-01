@@ -1,0 +1,124 @@
+{
+  "Hero": {
+    "title": "使用 Nextify 轻松创建您理想的文档网站",
+    "getStarted": "开始使用",
+    "github": "GitHub"
+  },
+  "Work": {
+    "title": "工作原理",
+    "description": "了解 Nextify 如何简化文档创建",
+    "steps": "3个简单步骤",
+    "step1": {
+      "title": "克隆 Nextify 模板",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    },
+    "step2": {
+      "title": "删除旧内容",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    },
+    "step3": {
+      "title": "开始新内容",
+      "description": "Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet"
+    }
+  },
+  "FAQ": {
+    "title": "常见问题",
+    "description": "查找有关 Nextify 的常见问题的答案",
+    "questions": [
+      {
+        "key": 1,
+        "question": "这个主题与市场上的其他主题有何不同？",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna"
+      },
+      {
+        "key": 2,
+        "question": "您对 Devjoy 资产分发的政策是什么？",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna"
+      },
+      {
+        "key": 3,
+        "question": "我如何为 Devjoy 做出贡献？",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna"
+      },
+      {
+        "key": 4,
+        "question": "您还有哪些其他主题？",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna"
+      }
+    ],
+    "support": "找不到您要找的答案？请联系我们的",
+    "supportLink": "客户支持团队。"
+  },
+  "Testimonial": {
+    "title": "用户评价",
+    "description": "听听使用 Nextify 的开发者怎么说"
+  },
+  "Newsletter": {
+    "title": "订阅我们的通讯",
+    "description": "及时了解 Nextify 的相关信息",
+    "placeholder": "输入您的电子邮箱",
+    "submit": "提交"
+  },
+  "Footer": {
+    "description": "Phasellus a nulla in neque lacinia posuere. Etiam auctor facilisis augue vel gravida.",
+    "solution": {
+      "title": "解决方案",
+      "marketing": "市场营销",
+      "analytics": "数据分析",
+      "commerce": "电子商务",
+      "insights": "洞察"
+    },
+    "support": {
+      "title": "支持",
+      "pricing": "定价",
+      "documentation": "文档",
+      "guides": "指南",
+      "apiStatus": "API 状态"
+    },
+    "docs": {
+      "title": "文档",
+      "pricing": "定价",
+      "apiGuide": "API 指南",
+      "apiStatus": "API 状态",
+      "devGuide": "开发指南"
+    },
+    "company": {
+      "title": "公司",
+      "about": "关于",
+      "blog": "博客",
+      "jobs": "工作机会",
+      "press": "新闻",
+      "partners": "合作伙伴"
+    },
+    "social": [
+      {
+        "name": "Github",
+        "url": "https://github.com/officialrajdeepsingh"
+      },
+      {
+        "name": "Facebook",
+        "url": "https://www.facebook.com/officialrajdeepsingh"
+      },
+      {
+        "name": "Website",
+        "url": "https://officialrajdeepsingh.dev"
+      }
+    ],
+    "copyright": "© 2021 版权所有",
+    "terms": "服务条款",
+    "license": "许可协议",
+    "privacy": "隐私政策"
+  },
+  "Navigation": {
+    "home": "首页",
+    "documentation": "文档",
+    "blog": "博客",
+    "about": "关于我们",
+    "changelog": "更新日志"
+  },
+  "BlogNav": {
+    "computerScience": "计算机科学",
+    "photography": "摄影",
+    "programming": "编程"
+  }
+} 
