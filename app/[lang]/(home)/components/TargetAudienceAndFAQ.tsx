@@ -3,45 +3,50 @@ import { Lightbulb, Search, HelpCircle, Users, Code, Palette, Building, PenTool 
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/container';
 import { Card } from '@/components/ui/card';
+import { useTranslations } from 'next-intl';
 
 export function TargetAudienceAndFAQ() {
+  const t = useTranslations();
+  const tAudience = useTranslations('TargetAudience');
+  const tFAQ = useTranslations('FAQ');
+
   const audiences = [
     {
       icon: Code,
-      name: "开发者",
-      description: "有编程基础或AI/Web3爱好的技术人员，希望探索AI+Web3的融合创新",
+      name: tAudience('audiences.developers'),
+      description: tAudience('audiences.developersDesc'),
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: PenTool,
-      name: "共建者",
-      description: "技术布道者、项目炼金师、活动造浪者等希望共同推动AI+Web3发展的贡献者",
+      name: tAudience('audiences.contributors'),
+      description: tAudience('audiences.contributorsDesc'),
       color: "from-indigo-500 to-purple-500"
     },
     {
       icon: Building,
-      name: "赞助商",
-      description: "关注AI+Web3创新领域，希望接触高质量开发者和项目的机构和企业",
+      name: tAudience('audiences.sponsors'),
+      description: tAudience('audiences.sponsorsDesc'),
       color: "from-amber-500 to-orange-500"
     }
   ];
 
   const faqs = [
     {
-      question: "活动都在哪些城市举办？",
-      answer: "活动覆盖亚太主要城市，包括曼谷、胡志明、吉隆坡、新加坡、北上广深杭等。线上Workshop不受地域限制，随时参与。"
+      question: tFAQ('questions.cities.question'),
+      answer: tFAQ('questions.cities.answer')
     },
     {
-      question: "需要哪些技术背景才能参加？",
-      answer: "适合有编程基础、AIGC能力、产品设计、运营经验，或者Web3/AI爱好者。不同主题对技术背景要求不同，我们会提前告知。"
+      question: tFAQ('questions.background.question'),
+      answer: tFAQ('questions.background.answer')
     },
     {
-      question: "参加活动能获得什么？",
-      answer: "黑客松奖金、孵化器对接、投资机会、限量NFT勋章、独家周边，以及与顶级VC共进深夜泡面局的机会。"
+      question: tFAQ('questions.benefits.question'),
+      answer: tFAQ('questions.benefits.answer')
     },
     {
-      question: "如何成为赞助商？",
-      answer: "赞助费用8,000美元起，可获得全年品牌曝光、定制主题黑客松、提前锁定优质开发者等权益。联系ian@openbuild.xyz了解详情。"
+      question: tFAQ('questions.sponsorship.question'),
+      answer: tFAQ('questions.sponsorship.answer')
     }
   ];
   
@@ -99,9 +104,9 @@ export function TargetAudienceAndFAQ() {
               <div className="inline-flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 p-2 mb-4">
                 <Users className="h-6 w-6 text-gray-900 dark:text-white" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">参与对象</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">{tAudience('title')}</h2>
               <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                招募<strong>开发者</strong>、<strong>共建者</strong>和<strong>赞助商</strong>，共同探索AI+Web3的未来
+                {tAudience('subtitle')}
               </p>
             </motion.div>
 
@@ -134,9 +139,9 @@ export function TargetAudienceAndFAQ() {
               <div className="inline-flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 p-2 mb-4">
                 <HelpCircle className="h-6 w-6 text-gray-800 dark:text-gray-200" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">常见问题</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">{tFAQ('title')}</h2>
               <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                关于创建MVP及获取用户的常见疑问解答
+                {tFAQ('subtitle')}
               </p>
             </motion.div>
 

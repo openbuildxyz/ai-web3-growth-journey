@@ -1,9 +1,14 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
+import { useTranslations } from 'next-intl';
 
 export function HeroSection() {
+  const t = useTranslations('Hero');
+
   return (
     <section className="w-full py-24 pb-16 lg:py-32 lg:pb-24 px-4 bg-white dark:bg-black relative overflow-hidden">
       {/* Geometric background elements - simplified */}
@@ -41,7 +46,7 @@ export function HeroSection() {
                 aria-labelledby="triangleIconTitle"
                 role="img"
               >
-                <title id="triangleIconTitle">AI+Web3 Growth Journey</title>
+                <title id="triangleIconTitle">{t('subtitle')}</title>
                 <path
                   d="M24 4L44 40H4L24 4Z"
                   fill="currentColor"
@@ -56,17 +61,17 @@ export function HeroSection() {
                 />
               </svg>
               <h2 className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400">
-                AI+Web3开发者成长计划
+                {t('title')}
               </h2>
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white mb-6">
               <span className="text-black dark:text-white bg-gradient-to-br from-blue-50 to-cyan-100 dark:from-blue-900 dark:to-cyan-800 px-2 rounded">AI³</span> Growth <span className="text-black dark:text-white bg-gradient-to-br from-purple-50 to-indigo-100 dark:from-purple-900 dark:to-indigo-800 px-2 rounded">Journey</span><br />
-              <span className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 dark:from-gray-300 dark:via-gray-200 dark:to-white bg-clip-text text-transparent">AI+Web3开发者成长计划</span>
+              <span className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 dark:from-gray-300 dark:via-gray-200 dark:to-white bg-clip-text text-transparent">{t('subtitle')}</span>
             </h1>
 
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-3xl mx-auto">
-              OpenBuild与周周黑客松联合发起亚太区AI+Web3开发者成长计划，每月举办<strong>线上Workshop</strong>和<strong>线下Mini-Hackathon</strong>
+              {t('description')}
             </p>
           </div>
 
@@ -74,33 +79,21 @@ export function HeroSection() {
 
             <Button asChild size="lg" variant="outline" className="border-2 border-indigo-600 dark:border-indigo-500 text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 shadow-lg">
               <Link href="https://hackathonweekly.feishu.cn/share/base/form/shrcnBjdytUgit8dDtRbPCPoaac" className="font-semibold px-8 py-6 text-lg">
-                开发者报名 <ArrowRight className="ml-2 h-5 w-5" />
+                {t('developerSignup')} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
 
             <Button asChild size="lg" variant="outline" className="border-2 border-indigo-600 dark:border-indigo-500 text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 shadow-lg">
               <Link href="https://hackathonweekly.feishu.cn/share/base/form/shrcnQzgHo1teYRjmDTUbdpxoWk"  className="font-semibold px-8 py-6 text-lg">
-                成为共建者 <ArrowRight className="ml-2 h-5 w-5" />
+                {t('becomeContributor')} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button asChild size="lg" className="bg-gradient-to-r from-indigo-600 to-blue-700 hover:from-indigo-700 hover:to-blue-800 text-white dark:from-indigo-500 dark:to-blue-600 dark:hover:from-indigo-600 dark:hover:to-blue-700 shadow-lg">
               <Link href="/docs" className="font-semibold px-8 py-6 text-lg">
-                开始探索 <ArrowRight className="ml-2 h-5 w-5" />
+                {t('startExploring')} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
-
-         {/*<div className="mt-16 grid grid-cols-3 gap-3 max-w-lg mx-auto">*/}
-         {/*   <div className="aspect-square bg-gradient-to-br from-blue-50 to-cyan-100 dark:from-blue-900 dark:to-cyan-800 rounded-lg shadow-md flex items-center justify-center">*/}
-         {/*     <span className="text-3xl font-bold">AI</span>*/}
-         {/*   </div>*/}
-         {/*   <div className="aspect-square bg-gradient-to-br from-purple-50 to-indigo-100 dark:from-purple-900 dark:to-indigo-800 rounded-lg shadow-md flex items-center justify-center">*/}
-         {/*     <span className="text-3xl font-bold">+</span>*/}
-         {/*   </div>*/}
-         {/*   <div className="aspect-square bg-gradient-to-br from-amber-50 to-orange-100 dark:from-amber-900 dark:to-orange-800 rounded-lg shadow-md flex items-center justify-center">*/}
-         {/*     <span className="text-3xl font-bold">Web3</span>*/}
-         {/*   </div>*/}
-         {/* </div>*/}
         </div>
       </Container>
     </section>

@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export function Sponsors() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const t = useTranslations('Sponsors');
 
   useEffect(() => {
     setMounted(true);
@@ -58,9 +60,9 @@ export function Sponsors() {
     return (
       <section className="py-16 container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">赞助商</h2>
+          <h2 className="text-3xl font-bold mb-4">{t('title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            感谢以下合作伙伴对AI³ Growth Journey的大力支持
+            {t('subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
@@ -81,11 +83,11 @@ export function Sponsors() {
   return (
     <section className="py-16 container mx-auto px-4">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4">赞助商</h2>
+        <h2 className="text-3xl font-bold mb-4">{t('title')}</h2>
         <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          感谢以下合作伙伴对AI³ Growth Journey的大力支持
+          {t('subtitle')}
         </p>
-        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">赞助合作请联系: <a href="mailto:ian@openbuild.xyz"
+        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">{t('contact')} <a href="mailto:ian@openbuild.xyz"
                                 className="text-indigo-600 dark:text-indigo-400 underline">ian@openbuild.xyz</a></p>
       </div>
 
