@@ -171,7 +171,7 @@ export function HandbookOverview() {
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('benefitsTitle')}</h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  AI³ Growth Journey将帮助你在AI+Web3融合创新的浪潮中占据先机，获取独特优势
+                  {t('benefitsDescription')}
                 </p>
                 
                 <ul className="space-y-6">
