@@ -10,10 +10,6 @@ export type Locale = (typeof locales)[number];
 export const pathnames = {
   '/': '/',
   '/docs': '/docs',
-  '/blog': '/blog',
-  '/blog/[slug]': '/blog/[slug]',
-  '/blog/tag/[tag]': '/blog/tag/[tag]',
-  '/page/[slug]': '/page/[slug]',
 };
 
 export const localePrefix = 'always'; // Default

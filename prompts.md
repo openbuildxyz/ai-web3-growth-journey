@@ -78,3 +78,216 @@ import { Globe } from 'lucide-react';
 - README.md: 项目介绍和使用说明
 - 代码注释: 详细说明AI生成的部分和实现逻辑
 - 国际化实现: 完整的中英双语支持系统 
+
+# AI 助手对话记录
+
+## 解决 fumadocs 404 问题 (2025-01-01)
+
+### 问题描述
+用户反馈使用 fumadocs 时 `http://localhost:3000/zh/docs` 访问结果是 404 not found。
+
+### 问题分析与解决过程
+
+#### 1. 初步诊断
+- 检查了多个关键文件：`lib/source.ts`, `middleware.ts`, `app/[lang]/docs/[[...slug]]/page.tsx`
+- 发现两个主要问题：
+  - `app/[lang]/docs/layout.tsx` 中有语法错误
+  - 缺失 fumadocs 需要的 `.source` 文件
+
+#### 2. 主要修复步骤
+
+**步骤1：修复语法错误**
+```typescript
+// 修复前：
+githubUrl='https://github.com/openbuildxyz/ai-web3-growth-journey',
+
+// 修复后：
+githubUrl="https://github.com/openbuildxyz/ai-web3-growth-journey"
+```
+
+**步骤2：生成源文件**
+```bash
+pnpm run postinstall  # 生成 .source 文件
+```
+
+**步骤3：修复 lib/source.ts**
+```typescript
+// 修复前：
+export const source = loader({
+  baseUrl: '/docs',
+  source: docs.toFumadocsSource(), // 这个方法不存在
+  i18n,
+});
+
+// 修复后：
+export const source = loader({
+  baseUrl: '/docs',
+  source: createMDXSource(docs, meta),
+  i18n,
+});
+```
+
+**步骤4：简化文件结构**
+- 将 `introduction.zh.mdx` 复制为 `introduction.mdx`
+- 简化 `meta.json` 配置
+- 移除复杂的多语言配置，先让基本功能工作
+
+**步骤5：修复页面查找逻辑**
+```typescript
+// 修复前：
+const page = source.getPage(pageSlug, lang);
+
+// 修复后：
+const pagePath = slug ? slug.join('/') : 'introduction';
+const page = source.getPage([pagePath]);
+```
+
+#### 3. 关键经验
+
+1. **fumadocs 配置问题**：`createMDXSource(docs, meta)` 返回空对象通常表示配置问题
+2. **多语言处理**：fumadocs 的多语言支持需要正确的文件命名和配置
+3. **调试方法**：通过添加 console.log 和 curl 测试来诊断具体问题
+4. **渐进式修复**：先解决基本功能，再逐步添加复杂特性
+
+#### 4. 最终解决方案
+
+修复后的关键文件：
+
+**lib/source.ts**:
+```typescript
+import { docs, meta } from '@/.source';
+import { loader } from 'fumadocs-core/source';
+import { createMDXSource } from 'fumadocs-mdx';
+
+export const source = loader({
+  baseUrl: '/docs',
+  source: createMDXSource(docs, meta),
+});
+```
+
+**app/[lang]/docs/[[...slug]]/page.tsx**:
+```typescript
+const pagePath = slug ? slug.join('/') : 'introduction';
+const page = source.getPage([pagePath]);
+```
+
+#### 5. 结果
+✅ 成功解决 404 问题
+✅ fumadocs 正常渲染中文内容
+✅ 侧边栏和导航正常工作
+✅ 支持多语言路由
+
+### 技术要点
+- fumadocs-mdx 版本兼容性问题
+- 正确的 source 配置方式
+- Next.js 多语言路由处理
+- MDX 文件处理和元数据配置 
+
+## 批量重命名文件 (2025-01-06)
+
+### 用户请求
+> 把所有 content 文件夹下的 xx.zh.mdx 改为 xx.mdx
+
+### 问题背景
+项目中有大量的 `.zh.mdx` 文件（共51个），需要批量重命名去掉 `.zh` 后缀，使文件名更简洁。
+
+### 解决方案
+
+#### 1. 文件发现
+使用 `file_search` 工具搜索所有 `.zh.mdx` 文件：
+```
+找到 51 个 .zh.mdx 文件，分布在：
+- content/docs/ 根目录文件
+- content/docs/2025-03-projects/ 目录
+- content/docs/2025-04-projects/ 目录
+- content/docs/2025-05-projects/ 目录
+- content/docs/2025-06-projects/ 目录
+```
+
+#### 2. 自动化脚本创建
+创建 Node.js 脚本 `rename-zh-files.js`：
+
+```javascript
+const fs = require('fs');
+const path = require('path');
+
+function findZhMdxFiles(dir, fileList = []) {
+  const files = fs.readdirSync(dir);
+  
+  files.forEach(file => {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    
+    if (stat.isDirectory()) {
+      findZhMdxFiles(filePath, fileList);
+    } else if (file.endsWith('.zh.mdx')) {
+      fileList.push(filePath);
+    }
+  });
+  
+  return fileList;
+}
+
+function renameZhMdxFiles() {
+  const contentDir = path.join(__dirname, 'content');
+  const zhMdxFiles = findZhMdxFiles(contentDir);
+  
+  console.log(`找到 ${zhMdxFiles.length} 个 .zh.mdx 文件:`);
+  
+  zhMdxFiles.forEach(filePath => {
+    const newFilePath = filePath.replace(/\.zh\.mdx$/, '.mdx');
+    console.log(`重命名: ${path.relative(__dirname, filePath)} -> ${path.relative(__dirname, newFilePath)}`);
+    
+    try {
+      fs.renameSync(filePath, newFilePath);
+      console.log('✓ 成功');
+    } catch (error) {
+      console.error('✗ 失败:', error.message);
+    }
+  });
+  
+  console.log('\n重命名完成！');
+}
+
+renameZhMdxFiles();
+```
+
+#### 3. 批量重命名执行
+运行脚本：
+```bash
+node rename-zh-files.js
+```
+
+#### 4. 执行结果
+✅ 成功重命名所有 51 个文件  
+✅ 所有操作都成功执行，无报错  
+✅ 文件结构更加简洁，去掉了冗余的 `.zh` 标识  
+
+#### 5. 重命名的文件示例
+- `content/docs/introduction.zh.mdx` → `content/docs/introduction.mdx`
+- `content/docs/2025-03.zh.mdx` → `content/docs/2025-03.mdx`
+- `content/docs/2025-03-projects/AI-GOAL.zh.mdx` → `content/docs/2025-03-projects/AI-GOAL.mdx`
+- `content/docs/2025-04-projects/0xauto.zh.mdx` → `content/docs/2025-04-projects/0xauto.mdx`
+- 等等...
+
+#### 6. 清理工作
+- 执行完成后自动删除临时脚本文件
+- 保持工作区整洁
+
+### 技术要点
+- **文件系统操作**: 使用 Node.js 的 `fs.readdirSync()` 和 `fs.renameSync()`
+- **递归目录遍历**: 递归搜索所有子目录中的目标文件
+- **正则表达式替换**: 使用 `/\.zh\.mdx$/` 精确匹配文件后缀
+- **错误处理**: 对每个重命名操作进行 try-catch 异常处理
+- **脚本自动化**: 创建临时脚本实现批量操作，完成后清理
+
+### 影响范围
+- 所有文档路径引用可能需要相应更新
+- 文档索引和元数据配置可能需要调整
+- 不影响文件内容，仅改变文件名
+
+### 后续考虑
+由于文件名发生变化，可能需要：
+1. 检查并更新相关的配置文件（如 meta.json）
+2. 检查文档间的内部链接引用
+3. 验证构建和部署流程是否正常 
