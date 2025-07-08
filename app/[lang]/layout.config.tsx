@@ -37,6 +37,11 @@ export function useBaseOptions(): BaseLayoutProps {
         url: '/docs',
         active: 'nested-url',
       },
+      {
+        text: t('feishuDocs'),
+        url: 'https://hackathonweekly.feishu.cn/wiki/space/7468518389615755265?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home',
+        external: true,
+      },
     ],
   };
 }
