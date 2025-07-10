@@ -2,7 +2,6 @@
 
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import Image from 'next/image';
-import { LanguageSwitcher } from '@/components/ui/language-switcher';
 import { useTranslations } from 'next-intl';
 
 /**
@@ -17,6 +16,7 @@ export function useBaseOptions(): BaseLayoutProps {
   
   return {
     githubUrl: 'https://github.com/openbuildxyz/ai-web3-growth-journey',
+    i18n: true,
     nav: {
       title: (
         <>
@@ -29,7 +29,7 @@ export function useBaseOptions(): BaseLayoutProps {
           AI³ Growth Journey
         </>
       ),
-      children: <LanguageSwitcher />,
+
     },
     links: [
       {

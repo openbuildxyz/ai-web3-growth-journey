@@ -174,12 +174,5 @@
     "description": "Explore AI+Web3 cutting-edge technologies with 15,000+ developers, participate in Asia-Pacific's most vibrant developer activities, and your project will traverse the 200,000+ developer network, reaching the radar of top incubators and investors",
     "developerSignup": "Developer Signup",
     "becomeContributor": "Become a Contributor"
-  },
-  "LanguageSwitcher": {
-    "switchLanguage": "Switch Language",
-    "languages": {
-      "en": "English",
-      "zh": "中文"
-    }
   }
 } 

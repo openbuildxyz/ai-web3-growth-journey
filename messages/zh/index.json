@@ -140,12 +140,5 @@
     "blog": "博客",
     "about": "关于我们",
     "changelog": "更新日志"
-  },
-  "LanguageSwitcher": {
-    "switchLanguage": "切换语言",
-    "languages": {
-      "en": "English",
-      "zh": "中文"
-    }
   }
 } 
