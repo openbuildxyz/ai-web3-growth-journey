@@ -53,6 +53,13 @@ export function Sponsors() {
       url: 'https://supra.com',
       height: 30,
     },
+    {
+      name: 'BGA',
+      logo: '/logos/BGA.png',
+      logoDark: '/logos/BGA-dark.png',
+      url: 'https://www.chainforgood.org',
+      height: 40,
+    },
   ];
 
   // 避免主题闪烁，等待挂载完成
@@ -65,7 +72,7 @@ export function Sponsors() {
             {t('subtitle')}
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
           {sponsors.map((sponsor) => (
             <div
               key={sponsor.name}
@@ -91,7 +98,7 @@ export function Sponsors() {
                                 className="text-indigo-600 dark:text-indigo-400 underline">ian@openbuild.xyz</a></p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
         {sponsors.map((sponsor) => (
           <Link
             href={sponsor.url}
