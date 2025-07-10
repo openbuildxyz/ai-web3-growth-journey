@@ -72,7 +72,7 @@ export function Sponsors() {
             {t('subtitle')}
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 items-center justify-items-center">
           {sponsors.map((sponsor) => (
             <div
               key={sponsor.name}
@@ -98,7 +98,7 @@ export function Sponsors() {
                                 className="text-indigo-600 dark:text-indigo-400 underline">ian@openbuild.xyz</a></p>
       </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 items-center justify-items-center">
         {sponsors.map((sponsor) => (
           <Link
             href={sponsor.url}
