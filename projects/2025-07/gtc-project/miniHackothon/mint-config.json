@@ -1,0 +1,15 @@
+{
+  "mintAddress": "9KSKM3tRCdrqUjpRxeMba4Fi67GqrMkpwYpd4mX3HfUF",
+  "tokenConfig": {
+    "name": "Green Trace Coin",
+    "symbol": "GTC",
+    "decimals": 9,
+    "description": "你的每一次环保都价值连城",
+    "image": "https://youke1.picui.cn/s1/2025/08/03/688f1d4b65d8f.png",
+    "website": "https://testtoken.example.com",
+    "twitter": "https://twitter.com/testtoken",
+    "telegram": "",
+    "attributes": []
+  },
+  "createdAt": "2025-08-03T08:34:38.175Z"
+}
