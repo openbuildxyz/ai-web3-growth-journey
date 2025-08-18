@@ -1,0 +1,22 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: web project cursor rule , Front-end project rule
+globs: 
+alwaysApply: false
+---
+
+**技术栈：**
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS
+- React 19
+
+## 项目结构
+- `app/` - Next.js App Router 页面和路由
+- `components/` - 可复用的 React 组件
+- `lib/` - 工具函数和共享逻辑
+- `public/` - 静态资源文件
