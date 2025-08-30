@@ -1,0 +1,7 @@
+![Landing page](image-1.png)
+![Landing page 2](image-2.png)
+![Metamask nft collection](image-3.png)
+![Rarible Marketplace](image-4.png)
+![AI ART address etherscan](image-5.png)
+![Marketplace etherscan](image-6.png)
+![AI Generated NFT ethersacn](image-7.png)
