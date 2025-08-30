@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(222.2, 84%, 4.9%);
+  --foreground: hsl(210, 40%, 98%);
+  --card: hsl(222.2, 84%, 4.9%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(222.2, 84%, 4.9%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(142.1, 76.2%, 36.3%);
+  --primary-foreground: hsl(355.7, 100%, 97.3%);
+  --secondary: hsl(217.2, 91.2%, 59.8%);
+  --secondary-foreground: hsl(222.2, 84%, 4.9%);
+  --muted: hsl(217.2, 32.6%, 17.5%);
+  --muted-foreground: hsl(215, 20.2%, 65.1%);
+  --accent: hsl(263.4, 70%, 50.4%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(217.2, 32.6%, 17.5%);
+  --input: hsl(217.2, 32.6%, 17.5%);
+  --ring: hsl(224.3, 76.3%, 94.1%);
+  --chart-1: hsl(142.1, 76.2%, 36.3%);
+  --chart-2: hsl(159.7826, 100%, 36.0784%);
+  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
+  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
+  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
+  --sidebar: hsl(217.2, 32.6%, 17.5%);
+  --sidebar-foreground: hsl(210, 40%, 98%);
+  --sidebar-primary: hsl(142.1, 76.2%, 36.3%);
+  --sidebar-primary-foreground: hsl(355.7, 100%, 97.3%);
+  --sidebar-accent: hsl(263.4, 70%, 50.4%);
+  --sidebar-accent-foreground: hsl(210, 40%, 98%);
+  --sidebar-border: hsl(217.2, 32.6%, 17.5%);
+  --sidebar-ring: hsl(224.3, 76.3%, 94.1%);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --radius: 0.75rem;
+  --shadow-2xs: 0px 2px 0px 0px hsl(224.3, 76.3%, 94.1% / 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(224.3, 76.3%, 94.1% / 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(224.3, 76.3%, 94.1% / 0.00), 0px 1px 2px -1px hsl(224.3, 76.3%, 94.1% / 0.00);
+  --shadow: 0px 2px 0px 0px hsl(224.3, 76.3%, 94.1% / 0.00), 0px 1px 2px -1px hsl(224.3, 76.3%, 94.1% / 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(224.3, 76.3%, 94.1% / 0.00), 0px 2px 4px -1px hsl(224.3, 76.3%, 94.1% / 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(224.3, 76.3%, 94.1% / 0.00), 0px 4px 6px -1px hsl(224.3, 76.3%, 94.1% / 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(224.3, 76.3%, 94.1% / 0.00), 0px 8px 10px -1px hsl(224.3, 76.3%, 94.1% / 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(224.3, 76.3%, 94.1% / 0.00);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: hsl(222.2, 84%, 4.9%);
+  --foreground: hsl(210, 40%, 98%);
+  --card: hsl(222.2, 84%, 4.9%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(222.2, 84%, 4.9%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(142.1, 76.2%, 36.3%);
+  --primary-foreground: hsl(355.7, 100%, 97.3%);
+  --secondary: hsl(217.2, 91.2%, 59.8%);
+  --secondary-foreground: hsl(222.2, 84%, 4.9%);
+  --muted: hsl(217.2, 32.6%, 17.5%);
+  --muted-foreground: hsl(215, 20.2%, 65.1%);
+  --accent: hsl(263.4, 70%, 50.4%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(217.2, 32.6%, 17.5%);
+  --input: hsl(217.2, 32.6%, 17.5%);
+  --ring: hsl(224.3, 76.3%, 94.1%);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+.code-editor {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.syntax-keyword { color: #C792EA; }
+.syntax-string { color: #C3E88D; }
+.syntax-comment { color: #546E7A; }
+.syntax-function { color: #82AAFF; }
+.syntax-number { color: #F78C6C; }
+
+.gradient-border {
+  position: relative;
+  background: linear-gradient(145deg, var(--primary), var(--accent));
+  padding: 1px;
+  border-radius: var(--radius);
+}
+
+.gradient-border > div {
+  background: var(--background);
+  border-radius: calc(var(--radius) - 1px);
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
