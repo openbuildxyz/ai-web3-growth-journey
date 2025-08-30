@@ -14,6 +14,14 @@ Click the thumbnail below to watch the full demo on YouTube:
 
 ---
 
+## Try it Live
+
+Experience Gen3Dao for yourself. Visit the live deployment on Vercel:
+
+**Live App:** [https://gen3dao.vercel.app/](https://gen3dao.vercel.app/)
+
+---
+
 ## What You'll See in the Video
 
 The demo covers the entire lifecycle of creating a DAO with Gen3Dao, including:
