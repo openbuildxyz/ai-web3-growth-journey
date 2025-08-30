@@ -1,0 +1,57 @@
+{
+  "name": "token-transfer-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for secure token transfers on Ethereum",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:coverage": "hardhat coverage",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network testnet",
+    "deploy:mainnet": "hardhat run scripts/deploy.js --network mainnet",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "node": "hardhat node",
+    "clean": "hardhat clean",
+    "verify": "hardhat verify",
+    "flatten": "hardhat flatten contracts/TokenTransfer.sol > TokenTransfer_flattened.sol"
+  },
+  "keywords": [
+    "ethereum",
+    "solidity",
+    "smart-contracts",
+    "erc20",
+    "token-transfer",
+    "defi",
+    "blockchain"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-etherscan": "^3.1.7",
+    "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/hardhat-upgrades": "^1.28.0",
+    "chai": "^4.3.7",
+    "dotenv": "^16.3.1",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.17.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/token-transfer-contracts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/token-transfer-contracts/issues"
+  },
+  "homepage": "https://github.com/yourusername/token-transfer-contracts#readme"
+}
