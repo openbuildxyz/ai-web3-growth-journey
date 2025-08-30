@@ -1,0 +1,19 @@
+{
+  "name": "@modelforge/demo-gradio",
+  "version": "0.1.0",
+  "description": "Gradio demo application template for ModelForge",
+  "private": true,
+  "scripts": {
+    "dev": "python app.py",
+    "build": "echo 'Gradio app ready for deployment'",
+    "install": "pip install -r requirements.txt",
+    "typecheck": "echo 'No TypeScript in Gradio app'"
+  },
+  "keywords": [
+    "gradio",
+    "python",
+    "demo",
+    "ai",
+    "model-forge"
+  ]
+}

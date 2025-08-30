@@ -1,0 +1,58 @@
+{
+  "name": "@modelforge/contracts",
+  "version": "0.1.0",
+  "description": "Smart contracts for ModelForge AI model registry",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "artifacts/",
+    "contracts/"
+  ],
+  "scripts": {
+    "build": "hardhat compile && tsc",
+    "clean": "hardhat clean && rm -rf dist",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "coverage": "hardhat coverage",
+    "deploy": "hardhat run scripts/deploy.ts",
+    "deploy:local": "hardhat run scripts/deploy-local.ts --network localhost",
+    "deploy:localhost": "hardhat run scripts/deploy.ts --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy.ts --network sepolia",
+    "deploy:polygon-amoy": "hardhat run scripts/deploy-polygon-amoy.ts --network polygonAmoy",
+    "verify": "hardhat verify",
+    "typechain": "hardhat typechain",
+    "chain:local": "hardhat node",
+    "dev": "hardhat node",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.6"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.2",
+    "@nomicfoundation/hardhat-ethers": "^3.0.4",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.1",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.6",
+    "chai": "^4.3.10",
+    "ethers": "^6.8.1",
+    "hardhat": "^2.19.1",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.5",
+    "typechain": "^8.3.2",
+    "typescript": "^5.3.2"
+  },
+  "keywords": [
+    "blockchain",
+    "smart-contracts",
+    "ai",
+    "model-registry",
+    "ethereum",
+    "hardhat"
+  ]
+}

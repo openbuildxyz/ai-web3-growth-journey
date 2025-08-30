@@ -1,0 +1,19 @@
+{
+  "name": "@modelforge/demo-streamlit",
+  "version": "0.1.0",
+  "description": "Streamlit demo application template for ModelForge",
+  "private": true,
+  "scripts": {
+    "dev": "streamlit run app.py",
+    "build": "echo 'Streamlit app ready for deployment'",
+    "install": "pip install -r requirements.txt",
+    "typecheck": "echo 'No TypeScript in Streamlit app'"
+  },
+  "keywords": [
+    "streamlit",
+    "python",
+    "demo",
+    "ai",
+    "model-forge"
+  ]
+}
