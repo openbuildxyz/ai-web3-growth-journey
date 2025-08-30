@@ -1,0 +1,11 @@
+[
+  {
+    "id": "T001",
+    "name": "Anant Mishra",
+    "email": "anantmishra249@gmail.com",
+    "password": "$2b$10$1DQ4U2mJw5PdBO1juWxwAu6aL3fOnYLvGHwXl5TP1nSuQ0KY/uNc.",
+    "role": "teacher",
+    "createdAt": "2025-08-16T12:40:19.387Z",
+    "updatedAt": "2025-08-16T12:40:19.387Z"
+  }
+]

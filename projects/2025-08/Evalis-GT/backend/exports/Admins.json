@@ -1,0 +1,12 @@
+[
+  {
+    "id": 2,
+    "username": "admin",
+    "name": "Admin User",
+    "email": "admin@university.edu",
+    "password": "$2b$10$SKGMda/Ghjw5e1F/f6grIOUhA4rZWDw/FMAVouUWydl3tgDNyiGCe",
+    "role": "admin",
+    "createdAt": "2025-08-16T10:22:29.436Z",
+    "updatedAt": "2025-08-16T22:47:19.082Z"
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "verificationDate": "2025-08-17T14:19:38.400Z",
+  "connectionTest": true,
+  "tableVerification": {
+    "tableStatus": {
+      "Students": "exists",
+      "Teachers": "exists",
+      "Subjects": "exists",
+      "Batches": "exists",
+      "Submissions": "exists",
+      "Admins": "exists",
+      "TeacherSubjects": "exists",
+      "Semesters": "exists",
+      "Assignments": "exists"
+    },
+    "totalTables": 9,
+    "existingTables": 9
+  },
+  "dataVerification": {
+    "dataStatus": {
+      "Students": 1,
+      "Teachers": 1,
+      "Subjects": 1,
+      "Batches": 1,
+      "Submissions": 0,
+      "Admins": 1,
+      "TeacherSubjects": 1,
+      "Semesters": 8,
+      "Assignments": 0
+    },
+    "totalRecords": 14
+  },
+  "crudTest": true,
+  "overallStatus": "PASSED"
+}

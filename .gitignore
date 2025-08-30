@@ -1,32 +1,89 @@
-# deps
-.vscode/
-.env
-temp/
-temp*
+# Dependencies
 node_modules/
+.pnp/
+.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# generated content
+# Environment variables (IMPORTANT - Never commit these!)
+.env
+.env.*
+!.env.example
+!.env.sample
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Generated content
 .contentlayer
 .content-collections
 .source
 
-# test & build
+# Test & build
 /coverage
 /.next/
 /out/
 /build
 *.tsbuildinfo
 
-# misc
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+Thumbs.db
+*.tmp
+*.temp
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+logs/
+*.log
+
+# Misc
 *.pem
 /.pnp
 .pnp.js
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
-# others
-.env*.local
+# Deployment
 .vercel
 next-env.d.ts
+
+# Temporary files
+temp/
+temp*
+tmp/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Security and credentials
+*.key
+*.cert
+*.crt
+credentials.json
+secrets.json
+firebase-admin-sdk.json
+*Firebase Admin SDK*.json
+
+# Backup files
+*backup*
+*.bak
+*.backup

@@ -1,0 +1,127 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '18'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        # Removed cache to avoid optional dependency issues
+    
+    - name: Clean and install dependencies
+      run: |
+        # Clear npm cache to avoid platform-specific issues
+        npm cache clean --force
+        
+        # Install dependencies with npm install (not npm ci) to handle optional deps
+        npm install --force
+        cd server && npm install --force
+    
+    - name: Run linter
+      run: npm run lint
+    
+    - name: Build frontend
+      run: npm run build
+    
+    - name: Run tests (if available)
+      run: |
+        # Add your test command here
+        # npm test
+        echo "Tests would run here"
+
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    permissions:
+      contents: read
+      packages: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Install dependencies and build
+      run: |
+        npm ci
+        cd server && npm ci
+        cd ..
+        npm run build
+    
+    - name: Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Deploy to production
+      run: |
+        echo "Deployment step would go here"
+        echo "This could trigger your deployment service"
+        echo "Or SSH into your server and pull the new image"
+        
+        # Example deployment commands:
+        # - SSH into your server
+        # - Pull the new Docker image
+        # - Update your docker-compose.yml
+        # - Restart the services
+        
+        # You would add your actual deployment commands here
+        # For example, if using a deployment service:
+        # curl -X POST "YOUR_DEPLOYMENT_WEBHOOK_URL"
+        
+        # Or if using SSH:
+        # ssh user@your-server.com "cd /path/to/app && docker-compose pull && docker-compose up -d"

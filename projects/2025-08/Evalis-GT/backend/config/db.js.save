@@ -1,0 +1,46 @@
+const { Sequelize } = require('sequelize');
+const colors = require('colors');
+
+const sequelize = new Sequelize(
+  process.env.POSTGRES_DB || 'evalis',
+  process.env.POSTGRES_USER || 'anantmishra',
+  process.env.POSTGRES_PASSWORD || ''
+,
+  {
+    host: process.env.POSTGRES_HOST || 'localhost',
+    port: process.env.POSTGRES_PORT || 5432,
+    dialect: 'postgres',
+    logging: process.env.NODE_ENV === 'development' ? console.log : false,
+    dialectOptions: {
+      ssl: process.env.POSTGRES_SSL === 'true' ? {
+        require: true,
+        rejectUnauthorized: false
+      } : false
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  }
+);
+
+const connectDB = async () => {
+  try {
+    console.log('Connecting to PostgreSQL...'.yellow);
+    await sequelize.authenticate();
+    console.log(`PostgreSQL Connected: ${sequelize.options.host}:${sequelize.options.port}`.cyan.underline);
+    return sequelize;
+  } catch (error) {
+    console.error(`Error connecting to PostgreSQL: ${error.message}`.red.bold);
+    console.error('Please check:');
+    console.error('1. Your network connection');
+    console.error('2. PostgreSQL server is running');
+    console.error('3. Database credentials are correct');
+    console.error('4. Database exists');
+    process.exit(1);
+  }
+};
+
+module.exports = { connectDB, sequelize }; 

@@ -1,0 +1,178 @@
+# Vercel Production Environment Variables
+
+Copy these EXACT values into your Vercel Dashboard → Settings → Environment Variables
+
+## Core Database & Server Configuration
+
+**DATABASE_URL**
+```
+postgresql://postgres:Lpkoji1920@database-1.c1qsmac4e5xd.ap-southeast-2.rds.amazonaws.com:5432/evalis
+```
+
+**NODE_ENV**
+```
+production
+```
+
+**JWT_SECRET**
+```
+EukAVLW0gwUxUC7tK+SYm5uvmuNAv9CQiyNs/LusHVIHpf8D9lk/Spn2/HwmZUoAnYSaBoYNT5jtfDx4QQn2Jw==
+```
+
+**JWT_EXPIRE**
+```
+24h
+```
+
+**DEFAULT_ADMIN_PASSWORD**
+```
+zyExeKhXoMFtd1Gc
+```
+
+**FRONTEND_URL**
+```
+https://evalis-8vi5bqy33-anntmishras-projects.vercel.app
+```
+
+## Firebase Configuration (Frontend)
+
+**FIREBASE_API_KEY**
+```
+AIzaSyDOyFOhXSYbtWrFCZMBwsF-7upRxYRlE9k
+```
+
+**FIREBASE_AUTH_DOMAIN**
+```
+evalis-d16f2.firebaseapp.com
+```
+
+**FIREBASE_PROJECT_ID**
+```
+evalis-d16f2
+```
+
+**FIREBASE_STORAGE_BUCKET**
+```
+evalis-d16f2.appspot.com
+```
+
+**FIREBASE_MESSAGING_SENDER_ID**
+```
+993676113888
+```
+
+**FIREBASE_APP_ID**
+```
+1:993676113888:web:21e93b506a90e0544e5d85
+```
+
+**FIREBASE_MEASUREMENT_ID**
+```
+G-CHPDVY165C
+```
+
+## Vite Frontend Variables (Required for Frontend)
+
+**VITE_FIREBASE_API_KEY**
+```
+AIzaSyDOyFOhXSYbtWrFCZMBwsF-7upRxYRlE9k
+```
+
+**VITE_FIREBASE_AUTH_DOMAIN**
+```
+evalis-d16f2.firebaseapp.com
+```
+
+**VITE_FIREBASE_PROJECT_ID**
+```
+evalis-d16f2
+```
+
+**VITE_FIREBASE_STORAGE_BUCKET**
+```
+evalis-d16f2.appspot.com
+```
+
+**VITE_FIREBASE_MESSAGING_SENDER_ID**
+```
+993676113888
+```
+
+**VITE_FIREBASE_APP_ID**
+```
+1:993676113888:web:21e93b506a90e0544e5d85
+```
+
+**VITE_FIREBASE_MEASUREMENT_ID**
+```
+G-CHPDVY165C
+```
+
+## Firebase Admin (Server-side)
+
+**FIREBASE_CLIENT_EMAIL**
+```
+firebase-adminsdk-fbsvc@evalis-d16f2.iam.gserviceaccount.com
+```
+
+**FIREBASE_PRIVATE_KEY_B64**
+```
+ewogICJ0eXBlIjogInNlcnZpY2VfYWNjb3VudCIsCiAgInByb2plY3RfaWQiOiAiZXZhbGlzLWQxNmYyIiwKICAicHJpdmF0ZV9rZXlfaWQiOiAiYjU3MmJhZWM3MTZkZDFhMGEyODk5NTg3ZmEzN2NiZGFjZTBhMjFlNyIsCiAgInByaXZhdGVfa2V5IjogIi0tLS0tQkVHSU4gUFJJVkFURSBLRVktLS0tLVxuTUlJRXZRSUJBREFOQmdrcWhraUc5dzBCQVFFRkFBU0NCS2N3Z2dTakFnRUFBb0lCQVFDaCtVK0huT3Z2NDlod1xuL3NhZ0RMa1NTNkloRDNRLzZNSjBKYnZrUUQ3Qjlhc0lPd0ZwQUNFUlMwNmVNNEhDbzJodnFzcUl4NTFrdkVmL1xuTnp6YXJESitEb2JWNWQ3YzVNbk5LdWFjcDJLUUY3U2xuMHdzaUF2eXNlTDdiU3BWYk41M1JpeDljdzhNV3RnRlxuS1BvRTFOeCs0eXkrZC8vYXVhN21xOC9IQi9pdVFQVEd0VU96RWtjV29GdzRSSGRTRXpDOFRqNm1ZQlJ5alNMeFxudTc4b1FzNlZGNlVkaUpWemJPR2ZIemlDZ1VzT2YxbEd6aXpJWUNmd1JDczU2Z2pkWHcvTm5OUnZTMEExcUNmdlxuQ3IvN1ArWDZvcUZmSXdiNm4rc2s1cmFtNFNMR055N3hqQ3FtRVRQeXdPZ2hRalNZdnlPNXc3MFN5WDJzKzdoNlxuMU5xc2FlMzlBZ01CQUFFQ2dnRUFFK2Z1SW5wQ1U4WFNicGFkSmdQU1JlR1dNQTUwYUx0TUZKYWptQXBlUEJ1YlxuVktSZHlMLzdrR0xMSzIya2s1MWVBeVZBQlYzVTVkR3UzbnAxSitHMFJlSTJwM2g3OG5WS3FNU09PVy9uME5JZFxuQVNMSjY0b2Z2OGlsWHVWOFo2bTgwSGRIRmZiTFFXY3p0N1NndjNIQ2xIU0taZkVjK0U1TUpLeTJXUjFOYm1xNlxua3pMclhWbTVINzAxVkYvanFYaDNLRjU5bGpVbUw4VmIxUi9SOTZPazZtVzg4T0VDeUVzbWdRendkMVVUWU1VbFxuM09uUzg5QTB2N1Z1RGM2WXhsazNkTmgrWU1xME1BMEwwYzI5R3ZGZ1dyZ0VyWFFhNXFlaE1qemJsVTByaEhlYVxuQ0d5TmpVWjFFUTI0RGRKTGM3U2tueUdlUWNPRHg0VHZ4N0dNbzc2SEFRS0JnUURaQmIrb3JuTVhXbnpJVXdrWlxudEp3STZvNG1nOVE0WWs1amxmc2p6R3NxTlBoNWUrUENBS1E5VVJMN0RmTko4QTFYMmlYcE1WM0Y3QlAxT0FJSVxuRnoza3BlckRnN09aTUpZTTJ0TUVLcjNnVjN2SS9OQS9SNmdkMGh4WHprNlZORjlDK09ZQkRsdFV6UXJlYndwZFxuVEExS3hpMHNpQzRKZ3RMdlArdWMyQWlRL1FLQmdRQy9FSW80UDBrQys4ejJmd09aUTFvNlJIelE0RFp0Sld1SlxuVlZPNTdjTGlsWlFPRTNzL0xCRENYZGl6ZGwxMmV1RzFOQThoZVF3amc5SXpPQUd1cVJoQVZGaXNVa0wwbHZJdVxuc2R2ZEVqY0VZd0c5Zk1SWnY1WGU4N3pEdFh0NXJSeFlnNi8rR2Q0Vmc2Z3BHUkhMVlMyYkV3Zi92RFRKNE51RVxuTnNiTzhLL2hBUUtCZ0ZSczV4Vmc0QWNLdlpaVXJ5cWYxeitrdDY0R0JNMzJlRlpIWjA2UzNIR3I3Nm1hNTR4MlxuSVc1MUZyUXh4aDVTVTI2RXY5REswcGNIY3ZBblhLcjNGNjNXV2RDN2NHZTh2Zks4UWZEU0M5RzFWc05tamtDL1xueUlmcFQvdGNsN2QxaTBXTGZEYVc5akswSFhGUXN6QitRSUdCUE51aEVuL0NzL284M0pURWVmaWxBb0dBQkNrRlxuQ1hKL1VYeFFHekhxenlTRFMyK0FWRC85ajJUWU1aWlZDMkJjOVBnUzBEZW1ZRnJDUnFrcWRjWG5CUlJwNDdzdFxuZFNvZ2xJbGpRMUE5NFNLM2IzY21zeUhiYVYzOENmNC9ibEhlTnM4OUUzWXJCRlZDbXljdGZnbHVsZGlxSEZkSlxudHJ1emRUNTNvK1Z5MkwyVEQ2UmJjVHNVM3l4eE96RENKWEZpTXdFQ2dZRUFycDNuSzdMZVdWVlJrMjZZems4Nlxua1Q4VDRkL0IwUHJ2T0hKUDFJTW1HYXVXQnVNK0JzWDAwY2tid0pzbTVOVXNqZmw2Z3ZWbENvRitjNXBhUm1tVlxuOUN4eWlLQmZyREg4aTN5WHpoc0E5TE05b0IzUWExaEtCbHc2b0FKSXpvZ3lta1VSdEs5VHpZcUd1RVBuMU9RNVxuNmZzd1MrcWtNVGloOUhocGo1QUdIVDQ9XG4tLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tXG4iLAogICJjbGllbnRfZW1haWwiOiAiZmlyZWJhc2UtYWRtaW5zZGstZmJzdmNAZXZhbGlzLWQxNmYyLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwKICAiY2xpZW50X2lkIjogIjEwMzIzODIxNzg4MzYxMDk0MTQ4MyIsCiAgImF1dGhfdXJpIjogImh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbS9vL29hdXRoMi9hdXRoIiwKICAidG9rZW5fdXJpIjogImh0dHBzOi8vb2F1dGgyLmdvb2dsZWFwaXMuY29tL3Rva2VuIiwKICAiYXV0aF9wcm92aWRlcl94NTA5X2NlcnRfdXJsIjogImh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL29hdXRoMi92MS9jZXJ0cyIsCiAgImNsaWVudF94NTA5X2NlcnRfdXJsIjogImh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL3JvYm90L3YxL21ldGFkYXRhL3g1MDkvZmlyZWJhc2UtYWRtaW5zZGstZmJzdmMlNDBldmFsaXMtZDE2ZjIuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLAogICJ1bml2ZXJzZV9kb21haW4iOiAiZ29vZ2xlYXBpcy5jb20iCn0K
+```
+
+## Email Configuration (Optional)
+
+**EMAIL_HOST**
+```
+smtp.gmail.com
+```
+
+**EMAIL_PORT**
+```
+587
+```
+
+**EMAIL_SECURE**
+```
+false
+```
+
+**EMAIL_USER**
+```
+evalis.system@gmail.com
+```
+
+**EMAIL_PASS**
+```
+your_gmail_app_password_here
+```
+
+**EMAIL_DRY_RUN**
+```
+false
+```
+
+---
+
+## Instructions:
+
+1. Go to https://vercel.com/dashboard
+2. Find your project
+3. Go to Settings → Environment Variables
+4. Add each variable above with the exact values
+5. Make sure to select "Production", "Preview", and "Development" for each variable
+6. After adding all variables, go to Deployments tab and click "Redeploy"
+
+## Critical Variables (Must Have):
+- DATABASE_URL
+- NODE_ENV
+- JWT_SECRET
+- JWT_EXPIRE
+- DEFAULT_ADMIN_PASSWORD
+- All VITE_ prefixed variables
+- All FIREBASE_ variables
+
+## Test Login Credentials:
+- Username: admin
+- Email: admin@university.edu
+- Password: zyExeKhXoMFtd1Gc

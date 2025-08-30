@@ -1,0 +1,12 @@
+[
+  {
+    "id": "BTech2025",
+    "name": "BTECH 2023-2027",
+    "startYear": 2025,
+    "endYear": 2029,
+    "department": "BTech",
+    "active": true,
+    "createdAt": "2025-08-16T11:31:11.491Z",
+    "updatedAt": "2025-08-16T11:31:11.491Z"
+  }
+]
