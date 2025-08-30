@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evalis - Grading System</title>
+    <style>
+      #error-display {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #ff5252;
+        color: white;
+        padding: 10px;
+        font-family: monospace;
+        white-space: pre-wrap;
+        z-index: 9999;
+        display: none;
+        max-height: 80vh;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="error-display"></div>
+    <div id="root"></div>
+    <script>
+      window.addEventListener('error', function(event) {
+        const errorDisplay = document.getElementById('error-display');
+        errorDisplay.style.display = 'block';
+        errorDisplay.textContent = 'ERROR: ' + event.message + '\n\nStack: ' + event.error.stack;
+        console.error(event.error);
+      });
+      
+      window.addEventListener('unhandledrejection', function(event) {
+        const errorDisplay = document.getElementById('error-display');
+        errorDisplay.style.display = 'block';
+        errorDisplay.textContent = 'PROMISE ERROR: ' + event.reason + '\n\nStack: ' + 
+          (event.reason.stack || 'No stack trace available');
+        console.error(event.reason);
+      });
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

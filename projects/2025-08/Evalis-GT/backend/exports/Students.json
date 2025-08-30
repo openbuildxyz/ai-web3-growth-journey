@@ -1,0 +1,14 @@
+[
+  {
+    "id": "E23CSEU0324",
+    "name": "Anant",
+    "section": "A",
+    "batch": "BTech2025",
+    "email": "anntmishraa@gmail.com",
+    "password": "$2b$10$86ZROzZBPmgETAcSpJs2yeKOPoOeFLeKNqd3iZpdNnXyIzu2J096m",
+    "role": "student",
+    "activeSemesterId": null,
+    "createdAt": "2025-08-16T12:48:43.423Z",
+    "updatedAt": "2025-08-16T12:48:43.423Z"
+  }
+]
