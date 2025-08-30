@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Professional developer-focused design system for smart contract builder */
+
+@layer base {
+  :root {
+    /* Dark professional theme */
+    --background: 222 14% 7%;
+    --foreground: 210 40% 98%;
+
+    --card: 223 17% 9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 223 17% 9%;
+    --popover-foreground: 210 40% 98%;
+
+    /* AI-tech gradient primary */
+    --primary: 262 83% 58%;
+    --primary-foreground: 210 40% 98%;
+    --primary-glow: 262 73% 68%;
+
+    /* Professional secondary */
+    --secondary: 217 19% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Muted for code backgrounds */
+    --muted: 217 19% 12%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    /* Accent for highlights */
+    --accent: 262 73% 68%;
+    --accent-foreground: 210 40% 98%;
+
+    /* Success for validation */
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 19% 15%;
+    --input: 217 19% 15%;
+    --ring: 262 83% 58%;
+
+    --radius: 0.75rem;
+
+    /* AI/Tech gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-ai: linear-gradient(135deg, hsl(262 83% 58%), hsl(220 83% 68%));
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+    --shadow-card: 0 4px 20px hsl(222 14% 2% / 0.8);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
