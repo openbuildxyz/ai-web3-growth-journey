@@ -1,0 +1,24 @@
+{
+  "mintAddress": null,
+  "tokenConfig": {
+    "name": "My Custom Token",
+    "symbol": "MCT",
+    "decimals": 6,
+    "description": "This is a custom token with metadata",
+    "image": "https://example.com/token-logo.png",
+    "website": "https://mycustomtoken.com",
+    "twitter": "https://twitter.com/mycustomtoken",
+    "telegram": "https://t.me/mycustomtoken",
+    "attributes": [
+      {
+        "trait_type": "Type",
+        "value": "Utility"
+      },
+      {
+        "trait_type": "Supply",
+        "value": "1000000"
+      }
+    ]
+  },
+  "createdAt": null
+}
