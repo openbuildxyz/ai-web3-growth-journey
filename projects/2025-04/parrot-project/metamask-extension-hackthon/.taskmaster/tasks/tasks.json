@@ -1,0 +1,191 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 13,
+        "title": "Create LLM Transaction Analysis Service",
+        "description": "Implement the core service class for handling OpenRouter LLM API requests and responses",
+        "details": "Create `shared/lib/llm-analysis-service.ts` with `LlmTransactionAnalysisService` class. Implement methods for API key management, request construction, and response parsing. Handle OpenRouter API integration with proper error handling and timeout management. Use named exports to avoid ES Module/CommonJS conflicts. Include methods: `analyzeTransaction(transactionData: string): Promise<AnalysisResult>`, `buildPrompt(transactionData: any): string`, `parseResponse(response: string): AnalysisResult`.",
+        "testStrategy": "Unit tests for service methods, mock API responses, test error handling scenarios, validate request/response format",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Create Transaction Formatting Utility",
+        "description": "Implement utility function to convert MetaMask confirmation objects to LLM-readable format",
+        "details": "Create `ui/pages/confirmations/utils/llm-analytics.util.ts` with `formatTransactionForLLM` function. Handle MetaMask's internal confirmation object structure, including optional fields like `value?: string | undefined`. Convert transaction data to structured JSON format suitable for LLM analysis. Include transaction type, value, gas fees, recipient address, and contract interaction details. Handle edge cases for different transaction types (transfer, contract call, etc.).",
+        "testStrategy": "Unit tests with various transaction types, test optional field handling, validate JSON structure output, test with real MetaMask confirmation objects",
+        "priority": "high",
+        "dependencies": [
+          13
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Define TypeScript Interfaces and Types",
+        "description": "Create comprehensive type definitions for LLM analysis feature components",
+        "details": "Define interfaces in appropriate type files: `AnalysisResult` interface with fields for analysis text, risk level, and confidence score. `TransactionAnalysisRequest` interface for API requests. `LLMResponse` interface for parsing API responses. Handle optional fields properly to match MetaMask's existing type system. Include proper JSDoc comments for all interfaces.",
+        "testStrategy": "TypeScript compilation tests, interface validation, ensure compatibility with existing MetaMask types",
+        "priority": "medium",
+        "dependencies": [
+          13,
+          14
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Create Analysis Button Component",
+        "description": "Implement React component for triggering LLM transaction analysis",
+        "details": "Create `ui/pages/confirmations/components/llm-transaction-analysis/AnalysisButton.tsx`. Implement button with loading states, disabled states during analysis, and proper accessibility attributes. Handle click events to trigger analysis. Include loading spinner and appropriate button text changes. Follow MetaMask's existing UI component patterns and styling. Use React hooks for state management (useState for loading state).",
+        "testStrategy": "Component rendering tests, click event handling tests, loading state tests, accessibility tests with screen readers",
+        "priority": "medium",
+        "dependencies": [
+          15
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Create Analysis Result Display Component",
+        "description": "Implement React component for displaying LLM analysis results and risk warnings",
+        "details": "Create `ui/pages/confirmations/components/llm-transaction-analysis/AnalysisResult.tsx`. Display analysis text in natural language, show risk level with appropriate visual indicators (colors, icons). Handle different risk levels (low, medium, high) with distinct styling. Include collapsible sections for detailed analysis. Follow MetaMask's design system for consistent UI. Handle empty states and error states gracefully.",
+        "testStrategy": "Component rendering tests for different risk levels, visual regression tests, responsive design tests, error state handling tests",
+        "priority": "medium",
+        "dependencies": [
+          15
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Create Main LLM Analysis Section Component",
+        "description": "Implement the main container component that orchestrates the analysis workflow",
+        "details": "Create `ui/pages/confirmations/components/llm-transaction-analysis/LlmAnalysisSection.tsx`. Integrate AnalysisButton and AnalysisResult components. Manage state for analysis results, loading states, and errors. Handle the complete workflow: button click → format transaction → call LLM service → display results. Implement proper error boundaries and fallback UI. Use React hooks for state management and side effects.",
+        "testStrategy": "Integration tests for complete workflow, error boundary tests, state management tests, user interaction flow tests",
+        "priority": "high",
+        "dependencies": [
+          16,
+          17
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Integrate LLM Analysis into Confirmation Page",
+        "description": "Add the LLM analysis section to the main transaction confirmation page",
+        "details": "Modify `ui/pages/confirmations/confirm/confirm.tsx` to include the `LlmAnalysisSection` component. Position the component appropriately within the existing confirmation UI layout. Ensure the integration doesn't block the main confirmation flow - users can still confirm transactions while analysis is running. Pass necessary transaction data props to the analysis section. Maintain existing confirmation page functionality.",
+        "testStrategy": "Integration tests with existing confirmation flow, ensure non-blocking behavior, test with various transaction types, regression tests for existing functionality",
+        "priority": "high",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Implement LLM Response Parsing Logic",
+        "description": "Create robust parsing logic for LLM responses including Markdown code block extraction",
+        "details": "Enhance the LLM service with response parsing logic. Handle LLM responses wrapped in Markdown code blocks (```json ... ```). Use regular expressions to extract pure JSON from response text. Implement fallback parsing strategies for malformed responses. Add validation for expected response structure. Handle partial responses and streaming if needed. Include proper error handling for JSON parsing failures.",
+        "testStrategy": "Unit tests for various response formats, test Markdown extraction, test malformed JSON handling, test edge cases with special characters",
+        "priority": "medium",
+        "dependencies": [
+          13
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Add Configuration and Environment Setup",
+        "description": "Implement configuration management for LLM API settings and environment variables",
+        "details": "Create configuration management for OpenRouter API key and endpoint settings. Add environment variable support for development/production configurations. Implement secure API key storage following MetaMask's security practices. Add configuration validation and fallback values. Create development environment setup documentation. Handle missing configuration gracefully with appropriate user messaging.",
+        "testStrategy": "Configuration loading tests, environment variable tests, security validation tests, fallback behavior tests",
+        "priority": "medium",
+        "dependencies": [
+          13
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Implement Error Handling and User Feedback",
+        "description": "Add comprehensive error handling and user-friendly error messages throughout the feature",
+        "details": "Implement error handling for network failures, API rate limits, invalid responses, and service unavailability. Create user-friendly error messages for different failure scenarios. Add retry logic for transient failures. Implement graceful degradation when LLM service is unavailable. Add logging for debugging purposes. Ensure errors don't crash the main MetaMask application.",
+        "testStrategy": "Error scenario tests, network failure simulation, API rate limit tests, user message validation tests, logging verification",
+        "priority": "medium",
+        "dependencies": [
+          18,
+          20
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Create Unit Tests for All Components",
+        "description": "Implement comprehensive unit tests for all LLM analysis feature components",
+        "details": "Create unit tests for LlmTransactionAnalysisService, formatTransactionForLLM utility, AnalysisButton component, AnalysisResult component, and LlmAnalysisSection component. Use Jest and React Testing Library following MetaMask's testing patterns. Mock external dependencies and API calls. Test edge cases, error conditions, and user interactions. Achieve high test coverage for all new code.",
+        "testStrategy": "Test coverage reports, mock validation, edge case testing, component isolation tests, service method tests",
+        "priority": "medium",
+        "dependencies": [
+          13,
+          14,
+          16,
+          17,
+          18,
+          20
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Implement Integration Tests and End-to-End Validation",
+        "description": "Create integration tests for the complete LLM analysis workflow within MetaMask",
+        "details": "Implement integration tests that validate the complete user workflow: transaction initiation → confirmation page display → LLM analysis trigger → result display. Test integration with MetaMask's existing confirmation flow. Validate that the feature doesn't interfere with normal transaction processing. Test with various transaction types and network conditions. Include performance testing to ensure acceptable response times.",
+        "testStrategy": "End-to-end workflow tests, performance benchmarks, cross-browser testing, transaction flow validation, non-interference verification with main MetaMask functionality",
+        "priority": "high",
+        "dependencies": [
+          19,
+          21,
+          22,
+          23
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Add Analysis Button and Configuration Entry to Wallet Connection Page",
+        "description": "Integrate the LLM analysis button and API key configuration entry point into the wallet connection page, providing the same functionality available on transaction confirmation pages.",
+        "details": "Extend the wallet connection page UI to include the LLM analysis functionality. Add the AnalysisButton component to the wallet connection interface, allowing users to analyze connection requests using LLM services. Integrate the API key configuration entry point, enabling users to set up their OpenRouter API key directly from the connection page. Ensure the analysis button is contextually appropriate for wallet connection scenarios and adapts the transaction analysis logic to handle connection requests. Implement proper state management to share configuration between connection and transaction pages. Follow MetaMask's existing UI patterns and ensure the new elements don't interfere with the standard wallet connection flow. Add appropriate loading states and error handling specific to connection page context. Ensure the feature gracefully handles cases where API keys are not configured.",
+        "testStrategy": "Test integration of analysis button on wallet connection page, verify API key configuration functionality works from connection page, test that connection flow remains uninterrupted, validate proper state sharing between connection and transaction pages, test error handling for unconfigured API keys, verify UI consistency with existing MetaMask patterns, test with various wallet connection scenarios and dApp interactions.",
+        "status": "done",
+        "dependencies": [
+          16,
+          17,
+          21
+        ],
+        "priority": "high",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-20T02:41:28.403Z",
+      "updated": "2025-06-21T06:21:05.090Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
