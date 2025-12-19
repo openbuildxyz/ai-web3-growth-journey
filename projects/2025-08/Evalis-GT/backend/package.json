@@ -1,0 +1,63 @@
+{
+  "name": "evalis-gt-server",
+  "version": "1.0.0",
+  "description": "Backend server for Evalis-GT with AI question enhancer capabilities",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "start-ai": "python api/question_enhancer_api.py",
+    "inspect-student": "node scripts/inspectStudentData.js",
+    "seed-test": "node createTestUsers.js",
+    "seed-assignment": "node createTestAssignment.js",
+    "inspect-academic": "node scripts/inspectAcademicData.js",
+    "repair-subject-batches": "node scripts/repairSubjectBatchIds.js"
+  },
+  "dependencies": {
+    "@clerk/backend": "^1.1.2",
+    "@clerk/express": "^1.7.25",
+    "axios": "^1.6.2",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.2",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.15.0",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "express-fileupload": "^1.4.3",
+    "express-rate-limit": "^7.4.0",
+    "firebase-admin": "^13.4.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.1",
+    "multer": "^2.0.2",
+    "nodemailer": "^6.10.1",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7",
+    "winston": "^3.17.0"
+  },
+  "optionalDependencies": {
+    "nltk": "^0.0.1",
+    "numpy": "^0.0.1",
+    "transformers": "^0.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "python": {
+    "dependencies": [
+      "flask==2.3.3",
+      "flask-cors==4.0.0",
+      "numpy>=1.24.0",
+      "nltk>=3.8.1",
+      "transformers>=4.30.0",
+      "torch>=2.0.0"
+    ]
+  },
+  "author": "",
+  "license": "MIT"
+}

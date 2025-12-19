@@ -1,0 +1,18 @@
+{
+  "exportDate": "2025-08-17T14:19:26.207Z",
+  "source": "Neon DB",
+  "destination": "AWS RDS",
+  "tables": {
+    "Students": 1,
+    "Teachers": 1,
+    "Subjects": 1,
+    "Batches": 1,
+    "Submissions": 0,
+    "Admins": 1,
+    "TeacherSubjects": 1,
+    "Semesters": 8,
+    "Assignments": 0
+  },
+  "totalRecords": 14,
+  "sourceUrl": "postgresql://neondb_owner:********@ep-autumn-bonus-a15zt06x-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+}
