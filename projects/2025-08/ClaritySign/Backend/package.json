@@ -1,0 +1,23 @@
+{
+  "name": "claritysign-backend",
+  "version": "1.0.0",
+  "description": "Backend for ClaritySign - blockchain transaction & contract analyzer",
+  "main": "server.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "nodemon --watch . --ext js,json --exec \"node --env-file=.env server.js\"",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "ethers": "^6.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "eslint": "^8.45.0"
+  }
+}
