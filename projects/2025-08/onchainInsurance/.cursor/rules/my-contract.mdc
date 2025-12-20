@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: background contract use，后端开发规范
+globs: 
+alwaysApply: false
+---
+# Solidity 开发规范
+
+## 项目技术栈
+- solidity: 0.8.20
+- forge Version: 1.1.0-stable
+- openzeppelin-solidity: v5.3.0
+
+## 代码风格
+- Solidity合约中不能直接使用Unicode字符，只有注释使用中文，其他内容使用英文（ASCII字符）（revert使用一定要英文，"console.log"内容一定要使用英文）
+- 使用 Solidity 版本声明 `^0.8.20` 或更高版本
+- 在合约中重写接口函数时，需添加 override 关键字
+- 使用命名导入：`import {Contract} from "path/to/contract.sol"`
+- 保持一致的缩进（4个空格或1个制表符）
+- 最大行长：120个字符
+- 函数名和变量使用小驼峰命名法（camelCase）
+- 合约名和结构体使用大驼峰命名法（PascalCase）
+- 常量使用大写下划线命名法（UPPER_CASE）
+- 按可见性分组导入、状态变量、事件、修饰器和函数W
+- 函数参数和返回值尽量写在同一行，如果实在太长，可以分开两行
+- 修改src合约方法的同时需要修改对应的接口文件（src/interfaces）
+- 不要使用 try catch 等隐藏问题的代码，有问题应该直接报错
