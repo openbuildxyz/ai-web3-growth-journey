@@ -1,0 +1,25 @@
+{
+  "name": "solana-token-minter",
+  "version": "1.0.0",
+  "description": "Solana token minting project for devnet",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "ts-node src/test.ts"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.87.6",
+    "@solana/spl-token": "^0.3.9",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "typescript": "^5.2.2",
+    "ts-node": "^10.9.1"
+  },
+  "keywords": ["solana", "token", "mint", "devnet"],
+  "author": "",
+  "license": "MIT"
+}

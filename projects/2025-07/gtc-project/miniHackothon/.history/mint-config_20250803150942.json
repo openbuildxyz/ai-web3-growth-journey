@@ -1,0 +1,10 @@
+{
+  "mintAddress": null,
+  "tokenConfig": {
+    "name": "TEST_TOKEN",
+    "symbol": "TEST", 
+    "decimals": 9,
+    "description": "Test token for minting"
+  },
+  "createdAt": null
+}
