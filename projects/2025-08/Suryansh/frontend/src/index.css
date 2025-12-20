@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for AI Contract Forge */
+body {
+  
+  border-radius:5px solid #6c6a6a;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #d5d9e0; /* bg-gray-900 */
+  
+ 
+  
+}
+
+/* Ensure the card has proper dimensions and centering */
+.ai-contract-card {
+  width: 40%;
+  height: 60%;
+  max-width: 1200px;
+
+  max-height: 800px;
+}
+
+/* Custom scrollbar for the contract history */
+.contract-history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.contract-history::-webkit-scrollbar-track {
+  background: #6c6a6a;
+  border-radius: 3px;
+}
+
+.contract-history::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.contract-history::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
