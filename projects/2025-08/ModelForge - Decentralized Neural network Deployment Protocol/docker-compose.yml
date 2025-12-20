@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  modelforge:
+    build: .
+    ports:
+      - '3000:3000' # Next.js web app
+      - '8545:8545' # Hardhat local node
+      - '7860:7860' # Gradio demo
+      - '8501:8501' # Streamlit demo
+    volumes:
+      - .:/workspace
+      - node_modules:/workspace/node_modules
+    environment:
+      - NODE_ENV=development
+    command: pnpm dev
+
+  # Optional: IPFS node for local development
+  ipfs:
+    image: ipfs/kubo:latest
+    ports:
+      - '4001:4001' # Swarm port
+      - '5001:5001' # API port
+      - '8080:8080' # Gateway port
+    volumes:
+      - ipfs_data:/data/ipfs
+    environment:
+      - IPFS_PROFILE=server
+
+volumes:
+  node_modules:
+  ipfs_data:
