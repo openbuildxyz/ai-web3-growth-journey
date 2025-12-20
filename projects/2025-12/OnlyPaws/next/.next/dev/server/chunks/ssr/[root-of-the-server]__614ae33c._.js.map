@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///Users/morganpage/Documents/VSCODE/X402/x402/examples/typescript/fullstack/next/app/protected/page.tsx"],"sourcesContent":["export default function ProtectedPage() {\n  return (\n    <div className=\"min-h-screen flex items-center justify-center\">\n      <div className=\"max-w-2xl mx-auto p-8\">\n        <h1 className=\"text-4xl font-bold mb-4\">Protected Content</h1>\n        <p className=\"text-lg mb-4\">\n          Your payment was successful! Enjoy this video.\n        </p>\n        <video\n          width=\"100%\"\n          controls\n          autoPlay\n          className=\"rounded-lg\"\n        >\n          <source src=\"/thankyou.mp4\" type=\"video/mp4\" />\n          Your browser does not support the video tag.\n        </video>\n      </div>\n    </div>\n  );\n}\n\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,0aAAC;QAAI,WAAU;kBACb,cAAA,0aAAC;YAAI,WAAU;;8BACb,0aAAC;oBAAG,WAAU;8BAA0B;;;;;;8BACxC,0aAAC;oBAAE,WAAU;8BAAe;;;;;;8BAG5B,0aAAC;oBACC,OAAM;oBACN,QAAQ;oBACR,QAAQ;oBACR,WAAU;;sCAEV,0aAAC;4BAAO,KAAI;4BAAgB,MAAK;;;;;;wBAAc;;;;;;;;;;;;;;;;;;AAMzD"}}]
+}
