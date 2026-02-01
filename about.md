@@ -2,7 +2,7 @@
 Image
 
 
-![](public/aiweb3poster.png)
+![](public/aiweb3poster.webp)
 
 🌍【AI³ Growth Journey 火热启动】🚀
 「AI 正在吞噬软件，Web3 正在重构生产关系」，虽然 Vitalik 与 Sam Altman 还未在达沃斯握手，代码与智能合约却已经在重塑世界的运行规则。此刻，一场横跨亚太的开发者觉醒运动即将启程——　

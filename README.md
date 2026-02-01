@@ -2,7 +2,7 @@
 
 ## AI+Web3开发者成长计划
 
-![AI+Web3 Growth Journey](public/aiweb3poster.png)
+![AI+Web3 Growth Journey](public/aiweb3poster.webp)
 
 ## 项目概述
 

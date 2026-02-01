@@ -55,8 +55,8 @@ export function Sponsors() {
     },
     {
       name: 'BGA',
-      logo: '/logos/BGA.png',
-      logoDark: '/logos/BGA-dark.png',
+      logo: '/logos/BGA.webp',
+      logoDark: '/logos/BGA-dark.webp',
       url: 'https://www.chainforgood.org',
       height: 40,
     },

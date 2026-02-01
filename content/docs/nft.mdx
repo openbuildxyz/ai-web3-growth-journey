@@ -21,51 +21,51 @@ github repo：https://github.com/fuhaooo/boo-nft
 
 3、 点击`Add to MetaMask`按钮，添加Monad测试网，并在OpenBuild的[领水界面](https://faucet.openbuild.xyz/monad?code=231d66aa-384b-4354-b0f8-5fedce06b56e)输入钱包地址，点击`Get Testnet MON`进行领水，需要绑定github账号。
 
-![faucet](/thirdweb/faucet.png)
+![faucet](/thirdweb/faucet.webp)
 
 ### 二、Thirdweb 0代码部署合约
 
 1、借助[thirdweb](https://thirdweb.com/) 实现一个简单的NFT Minting页面，不需要手动写智能合约代码，首先在官网完成注册。
-![注册](/thirdweb/0.png)
+![注册](/thirdweb/0.webp)
 
 2、注册账号后，确认钱包已连接，点击`NFT Drop`
-![nft drop](/thirdweb/1.png)
+![nft drop](/thirdweb/1.webp)
 
 3、会看到NFT Drop页面和详细介绍，点击`Deploy Now`开始部署
-![deploy now](/thirdweb/2.png)
+![deploy now](/thirdweb/2.webp)
 
 4、填写NFT相关元数据，同时可以设置NFT发生二次销售时，收取的版税。这里的两个钱包地址均是自动填写的，即为自己的钱包地址。
-![meta data](/thirdweb/3.png)
+![meta data](/thirdweb/3.webp)
 
 往下滑，还需要设置合约部署的区块链网络，一般我们部署demo，就选择测试网即可，常用的测试网有Sepolia等。本节课我们使用Monad Testnet，因为已经在前面通过Openbuild网站进行领水，所以我们拥有了在Monad Testnet上部署合约和交易的Gas费。
-![chain](/thirdweb/4.png)
+![chain](/thirdweb/4.webp)
 
 5、点击部署，MetaMask钱包会弹出一个交易请求的小窗口，我们点击确认
-![transaction](/thirdweb/5.png)
+![transaction](/thirdweb/5.webp)
 
 等待一小段时间后，可能会看到交易成功，这代表我们的NFT合约已经成功部署到Monad Testnet的区块链网络上了
-![success](/thirdweb/6.png)
+![success](/thirdweb/6.webp)
 
 6、我们点击`View Contract`按钮，会跳转到另一个页面，同时我们也会看到一个Checklist，这是一个引导我们，必须按照顺序完成的步骤列表。在NFT的名称下面，我们也可以查看当前合约的地址和详细信息。
-![view contract](/thirdweb/7.png)
+![view contract](/thirdweb/7.webp)
 
 7、接着我们在左边Extensions下面，点击`NFTs`的Tab页，可以上传我们的NFT图片。可以上传单个NFT图片，也可以批量进行上传。
-![nft](/thirdweb/8.png)
+![nft](/thirdweb/8.webp)
 
 > 这里批量上传的情况下，我们可能需要借助其他IPFS存储服务，如Pinata等。IPFS是一个分布式文件存储系统，可以将文件存储到网络上，同时也可以通过URL直接访问。我们一般看到的NFT图片，本质上是IPFS存储的文件，区块链只负责存储和分发，不负责存储文件的完整性。
-![pinata](/thirdweb/9.png)
+![pinata](/thirdweb/9.webp)
 
 8、由于这里我想要实现多层级，不同特征和稀有度的NFT，所以我们选择批量上传，同时上传的Metadata元数据已经替大家打包好了，可以[下载使用](https://pan.quark.cn/s/6b2ae8e8ce25)。注意需要上传的是Json文件，Json文件内包含了NFT的元数据。
-![batch upload](/thirdweb/10.png)
+![batch upload](/thirdweb/10.webp)
 
 9、往下翻点击`Next`，我们需要选择是否延迟Reveal NFT的元数据。延迟揭示，就是类似盲盒，我们需要再上传一个封面，以及设置具体揭示的时间。这样大家一开始Mint的时候，在未揭示之前看到的都是相同的，只有揭示后才能看到不同的NFT。
-![delay reveal](/thirdweb/11.png)
+![delay reveal](/thirdweb/11.webp)
 
 10、接着我们在左边Extensions下面，点击`Claim Conditions`的Tab页，点击`Add Phase`按钮，可以添加多个不同的销售阶段
-![add phase](/thirdweb/13.png)
+![add phase](/thirdweb/13.webp)
 
 同时在具体的销售阶段内，我们可以设置NFT的销售价格、发行量、每个钱包地址的可Mint的数量等信息。
-![claim conditions](/thirdweb/12.png)
+![claim conditions](/thirdweb/12.webp)
 
 ### 三、AI开发前端页面
 
@@ -77,16 +77,16 @@ npm i -g @thirdweb-dev/cli
 ```bash
 npx thirdweb create app --next
 ```
-![create app](/thirdweb/15.png)
+![create app](/thirdweb/15.webp)
 
 12、初始化项目后，我们就可以使用Windsurf、Cursor等AI IDE工具，开始写代码了。我们首先要在.env文件中配置Thirdweb的Client ID。
-![ide](/thirdweb/16.png)
+![ide](/thirdweb/16.webp)
 
 在Thirdweb官网创建项目的时候，会生成这个Client ID，可以在Create Project页面点击具体的项目查看
-![client id](/thirdweb/18.png)
+![client id](/thirdweb/18.webp)
 
 13、使用`yarn dev`命令启动项目，会在本地打开一个浏览器页面。
-![yarn dev](/thirdweb/17.png)
+![yarn dev](/thirdweb/17.webp)
 
 14、使用下列提示词，进行项目构建，Claude 3.7 Sonnet
 ```tsx
@@ -192,20 +192,20 @@ npx thirdweb create app --next
 ```
 
 15、如果有bug简单修改后，就可以使用`yarn dev`命令，看到前端页面了
-![yarn dev](/thirdweb/19.png)
+![yarn dev](/thirdweb/19.webp)
 
 我们可以选择连接钱包来进行Mint NFT的操作。
 > 这里NFT图片没有正常显示出来，应该是跟Thirdweb的IPFS服务有关系，但是当我们揭示的时候，使用的是Pinata的服务，应该不会有问题
-![connect wallet](/thirdweb/20.png)
+![connect wallet](/thirdweb/20.webp)
 
 20、使用Vercel部署你的第一个Web3服务
-![deploy service](/thirdweb/21.png)
+![deploy service](/thirdweb/21.webp)
 
 21、分享你的页面，让更多人来Mint NFT吧
 
 Demo展示环节：[Alfred's Boo NFT](https://boo-nft.vercel.app/) 2025年4月1日揭示
 
-![share page](/thirdweb/22.png)
+![share page](/thirdweb/22.webp)
 
 
 ## 下一步计划
