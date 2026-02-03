@@ -29,7 +29,7 @@ npm run dev
 
 ### 1. 主界面 - 支付授权控制台
 
-![主界面截图](./image/homepage.png)
+![主界面截图](./image/homepage.webp)
 
 功能展示:
 - 三步式支付流程指示器
@@ -65,7 +65,7 @@ npm run dev
 
 ### 5. 授权管理后台
 
-![授权管理后台截图](./image/AuthorizationManagement.png)
+![授权管理后台截图](./image/AuthorizationManagement.webp)
 
 配置功能:
 - 当前授权状态概览
@@ -76,7 +76,7 @@ npm run dev
 
 ### 6. 402资源配置
 
-![402资源配置截图](./image/402ResourceConfig.png)
+![402资源配置截图](./image/402ResourceConfig.webp)
 
 配置选项:
 - 资源名称

@@ -1,11 +1,11 @@
 1、用户登录、注册
 
-![alt text](image.png)
+![alt text](image.webp)
 
-![alt text](image-1.png)
+![alt text](image-1.webp)
 
 2、通过与Agent对话，发布需求或者产品/服务
-![alt text](image-2.png)
+![alt text](image-2.webp)
 
 比如，用户输入一个需求
 如果市场上有与之匹配的产品/服务，则由Agent进行推理后完成筛选，选出当前最优解
@@ -15,12 +15,12 @@
 
 
 3、用户可以直接查看市场上的需求，产品/服务，直接成交
-![alt text](image-3.png)
+![alt text](image-3.webp)
 
 如果是非自己的需求，也可以直接发起成交
 
-![alt text](image-4.png)
+![alt text](image-4.webp)
 
 4、也可以查看自己已成交的交易
 
-![alt text](image-5.png)
+![alt text](image-5.webp)

@@ -9,16 +9,16 @@
 ## 演示截图
 
 ### 主界面
-![主界面](./images/demo_main.png)
+![主界面](./images/demo_main.webp)
 
 ### API服务选择
-![服务选择](./images/demo_services.png)
+![服务选择](./images/demo_services.webp)
 
 ### 参数设置与支付
-![参数设置](./images/demo_params.png)
+![参数设置](./images/demo_params.webp)
 
 ### API响应结果
-![响应结果](./images/demo_result.png)
+![响应结果](./images/demo_result.webp)
 
 ## 演示流程
 

@@ -1,1 +1,1 @@
-![demo截图](./assets/demo.jpg)
+![demo截图](./assets/demo.webp)

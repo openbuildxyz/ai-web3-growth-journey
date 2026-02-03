@@ -107,7 +107,7 @@ description: 简短的章节描述（100-150字符）
    ````
 4. **图片**: 图片文件应放在`public/images/`目录下，并使用相对路径引用:
    ```md
-   ![图片描述](/images/your-image.png)
+   ![图片描述](/images/your-image.webp)
    ```
 5. **链接**: 使用相对路径链接到其他章节:
    ```md

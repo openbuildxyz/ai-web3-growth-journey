@@ -2,7 +2,7 @@
 
 ## 1 项目首页
 
-![Clipboard_Screenshot_1743350713](./assets/Clipboard_Screenshot_1743350713.png)
+![Clipboard_Screenshot_1743350713](./assets/Clipboard_Screenshot_1743350713.webp)
 
 ## 2 核心流程
 
@@ -30,15 +30,15 @@
 
 > 填写目标标题和描述后，可以获得完成目标的AI建议
 
-![image-20250331002322695](./assets/image-20250331002322695.png)
+![image-20250331002322695](./assets/image-20250331002322695.webp)
 
 ## 4 目标查看
 
-![image-20250331002600946](./assets/image-20250331002600946.png)
+![image-20250331002600946](./assets/image-20250331002600946.webp)
 
 ## 5 详情查看
 
-![image-20250331002634580](./assets/image-20250331002634580.png)
+![image-20250331002634580](./assets/image-20250331002634580.webp)
 
 
 

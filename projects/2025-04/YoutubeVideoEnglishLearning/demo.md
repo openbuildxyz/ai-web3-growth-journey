@@ -1,3 +1,3 @@
 # Demo Picture
 
-![Picture](./demo.png)
+![Picture](./demo.webp)

@@ -12,25 +12,25 @@
 
 在主界面中，您可以看到已创建的企业网站列表。每个网站卡片右上角都有一个操作菜单，其中包含"官网上链"选项。
 
-![主界面截图](http://cdn.camera-eat-first.tech//image_beding/20250517163852.png)
+![主界面截图](http://cdn.camera-eat-first.tech//image_beding/20250517163852.webp)
 
 ### 2. 点击"官网上链"按钮
 
 当您点击"官网上链"按钮时，系统会弹出一个模态框，显示网站信息并提供连接钱包的选项。
 
-![上链模态框截图](http://cdn.camera-eat-first.tech//image_beding/20250517163921.png)
+![上链模态框截图](http://cdn.camera-eat-first.tech//image_beding/20250517163921.webp)
 
 ### 3. 连接钱包
 
 点击"连接钱包"按钮，系统会尝试连接MetaMask或其他兼容的以太坊钱包。
 
-![连接钱包截图](http://cdn.camera-eat-first.tech//image_beding/20250517161514.png)
+![连接钱包截图](http://cdn.camera-eat-first.tech//image_beding/20250517161514.webp)
 
 ### 4. 确认上链
 
 连接钱包后，点击"确认上链"按钮，系统会将网站信息写入区块链。
 
-![确认上链截图](http://cdn.camera-eat-first.tech//image_beding/20250517161609.png)
+![确认上链截图](http://cdn.camera-eat-first.tech//image_beding/20250517161609.webp)
 
 ### 5. 上链成功
 

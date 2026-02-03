@@ -8,7 +8,7 @@ This video provides a complete walkthrough of the platform, showcasing its core 
 
 Click the thumbnail below to watch the full demo on YouTube:
 
-[![Gen3Dao AI-Powered DAO Creator Demo](https://img.youtube.com/vi/OJH52Bwsw_M/0.jpg)](https://youtu.be/OJH52Bwsw_M)
+[![Gen3Dao AI-Powered DAO Creator Demo](https://img.youtube.com/vi/OJH52Bwsw_M/0.webp)](https://youtu.be/OJH52Bwsw_M)
 
 **Direct Link:** [https://youtu.be/OJH52Bwsw_M](https://youtu.be/OJH52Bwsw_M)
 

@@ -9,8 +9,8 @@
 
 ## 📸 截图展示
 
-![](./image/home.png)
-![](./image/upload.png)
-![](./image/detail.png)
+![](./image/home.webp)
+![](./image/upload.webp)
+![](./image/detail.webp)
 
 > *界面设计符合响应式和无障碍标准，支持移动端操作，深色主题减少视觉疲劳。*

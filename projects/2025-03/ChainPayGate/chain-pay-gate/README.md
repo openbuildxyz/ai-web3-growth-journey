@@ -4,7 +4,7 @@
 
 ## 项目架构
 
-![项目架构图](./images/architecture.png)
+![项目架构图](./images/architecture.webp)
 
 项目包含三个主要部分：
 

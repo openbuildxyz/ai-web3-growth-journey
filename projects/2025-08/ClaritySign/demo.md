@@ -1,3 +1,3 @@
-![Alt text](image1.png)
+![Alt text](image1.webp)
 
-![Alt text](image2.png)
+![Alt text](image2.webp)
