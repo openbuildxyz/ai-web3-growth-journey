@@ -1,0 +1,25 @@
+{
+  "name": "cangjie-refactor-skill",
+  "version": "1.0.0",
+  "description": "Cangjie代码重构技能 - 根据CANGJIE_CODING_GUIDELINES.md规范自动重构仓颉代码",
+  "author": "UCToo Team",
+  "license": "MIT",
+  "skill": {
+    "entry": "cangjie_refactor",
+    "exports": [
+      "cangjie_refactor"
+    ]
+  },
+  "dependencies": {
+    "magic-core": "^1.0.0",
+    "std-collection": "^1.0.0",
+    "std-fs": "^1.0.0",
+    "std-io": "^1.0.0",
+    "std-text": "^1.0.0",
+    "std-util": "^1.0.0"
+  },
+  "metadata": {
+    "category": "development",
+    "tags": ["refactoring", "coding-standards", "automation", "cangjie", "code-quality"]
+  }
+}

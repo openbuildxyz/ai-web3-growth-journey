@@ -1,0 +1,6 @@
+[submodule "submodules/CangjieMagic-Examples"]
+	path = submodules/CangjieMagic-Examples
+	url = https://gitcode.com/Cangjie/CangjieMagic-Examples.git
+[submodule "submodules/CangjieCorpus"]
+	path = submodules/CangjieCorpus
+	url = https://gitcode.com/Cangjie/CangjieCorpus.git

@@ -1,0 +1,61 @@
+{
+  "name": "@cangjiemagic/skill-runtime-sdk",
+  "version": "1.0.0",
+  "description": "JavaScript/TypeScript SDK for creating CangjieMagic Skill Runtime skills",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "bin": {
+    "skill": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cangjiemagic",
+    "skill-runtime",
+    "wasm",
+    "component-model",
+    "skills",
+    "plugins",
+    "typescript"
+  ],
+  "author": "CangjieMagic Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cangjiemagic/skill-runtime.git",
+    "directory": "sdk/javascript"
+  },
+  "homepage": "https://www.cangjiemagic.dev/",
+  "bugs": {
+    "url": "https://github.com/cangjiemagic/skill-runtime/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@bytecodealliance/jco": "^1.6.5",
+    "axios": "^1.6.0",
+    "commander": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.2",
+    "typescript": "^5.2.2",
+    "@types/jest": "^29.5.5",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

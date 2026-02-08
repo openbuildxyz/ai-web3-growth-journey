@@ -1,0 +1,1 @@
+Given the constraint (or bug? on OHOS-Cangjie-5.0.100) that the macro package can only import the stdlib package and no others, it is not feasible to structure the DSL package as a collection of multiple sub-packages.

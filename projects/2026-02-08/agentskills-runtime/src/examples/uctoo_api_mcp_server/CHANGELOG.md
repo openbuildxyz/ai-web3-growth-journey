@@ -1,0 +1,2 @@
+# uctoo_api_mcp Agent
+2026.01.01 v0.0.1发布，实现通过自然语言调用uctoo-backend服务端API功能的Agent。映射了服务端非标准API，例如登录接口，可通过自然语言登录uctoo-backend获取调用其他接口的access_token。映射了uctoo数据库entity表的标准CURD操作API，可通过自然语言实现数据库增删改查操作。此版本仅用于技术可行性验证，不对安全性做保证，请开发者和用户在生产环境审慎使用自然语言登录等功能。

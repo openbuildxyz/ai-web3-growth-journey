@@ -1,0 +1,230 @@
+openapi: 3.0.0
+info:
+  title: CangjieMagic Agentskills Integration API
+  description: API contracts for integrating agentskills standard with CangjieMagic framework
+  version: 1.0.0
+paths:
+  /skills:
+    get:
+      summary: List all available skills
+      description: Retrieve a list of all skills that conform to the agentskills standard
+      responses:
+        '200':
+          description: A list of available skills
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skill'
+    post:
+      summary: Register a new skill
+      description: Register a new skill from a SKILL.md file or skill directory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillRegistrationRequest'
+      responses:
+        '201':
+          description: Skill registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+        '400':
+          description: Invalid skill definition
+  /skills/{skillName}:
+    get:
+      summary: Get skill details
+      description: Retrieve details of a specific skill by name
+      parameters:
+        - name: skillName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Skill details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+        '404':
+          description: Skill not found
+    delete:
+      summary: Unregister a skill
+      description: Remove a skill from the skill manager
+      parameters:
+        - name: skillName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Skill unregistered successfully
+        '404':
+          description: Skill not found
+  /skills/{skillName}/execute:
+    post:
+      summary: Execute a skill
+      description: Execute a specific skill with provided arguments
+      parameters:
+        - name: skillName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillExecutionRequest'
+      responses:
+        '200':
+          description: Skill executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillExecutionResult'
+        '400':
+          description: Invalid execution request
+        '404':
+          description: Skill not found
+  /skills/validate:
+    post:
+      summary: Validate a skill
+      description: Validate a skill against the agentskills standard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillValidationRequest'
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillValidationResult'
+components:
+  schemas:
+    Skill:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          description: Unique identifier for the skill
+          example: "pdf-processing"
+          maxLength: 64
+        description:
+          type: string
+          description: Description of what the skill does
+          example: "Extract text and tables from PDF files, fill forms, merge documents."
+          maxLength: 1024
+        license:
+          type: string
+          description: License information for the skill
+          example: "Apache-2.0"
+        compatibility:
+          type: string
+          description: Environment requirements for the skill
+          example: "Requires pdftools and access to the internet"
+          maxLength: 500
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional arbitrary metadata
+          example:
+            author: "example-org"
+            version: "1.0"
+        allowedTools:
+          type: string
+          description: Space-delimited list of pre-approved tools
+          example: "Bash(git:*) Bash(jq:*) Read"
+        instructions:
+          type: string
+          description: Markdown content containing the skill instructions
+        skillPath:
+          type: string
+          description: File path to the skill's directory
+          example: "/path/to/skill/directory"
+    SkillRegistrationRequest:
+      type: object
+      required:
+        - skillPath
+      properties:
+        skillPath:
+          type: string
+          description: Path to the skill directory containing SKILL.md
+          example: "/path/to/skill/directory"
+        enabled:
+          type: boolean
+          description: Whether the skill should be enabled after registration
+          default: true
+    SkillExecutionRequest:
+      type: object
+      properties:
+        arguments:
+          type: object
+          description: Arguments to pass to the skill execution
+          additionalProperties: true
+          example:
+            filePath: "/path/to/document.pdf"
+            targetLanguage: "en"
+    SkillExecutionResult:
+      type: object
+      required:
+        - skillName
+        - status
+        - output
+      properties:
+        skillName:
+          type: string
+          description: Name of the skill that was executed
+        status:
+          type: string
+          enum: [success, failure, partial]
+          description: Execution status
+        output:
+          type: string
+          description: Output from the skill execution
+        error:
+          type: string
+          description: Error message if execution failed
+        executionTime:
+          type: integer
+          format: int64
+          description: Time taken for execution in milliseconds
+    SkillValidationRequest:
+      type: object
+      required:
+        - skillPath
+      properties:
+        skillPath:
+          type: string
+          description: Path to the skill directory containing SKILL.md
+          example: "/path/to/skill/directory"
+    SkillValidationResult:
+      type: object
+      required:
+        - valid
+        - issues
+      properties:
+        valid:
+          type: boolean
+          description: Whether the skill is valid according to the standard
+        issues:
+          type: array
+          items:
+            type: string
+          description: List of validation issues found

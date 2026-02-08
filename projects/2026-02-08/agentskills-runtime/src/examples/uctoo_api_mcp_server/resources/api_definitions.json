@@ -1,0 +1,76 @@
+{
+  "apiMappings": [
+    {
+      "mappingId": "mapping-users-crud",
+      "backendEndpoint": "/api/v1/users",
+      "mcpServiceId": "mcp-service-users",
+      "translationRules": [
+        {
+          "ruleId": "rule-users-get",
+          "pattern": "get user with id {id}",
+          "targetEndpoint": "/api/v1/users/{id}",
+          "parameterMappings": {
+            "id": "id"
+          },
+          "transformFunction": "defaultTransform"
+        },
+        {
+          "ruleId": "rule-users-list",
+          "pattern": "get all users",
+          "targetEndpoint": "/api/v1/users",
+          "parameterMappings": {},
+          "transformFunction": "defaultTransform"
+        },
+        {
+          "ruleId": "rule-users-create",
+          "pattern": "create user with name {name} and email {email}",
+          "targetEndpoint": "/api/v1/users",
+          "parameterMappings": {
+            "name": "name",
+            "email": "email"
+          },
+          "transformFunction": "defaultTransform"
+        }
+      ],
+      "naturalLanguagePatterns": [
+        "Get user information",
+        "Find user by ID",
+        "List all users",
+        "Show users",
+        "Create new user",
+        "Add user to system"
+      ],
+      "enabled": true
+    },
+    {
+      "mappingId": "mapping-products-crud",
+      "backendEndpoint": "/api/v1/products",
+      "mcpServiceId": "mcp-service-products",
+      "translationRules": [
+        {
+          "ruleId": "rule-products-get",
+          "pattern": "get product with id {id}",
+          "targetEndpoint": "/api/v1/products/{id}",
+          "parameterMappings": {
+            "id": "id"
+          },
+          "transformFunction": "defaultTransform"
+        },
+        {
+          "ruleId": "rule-products-list",
+          "pattern": "get all products",
+          "targetEndpoint": "/api/v1/products",
+          "parameterMappings": {},
+          "transformFunction": "defaultTransform"
+        }
+      ],
+      "naturalLanguagePatterns": [
+        "Get product information",
+        "Find product by ID",
+        "List all products",
+        "Show products"
+      ],
+      "enabled": true
+    }
+  ]
+}
