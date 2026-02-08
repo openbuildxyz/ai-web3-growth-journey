@@ -1,0 +1,145 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  height: 100%;
+}
+
+.section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+/* Indicator Cards */
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.card {
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.cardLabel {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.cardValue {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  margin-bottom: 0.25rem;
+}
+
+.cardSignal {
+  font-size: 0.65rem;
+  font-weight: 500;
+}
+
+.cardSignal.bullish {
+  color: var(--color-long);
+}
+
+.cardSignal.bearish {
+  color: var(--color-short);
+}
+
+.cardSignal.neutral {
+  color: var(--color-warning);
+}
+
+/* Profile Card */
+.profileCard {
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem;
+}
+
+.profileType {
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 0.25rem;
+}
+
+.profileStats {
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.positive {
+  color: var(--color-long);
+}
+
+.negative {
+  color: var(--color-short);
+}
+
+.separator {
+  margin: 0 0.25rem;
+  color: var(--text-muted);
+}
+
+.profileMeta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Sentiment */
+.sentimentCard {
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem;
+}
+
+.sentimentHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.sentimentValue {
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.sentimentBar {
+  height: 8px;
+  background: linear-gradient(90deg, var(--color-short) 0%, var(--color-warning) 50%, var(--color-long) 100%);
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.sentimentFill {
+  position: absolute;
+  top: -3px;
+  height: 14px;
+  width: 4px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: left var(--transition-normal);
+}
+
+.sentimentLabel {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: center;
+}

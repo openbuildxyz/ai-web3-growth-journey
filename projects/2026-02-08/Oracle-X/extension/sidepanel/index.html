@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oracle-X</title>
+    <link rel="stylesheet" href="panel.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <span class="logo-icon">🔮</span>
+          <span class="logo-text">Oracle-X</span>
+        </div>
+        <button id="retryBtn" class="retry-btn" title="重新截图">🔄</button>
+      </header>
+
+      <!-- 场景识别卡片 -->
+      <section id="recognizeCard" class="card recognize-card">
+        <div class="card-header">
+          <span class="card-icon">📍</span>
+          <span>场景识别</span>
+        </div>
+        <div id="recognizeContent" class="recognize-content">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <span>正在识别交易页面...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 意图选择 -->
+      <section id="intentSection" class="intent-section hidden">
+        <div class="intent-title">选择交易意图</div>
+        <div class="intent-buttons">
+          <button id="longBtn" class="intent-btn long-btn">
+            <span class="btn-icon">📈</span>
+            <span>做多</span>
+          </button>
+          <button id="shortBtn" class="intent-btn short-btn">
+            <span class="btn-icon">📉</span>
+            <span>做空</span>
+          </button>
+          <button id="analyzeOnlyBtn" class="intent-btn analyze-btn">
+            <span class="btn-icon">🔍</span>
+            <span>仅分析</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Alpha Score 仪表盘 -->
+      <section id="scoreSection" class="card score-section hidden">
+        <div class="card-header">
+          <span class="card-icon">📊</span>
+          <span>Alpha Score</span>
+        </div>
+        <div class="score-dashboard">
+          <div class="score-gauge">
+            <svg viewBox="0 0 100 50" class="gauge-svg">
+              <path
+                d="M 10 50 A 40 40 0 0 1 90 50"
+                fill="none"
+                stroke="#333"
+                stroke-width="8"
+              />
+              <path
+                id="scoreArc"
+                d="M 10 50 A 40 40 0 0 1 90 50"
+                fill="none"
+                stroke="url(#scoreGradient)"
+                stroke-width="8"
+                stroke-dasharray="0 126"
+              />
+              <defs>
+                <linearGradient
+                  id="scoreGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" style="stop-color: #ef4444" />
+                  <stop offset="50%" style="stop-color: #eab308" />
+                  <stop offset="100%" style="stop-color: #22c55e" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div id="scoreValue" class="score-value">--</div>
+          </div>
+          <div id="scoreSummary" class="score-summary">等待分析...</div>
+        </div>
+      </section>
+
+      <!-- Twitter 情绪面板 -->
+      <section id="twitterSection" class="card twitter-section hidden">
+        <div class="card-header">
+          <span class="card-icon">🐦</span>
+          <span>Twitter 情绪</span>
+        </div>
+        <div id="twitterContent" class="twitter-content">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <span>正在分析推文...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI 分析结果 -->
+      <section id="analysisSection" class="card analysis-section hidden">
+        <div class="card-header">
+          <span class="card-icon">🤖</span>
+          <span>AI 分析</span>
+        </div>
+        <div id="analysisContent" class="analysis-content">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <span>AI 正在分析...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 结论徽章 -->
+      <section id="conclusionSection" class="conclusion-section hidden">
+        <div id="conclusionBadge" class="conclusion-badge">
+          <div class="conclusion-title"></div>
+          <div class="conclusion-desc"></div>
+        </div>
+      </section>
+    </div>
+
+    <script src="panel.js"></script>
+  </body>
+</html>
