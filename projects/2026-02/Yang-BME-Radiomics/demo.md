@@ -9,6 +9,7 @@ ng)
 
 #### 2. 特征贡献度 (可解释性分析)
 ![Feature Importance](feature_importance.png)
+<img width="1599" height="825" alt="feature_importance" src="https://github.com/user-attachments/assets/ca93fe8e-e0ef-4c32-bc83-366b56de80a1" />
 
 ### 运行说明
 用户只需运行 `src/main_analysis.R`，系统将自动完成数据标准化、LASSO 降维及结果可视化。
