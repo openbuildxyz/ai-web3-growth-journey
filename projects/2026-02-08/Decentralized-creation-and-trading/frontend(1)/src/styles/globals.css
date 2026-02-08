@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #6366f1;
+  --secondary: #8b5cf6;
+  --dark: #1e293b;
+  --light: #f8fafc;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--light);
+  color: var(--dark);
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.card {
+  @apply bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-300;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary/90;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-white hover:bg-secondary/90;
+}
+
+.btn-outline {
+  @apply border border-primary text-primary hover:bg-primary/10;
+}

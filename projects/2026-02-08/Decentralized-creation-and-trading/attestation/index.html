@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0G Notarization System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .wallet-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            background: #f8f9ff;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-left: 4px solid #1976d2;
+        }
+
+        .status.success {
+            background: #e8f5e9;
+            color: #388e3c;
+            border-left: 4px solid #388e3c;
+        }
+
+        .status.error {
+            background: #ffebee;
+            color: #d32f2f;
+            border-left: 4px solid #d32f2f;
+        }
+
+        .result,
+        .verify-result {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .result h3,
+        .verify-result h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .record-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .record-item:last-child {
+            border-bottom: none;
+        }
+
+        .record-item strong {
+            color: #555;
+            display: inline-block;
+            min-width: 150px;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+            color: #856404;
+        }
+
+        .verify-success {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .verify-fail {
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f44336;
+        }
+
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tx-info-display {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+        }
+
+        .tx-info-display h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔐 0G Notarization System</h1>
+        <p class="subtitle">Blockchain-based File Authentication & Verification</p>
+
+        <div class="card">
+            <div class="wallet-section">
+                <button id="connectBtn">Connect Wallet</button>
+                <button id="switchNetworkBtn">Switch to 0G Testnet</button>
+            </div>
+
+            <div id="status" class="status info" style="display: none;">Ready to connect</div>
+        </div>
+
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('upload')">📤 Notarize File</button>
+                <button class="tab" onclick="switchTab('verify')">✅ Verify by Hash</button>
+                <button class="tab" onclick="switchTab('verifytx')">🔗 Verify by Transaction</button>
+            </div>
+
+            <!-- Upload Tab -->
+            <div id="uploadTab" class="tab-content active">
+                <h2 class="section-title">Notarize Your File</h2>
+                <p style="margin-bottom: 20px; color: #666;">
+                    Upload a file to create a permanent, tamper-proof record on the 0G blockchain.
+                </p>
+
+                <div class="form-group">
+                    <label for="fileInput">Select File to Notarize:</label>
+                    <input type="file" id="fileInput">
+                </div>
+
+                <button id="uploadBtn" disabled>Notarize File</button>
+
+                <div id="result"></div>
+            </div>
+
+            <!-- Verify Tab -->
+            <div id="verifyTab" class="tab-content">
+                <h2 class="section-title">Verify File Authenticity</h2>
+                <p style="margin-bottom: 20px; color: #666;">
+                    Verify if a file matches its blockchain record by comparing hashes.
+                </p>
+
+                <div class="form-group">
+                    <label for="verifyFileInput">Select File to Verify:</label>
+                    <input type="file" id="verifyFileInput">
+                </div>
+
+                <div class="form-group">
+                    <label for="hashInput">Enter Expected Hash (from notarization record):</label>
+                    <input type="text" id="hashInput" placeholder="0x...">
+                </div>
+
+                <button id="verifyBtn" disabled>Verify File</button>
+
+                <div id="verifyResult"></div>
+            </div>
+
+
+            <!-- Verify by Transaction Tab -->
+            <div id="verifyTxTab" class="tab-content">
+                <h2 class="section-title">Verify by Blockchain Transaction</h2>
+                <p style="margin-bottom: 20px; color: #666;">
+                    Two-step verification: First query the blockchain record, then compare with your file.
+                </p>
+
+                <!-- Step 1: Query Transaction -->
+                <div style="background: #f0f7ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Step 1: Query Blockchain Record</h3>
+
+                    <div class="form-group">
+                        <label for="txHashInput">Enter Transaction Hash:</label>
+                        <input type="text" id="txHashInput" placeholder="0x...">
+                    </div>
+
+                    <button id="queryTxBtn">Query Transaction</button>
+
+                    <div id="txInfo" style="margin-top: 20px;"></div>
+                </div>
+
+                <!-- Step 2: Upload File and Compare -->
+                <div style="background: #fff7ed; padding: 20px; border-radius: 8px;">
+                    <h3 style="color: #f97316; margin-bottom: 15px;">Step 2: Upload File to Compare</h3>
+
+                    <div class="form-group">
+                        <label for="verifyTxFileInput">Select File to Verify:</label>
+                        <input type="file" id="verifyTxFileInput">
+                    </div>
+
+
+                    <button id="compareHashBtn" disabled>Compare with Blockchain</button>
+
+                    <!-- Comparison Result -->
+                    <div id="verifyResult" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            if (tab === 'upload') {
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('uploadTab').classList.add('active');
+            } else if (tab === 'verify') {
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('verifyTab').classList.add('active');
+            } else if (tab === 'verifytx') {
+                document.querySelectorAll('.tab')[2].classList.add('active');
+                document.getElementById('verifyTxTab').classList.add('active');
+            }
+        }
+    </script>
+
+    <script type="module" src="./index.js"></script>
+</body>
+
+</html>
