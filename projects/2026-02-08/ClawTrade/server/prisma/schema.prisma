@@ -1,0 +1,59 @@
+// Prisma Schema for ClawTrade
+// 单用户模拟交易系统
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表（单用户 demo）
+model User {
+  id          String     @id @default(uuid())
+  username    String     @unique @default("demo_user")
+  currentCash Decimal    @default(100000) @db.Decimal(15, 2)
+  createdAt   DateTime   @default(now())
+  positions   Position[]
+  trades      Trade[]
+
+  @@map("users")
+}
+
+// 持仓表
+model Position {
+  id        String  @id @default(uuid())
+  userId    String
+  coinId    String  // CoinGecko ID (e.g. "bitcoin")
+  symbol    String  // 币种符号 (e.g. "BTC")
+  name      String  // 币种名称 (e.g. "Bitcoin")
+  icon      String  // 图标符号
+  amount    Decimal @db.Decimal(20, 8) // 持有数量
+  avgCost   Decimal @db.Decimal(15, 8) // 平均成本
+  totalCost Decimal @db.Decimal(15, 2) // 总成本
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, coinId])
+  @@map("positions")
+}
+
+// 交易记录表
+model Trade {
+  id         String   @id @default(uuid())
+  userId     String
+  type       String   // 'BUY' or 'SELL'
+  coinId     String   // CoinGecko ID
+  symbol     String   // 币种符号
+  icon       String   // 图标符号
+  amount     Decimal  @db.Decimal(20, 8) // 交易数量
+  price      Decimal  @db.Decimal(15, 8) // 成交价格
+  totalValue Decimal  @db.Decimal(15, 2) // 成交金额
+  source     String   @default("WEB") // 'WEB' or 'OPENCLAW'
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@map("trades")
+}
