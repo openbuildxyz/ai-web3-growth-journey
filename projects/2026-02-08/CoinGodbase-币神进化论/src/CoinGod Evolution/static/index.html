@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="🧬 币神进化论 - Don't Copy Trade. Let AI Copy You.，通过模拟交易学习投资知识，与AI Agent对战竞技">
+    <meta name="keywords" content="加密货币,比特币,交易,学习,游戏,AI,投资,区块链">
+    <title>🧬 币神进化论 - Don't Copy Trade. Let AI Copy You.</title>
+    
+    <!-- Tailwind CSS CDN (使用默认版本确保稳定性) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js CDN (使用jsDelivr CDN提高稳定性) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Font Awesome (使用Cloudflare CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e6f7ff',
+                            100: '#bae7ff',
+                            200: '#91d5ff',
+                            300: '#69c0ff',
+                            400: '#40a9ff',
+                            500: '#1890ff',
+                            600: '#096dd9',
+                            700: '#0050b3',
+                            800: '#003a8c',
+                            900: '#002766',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- 初始加载动画 -->
+    <div id="initialLoader" class="fixed inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 z-[9999] flex items-center justify-center">
+        <div class="text-center">
+            <div class="mb-6">
+                <div class="inline-block animate-bounce text-6xl">🧬</div>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-4">币神进化论</h2>
+            <div class="flex items-center justify-center space-x-2">
+                <div class="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                <div class="w-3 h-3 bg-white rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                <div class="w-3 h-3 bg-white rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+            </div>
+            <p class="text-white/80 mt-4 text-sm">正在加载交易系统...</p>
+        </div>
+    </div>
+    
+    <!-- 顶部导航栏 -->
+    <header class="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo和标题 -->
+                <div class="flex items-center space-x-4">
+                    <div class="text-3xl">🧬</div>
+                    <div>
+                        <h1 class="text-2xl font-bold">币神进化论</h1>
+                        <p class="text-xs text-blue-100">Don't Copy Trade. Let AI Copy You.</p>
+                    </div>
+                    <!-- 移动端用户英文名显示 -->
+                    <div id="mobileUserName" class="hidden md:hidden bg-white/20 px-2 py-1 rounded-md text-sm font-medium">
+                        <i class="fas fa-user mr-1"></i>
+                        <span id="mobileUserNameText">Guest</span>
+                    </div>
+                </div>
+                
+                <!-- 路演展示入口 -->
+                <button id="roadshowBtn" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 mr-2" title="查看路演展示">
+                    <i class="fas fa-bullhorn"></i>
+                    <span class="font-semibold">路演展示</span>
+                </button>
+                
+                <!-- 模式切换 -->
+                <div id="modeSwitch" class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg p-1">
+                    <button class="mode-btn active px-4 py-2 rounded-md transition-all" data-mode="tutorial">
+                        <i class="fas fa-book mr-2"></i>演示模式
+                    </button>
+                    <button class="mode-btn px-4 py-2 rounded-md transition-all" data-mode="practice" disabled>
+                        <i class="fas fa-rocket mr-2"></i>实战练习
+                    </button>
+                </div>
+                
+                <!-- 用户信息 -->
+                <div class="flex items-center space-x-4">
+                    <!-- 排行榜按钮（始终显示） -->
+                    <button id="leaderboardBtn" class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105" title="查看排行榜">
+                        <i class="fas fa-trophy"></i>
+                        <span class="font-semibold">Epoch封神榜</span>
+                    </button>
+                    
+                    <!-- 保存按钮（仅实战模式显示） -->
+                    <button id="saveBtn" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg flex items-center justify-center transition-all duration-200 group hidden" title="保存当前数据">
+                        <i class="fas fa-save text-white group-hover:text-blue-200 transition-colors"></i>
+                    </button>
+                    
+                    <!-- 载入按钮（仅实战模式显示） -->
+                    <button id="loadBtn" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg flex items-center justify-center transition-all duration-200 group hidden" title="载入保存的数据">
+                        <i class="fas fa-folder-open text-white group-hover:text-blue-200 transition-colors"></i>
+                    </button>
+                    
+                    <div class="text-right">
+                        <div class="text-sm text-blue-100">总资产</div>
+                        <div id="totalAssets" class="text-xl font-bold">$1,000,000.00</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm text-blue-100">收益率</div>
+                        <div id="todayProfit" class="text-xl font-bold">$0.00</div>
+                    </div>
+                    <div id="userAvatar" class="bg-white/20 px-3 py-2 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-user mr-2"></i>
+                        <span class="text-sm font-medium">Guest</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 py-6">
+        <div id="mainGrid" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- 左侧：加密货币列表 -->
+            <div id="leftPanel" class="lg:col-span-4">
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <h2 class="text-lg font-bold text-gray-800">
+                                <i class="fas fa-coins text-yellow-500 mr-2"></i>币种列表
+                            </h2>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                <i class="fas fa-database text-blue-400 mr-1"></i>CryptoCompare 真实市场数据
+                            </span>
+                        </div>
+                        <button id="refreshBtn" class="text-blue-500 hover:text-blue-700 transition-colors">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- 搜索框 -->
+                    <div class="mb-4">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="搜索币种..." 
+                                   class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 币种列表 -->
+                    <div id="cryptoList" class="space-y-2 max-h-[600px] overflow-y-auto">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中间：K线图和交易面板 -->
+            <div id="centerPanel" class="lg:col-span-8">
+                <!-- 价格走势图 -->
+                <div class="bg-white rounded-xl shadow-lg p-4 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-lg font-bold text-gray-800" id="chartTitle">
+                                <span id="selectedCryptoName">Bitcoin</span>
+                                <span id="selectedCryptoSymbol" class="text-gray-500 ml-2">BTC</span>
+                            </h2>
+                            <div class="flex items-center space-x-4 mt-2">
+                                <span id="currentPrice" class="text-2xl font-bold text-gray-900">$99,999.99</span>
+                                <span id="priceChange" class="text-sm px-2 py-1 rounded bg-green-100 text-green-700">
+                                    <i class="fas fa-arrow-up mr-1"></i>+1.25%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="period-btn active px-3 py-1 rounded text-sm" data-period="6">6H</button>
+                            <button class="period-btn px-3 py-1 rounded text-sm" data-period="24">24H</button>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <canvas id="klineChart" class="w-full" style="height: 400px;"></canvas>
+                        <!-- 弹幕滚动容器 -->
+                        <div id="danmakuContainer" class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+                            <!-- 弹幕将动态插入这里 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 弹幕输入模块（简化版） -->
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3 mt-4 border border-purple-100">
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="danmakuInput" 
+                               placeholder="发个友善的弹幕分享体验～" 
+                               maxlength="200"
+                               class="flex-1 px-3 py-2 text-sm border border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white">
+                        <button id="sendDanmakuBtn" 
+                                class="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all text-sm font-medium shadow-sm hover:shadow-md">
+                            <i class="fas fa-paper-plane mr-1"></i>发送
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 交易面板 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mt-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-exchange-alt text-blue-500 mr-2"></i>交易面板
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-2">可用资金</label>
+                            <div id="availableCash" class="text-xl font-bold text-gray-900">$1,000,000.00</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-2">持仓数量</label>
+                            <div id="holdingAmount" class="text-xl font-bold text-gray-900">0</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-2">交易数量</label>
+                            <input type="number" id="tradeAmount" placeholder="请输入数量" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   step="0.0001" min="0">
+                        </div>
+
+                        <!-- 最大可买数量显示 -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-info-circle text-blue-500 text-sm"></i>
+                                    <span class="text-sm text-gray-700">最大可买数量</span>
+                                </div>
+                                <div class="text-right">
+                                    <div id="maxBuyAmount" class="text-sm font-medium text-blue-600">0</div>
+                                    <div id="maxBuyValue" class="text-xs text-gray-500">$0.00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <button id="buyBtn" class="buy-button px-6 py-3 rounded-lg text-white font-bold transition-all">
+                                <i class="fas fa-arrow-up mr-2"></i>买入
+                            </button>
+                            <button id="sellBtn" class="sell-button px-6 py-3 rounded-lg text-white font-bold transition-all">
+                                <i class="fas fa-arrow-down mr-2"></i>卖出
+                            </button>
+                        </div>
+
+                        <div id="tradeHint" class="text-sm text-gray-500 text-center">
+                            <!-- 交易提示 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 持仓列表 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mt-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-wallet text-green-500 mr-2"></i>我的持仓
+                    </h2>
+                    <div id="portfolioList" class="space-y-2">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：AI Agent和排行榜（仅实战模式显示） -->
+            <div id="rightPanel" class="lg:col-span-3 hidden">
+                <!-- AI Agent动态 -->
+                <div class="bg-white rounded-xl shadow-lg p-4 mb-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-robot text-purple-500 mr-2"></i>AI对手动态
+                    </h2>
+                    <div id="agentList" class="space-y-3">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 排行榜 -->
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-trophy text-yellow-500 mr-2"></i>排行榜
+                    </h2>
+                    <div id="leaderboard" class="space-y-2">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 教学引导遮罩 -->
+    <div id="tutorialOverlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+    
+    <!-- 教学提示框 -->
+    <div id="tutorialTooltip" class="fixed z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-md border border-gray-100">
+            <!-- 倒计时指示器 -->
+            <div class="mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-16 h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div id="tutorialProgress" class="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000 ease-linear" style="width: 100%"></div>
+                        </div>
+                        <span id="tutorialCountdown" class="text-xs text-gray-600 font-mono">自动进入下一步</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主要内容区域 -->
+            <div class="mb-6">
+                <div class="flex items-start justify-between mb-3">
+                    <h3 id="tutorialTitle" class="text-xl font-bold text-gray-800"></h3>
+                    <span id="tutorialStep" class="text-sm bg-gradient-to-r from-blue-500 to-purple-500 text-white px-3 py-1 rounded-full font-medium"></span>
+                </div>
+                <p id="tutorialContent" class="text-gray-600 leading-relaxed text-sm"></p>
+            </div>
+            
+            <!-- 操作按钮区域 -->
+            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                <button id="skipTutorial" class="text-sm text-gray-500 hover:text-gray-700 transition-colors font-medium">
+                    <i class="fas fa-forward mr-1"></i>跳过教学
+                </button>
+                <button id="nextTutorial" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2.5 rounded-lg font-bold hover:from-blue-600 hover:to-purple-600 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
+                    下一步<i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示容器 -->
+    <div id="messageContainer" class="fixed top-20 right-4 z-50 space-y-2">
+        <!-- 动态生成消息 -->
+    </div>
+
+    <!-- 排行榜弹窗 -->
+    <div id="leaderboardModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[80vh] overflow-hidden animate-fade-in">
+            <!-- 弹窗头部 -->
+            <div class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 text-white px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-trophy text-3xl"></i>
+                    <div>
+                        <h2 class="text-2xl font-bold">Epoch封神榜</h2>
+                        <p class="text-sm text-yellow-100">实时排名 · 每30秒更新</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button id="closeLeaderboardBtn" class="text-white hover:text-yellow-100 transition-colors">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 弹窗内容 -->
+            <div class="p-6 overflow-y-auto max-h-[calc(80vh-100px)]">
+                <!-- 加载状态 -->
+                <div id="leaderboardLoading" class="text-center py-12">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-gray-500">加载排行榜数据中...</p>
+                </div>
+                
+                <!-- 排行榜内容 -->
+                <div id="leaderboardContent" class="hidden">
+                    <!-- 前三名特殊展示 -->
+                    <div id="topThree" class="mb-6">
+                        <!-- 动态生成 -->
+                    </div>
+                    
+                    <!-- 其他排名列表 -->
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <div class="space-y-2" id="otherRanks">
+                            <!-- 动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 更新时间 -->
+                    <div class="text-center text-sm text-gray-400 mt-4">
+                        最后更新: <span id="leaderboardUpdateTime">--</span>
+                    </div>
+                </div>
+                
+                <!-- 空数据提示 -->
+                <div id="leaderboardEmpty" class="text-center py-12 hidden">
+                    <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500">暂无排行榜数据</p>
+                    <p class="text-sm text-gray-400 mt-2">快去实战模式交易吧！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript模块 -->
+    <script type="module" src="api.js"></script>
+    <script type="module" src="charts.js"></script>
+    <script type="module" src="components.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

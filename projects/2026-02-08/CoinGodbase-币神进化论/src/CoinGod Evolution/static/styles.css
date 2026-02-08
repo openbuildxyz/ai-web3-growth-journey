@@ -1,0 +1,3003 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+        'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 模式切换按钮 */
+.mode-btn {
+    transition: all 0.3s ease;
+}
+
+.mode-btn.active {
+    background: white !important;
+    color: #1890ff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mode-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 加密货币卡片 */
+.crypto-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.crypto-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(24, 144, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.crypto-item:hover::before {
+    left: 100%;
+}
+
+/* K线周期按钮 */
+.period-btn {
+    background: #f0f0f0;
+    color: #8c8c8c;
+    transition: all 0.3s ease;
+}
+
+.period-btn.active {
+    background: #1890ff;
+    color: white;
+}
+
+.period-btn:hover {
+    background: #40a9ff;
+    color: white;
+}
+
+/* 交易按钮 */
+.buy-button {
+    background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+    box-shadow: 0 4px 16px rgba(255, 77, 79, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.buy-button:hover {
+    background: linear-gradient(135deg, #ff7875 0%, #ff4d4f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 77, 79, 0.4);
+}
+
+.buy-button:active {
+    transform: translateY(0);
+}
+
+.sell-button {
+    background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+    box-shadow: 0 4px 16px rgba(82, 196, 26, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sell-button:hover {
+    background: linear-gradient(135deg, #73d13d 0%, #52c41a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(82, 196, 26, 0.4);
+}
+
+.sell-button:active {
+    transform: translateY(0);
+}
+
+/* AI Agent卡片 */
+.agent-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.agent-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(24, 144, 255, 0.1) 0%, transparent 100%);
+    border-radius: 0 0 0 60px;
+}
+
+/* 教学高亮 */
+.tutorial-highlight {
+    position: relative;
+    z-index: 1000;
+    box-shadow: 0 0 0 4px #1890ff, 0 0 20px rgba(24, 144, 255, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 4px #1890ff, 0 0 20px rgba(24, 144, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 0 8px #1890ff, 0 0 30px rgba(24, 144, 255, 0.7);
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-left {
+    animation: slideLeft 0.3s ease-out;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .lg\:col-span-3 {
+        grid-column: span 6 / span 6;
+    }
+    
+    .lg\:col-span-6 {
+        grid-column: span 12 / span 12;
+    }
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    #modeSwitch {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    #tutorialTooltip {
+        max-width: 90vw;
+        left: 5vw !important;
+        right: 5vw !important;
+        transform: none !important;
+    }
+}
+
+/* 输入框样式 */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* 卡片悬停效果 */
+.hover\:shadow-md:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* 过渡效果 */
+.transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+
+/* 加载动画 */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #1890ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 渐变背景 */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #faad14 0%, #ffc53d 100%);
+}
+
+.bg-gradient-error {
+    background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+}
+
+/* 毛玻璃效果 */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 状态指示器 */
+.status-indicator {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-indicator.online {
+    background: #52c41a;
+    animation: pulse-green 2s infinite;
+}
+
+.status-indicator.error {
+    background: #ff4d4f;
+    animation: pulse-red 2s infinite;
+}
+
+.status-indicator.loading {
+    background: #faad14;
+    animation: pulse-yellow 2s infinite;
+}
+
+@keyframes pulse-green {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(82, 196, 26, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(82, 196, 26, 0);
+    }
+}
+
+@keyframes pulse-red {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(255, 77, 79, 0);
+    }
+}
+
+@keyframes pulse-yellow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(250, 173, 20, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(250, 173, 20, 0);
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    header {
+        background: white !important;
+        color: black !important;
+    }
+    
+    button {
+        display: none !important;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    button {
+        border-width: 2px;
+    }
+    
+    .crypto-item,
+    .agent-card {
+        border-width: 2px;
+    }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* 排行榜前三名特殊效果 */
+.top-three-gold {
+    background: linear-gradient(135deg, #fff9e6 0%, #ffedcc 50%, #fff9e6 100%);
+    border: 2px solid #d4af37;
+    box-shadow: 
+        0 4px 20px rgba(212, 175, 55, 0.3),
+        0 0 40px rgba(212, 175, 55, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.top-three-silver {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%);
+    border: 2px solid #c0c0c0;
+    box-shadow: 
+        0 4px 20px rgba(192, 192, 192, 0.3),
+        0 0 40px rgba(192, 192, 192, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.top-three-bronze {
+    background: linear-gradient(135deg, #fff5f0 0%, #ffe7d6 50%, #fff5f0 100%);
+    border: 2px solid #cd7f32;
+    box-shadow: 
+        0 4px 20px rgba(205, 127, 50, 0.3),
+        0 0 40px rgba(205, 127, 50, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* 前三名徽章效果 */
+.medal-gold {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffa500 100%);
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+}
+
+.medal-silver {
+    background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 50%, #a8a8a8 100%);
+    box-shadow: 0 2px 10px rgba(192, 192, 192, 0.5);
+}
+
+.medal-bronze {
+    background: linear-gradient(135deg, #cd7f32 0%, #daa520 50%, #b87333 100%);
+    box-shadow: 0 2px 10px rgba(205, 127, 50, 0.5);
+}
+
+/* 前三名卡片悬停效果 */
+.top-three-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.top-three-card:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* 第一名特殊动画效果 */
+@keyframes goldShimmer {
+    0%, 100% {
+        box-shadow: 
+            0 4px 20px rgba(212, 175, 55, 0.3),
+            0 0 40px rgba(212, 175, 55, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    50% {
+        box-shadow: 
+            0 6px 30px rgba(212, 175, 55, 0.5),
+            0 0 60px rgba(212, 175, 55, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+}
+
+.gold-glow {
+    animation: goldShimmer 3s ease-in-out infinite;
+}
+
+/* 演示模式专用样式 */
+
+/* 教学弹窗优化 */
+#tutorialTooltip {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: tutorialFadeIn 0.3s ease-out;
+}
+
+@keyframes tutorialFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* 倒计时进度条优化 */
+#tutorialProgress {
+    transition: width 10s linear;
+    background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+/* 教学高亮效果优化 */
+.tutorial-highlight {
+    position: relative;
+    z-index: 45;
+    box-shadow: 
+        0 0 0 4px rgba(59, 130, 246, 0.8),
+        0 0 20px rgba(59, 130, 246, 0.4),
+        0 0 40px rgba(59, 130, 246, 0.2);
+    border-radius: 8px;
+    animation: tutorialPulse 2s ease-in-out infinite;
+}
+
+@keyframes tutorialPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 0 4px rgba(59, 130, 246, 0.8),
+            0 0 20px rgba(59, 130, 246, 0.4),
+            0 0 40px rgba(59, 130, 246, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 0 0 8px rgba(59, 130, 246, 0.6),
+            0 0 30px rgba(59, 130, 246, 0.6),
+            0 0 60px rgba(59, 130, 246, 0.3);
+    }
+}
+
+/* 教学遮罩优化 */
+#tutorialOverlay {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.4);
+    animation: overlayFadeIn 0.3s ease-out;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 教学弹窗按钮悬停效果 */
+#nextTutorial:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+#skipTutorial:hover {
+    transform: translateX(2px);
+}
+
+/* 倒计时数字样式 */
+#tutorialCountdown {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+}
+
+/* 教学步骤标签优化 */
+#tutorialStep {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    animation: stepGlow 2s ease-in-out infinite;
+}
+
+@keyframes stepGlow {
+    0%, 100% {
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5);
+    }
+}
+
+/* 响应式优化 - 移动端教学弹窗 */
+@media (max-width: 768px) {
+    #tutorialTooltip {
+        max-width: 90vw;
+        margin: 0 5vw;
+    }
+    
+    #tutorialTooltip .bg-white {
+        padding: 1rem;
+        border-radius: 1rem;
+    }
+    
+    #tutorialTitle {
+        font-size: 1.1rem;
+    }
+    
+    #tutorialContent {
+        font-size: 0.9rem;
+    }
+    
+    #nextTutorial,
+    #skipTutorial {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+}
+
+/* 减少动画模式 - 为偏好减少动画的用户 */
+@media (prefers-reduced-motion: reduce) {
+    #tutorialTooltip,
+    #tutorialOverlay,
+    .tutorial-highlight,
+    #tutorialStep,
+    #tutorialProgress {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    #nextTutorial:hover,
+    #skipTutorial:hover {
+        transform: none !important;
+    }
+}
+
+/* ========================================
+   移动端响应式适配
+   ======================================== */
+
+/* 平板设备 (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+    /* 顶部导航栏优化 */
+    header .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    header .text-xs {
+        font-size: 0.65rem;
+    }
+    
+    /* 模式切换按钮 */
+    .mode-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    /* 用户信息区域 */
+    #totalAssets,
+    #todayProfit {
+        font-size: 1.125rem;
+    }
+    
+    /* 主内容区 */
+    main.container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* K线图高度调整 */
+    #klineChart {
+        height: 300px !important;
+    }
+}
+
+/* 移动设备 (小于768px) */
+@media (max-width: 767px) {
+    /* 顶部导航栏 - 移动端优化 */
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    header .container {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    header .flex {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    /* Logo和标题区域 */
+    header .flex.items-center.space-x-4:first-child {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* 移动端用户英文名显示 */
+    #mobileUserName {
+        display: flex !important;
+        align-items: center;
+        margin-left: auto;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    #mobileUserName i {
+        font-size: 0.7rem;
+    }
+    
+    /* 移动端演示模式下隐藏用户头像 */
+    body[data-mode="tutorial"] #userAvatar {
+        display: none !important;
+    }
+    
+    header .text-3xl {
+        font-size: 1.75rem;
+    }
+    
+    header h1 {
+        font-size: 1.25rem;
+    }
+    
+    header .text-xs {
+        font-size: 0.625rem;
+    }
+    
+    /* 模式切换 - 移动端居中 */
+    #modeSwitch {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+        padding: 0.25rem;
+    }
+    
+    .mode-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        flex: 1;
+        text-align: center;
+    }
+    
+    .mode-btn i {
+        display: none;
+    }
+    
+    /* 用户信息区域 - 移动端布局优化 */
+    header .flex.items-center.space-x-4:last-child {
+        flex: 1 1 100%;
+        justify-content: space-between;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    /* 左侧按钮组 - Epoch封神榜调整 */
+    header .flex.items-center.space-x-4:last-child > button:first-child {
+        order: 1;
+        flex-shrink: 0;
+        margin-left: 1rem; /* 右移一点 */
+    }
+    
+    /* 保存和载入按钮组 */
+    header .flex.items-center.space-x-4:last-child > button:nth-child(2),
+    header .flex.items-center.space-x-4:last-child > button:nth-child(3) {
+        order: 2;
+        flex-shrink: 0;
+    }
+    
+    /* 资产信息组 - 收益率调整 */
+    header .flex.items-center.space-x-4:last-child > div:nth-child(4) {
+        order: 3;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    header .flex.items-center.space-x-4:last-child > div:nth-child(5) {
+        order: 3;
+        flex: 1;
+        min-width: 0;
+        margin-right: 1rem; /* 左移一点 */
+    }
+    
+    /* 用户头像 */
+    header .flex.items-center.space-x-4:last-child > div:last-child {
+        order: 4;
+        flex-shrink: 0;
+    }
+    
+    #leaderboardBtn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        max-width: fit-content;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    #leaderboardBtn span {
+        display: inline;
+    }
+    
+    #saveBtn,
+    #loadBtn {
+        padding: 0.5rem;
+        min-width: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #totalAssets,
+    #todayProfit {
+        font-size: 0.875rem;
+        text-align: right;
+    }
+    
+    header .text-sm {
+        font-size: 0.625rem;
+        text-align: right;
+    }
+    
+    #userAvatar {
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #userAvatar span {
+        display: none;
+    }
+    
+    /* 小屏幕设备优化 */
+    @media (max-width: 479px) {
+        header .flex.items-center.space-x-4:last-child {
+            gap: 0.25rem;
+        }
+        
+        #totalAssets,
+        #todayProfit {
+            font-size: 0.75rem;
+        }
+        
+        header .text-sm {
+            font-size: 0.5rem;
+        }
+    }
+    
+    /* 主内容区 */
+    main.container {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    #mainGrid {
+        gap: 1rem;
+    }
+    
+    /* 左侧面板 - 币种列表 */
+    #leftPanel .bg-white {
+        padding: 0.75rem;
+    }
+    
+    #leftPanel h2 {
+        font-size: 1rem;
+    }
+    
+    #leftPanel .text-xs {
+        font-size: 0.625rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    #searchInput {
+        padding: 0.5rem 0.75rem 0.5rem 2rem;
+        font-size: 0.875rem;
+    }
+    
+    #cryptoList {
+        max-height: 400px;
+    }
+    
+    .crypto-item {
+        padding: 0.75rem;
+    }
+    
+    .crypto-item .text-2xl {
+        font-size: 1.5rem;
+    }
+    
+    .crypto-item .text-lg {
+        font-size: 1rem;
+    }
+    
+    .crypto-item .text-sm {
+        font-size: 0.75rem;
+    }
+    
+    .crypto-item .text-xs {
+        font-size: 0.625rem;
+    }
+    
+    /* 中间面板 - K线图和交易 */
+    #centerPanel .bg-white {
+        padding: 0.75rem;
+    }
+    
+    #centerPanel h2 {
+        font-size: 1rem;
+    }
+    
+    #chartTitle {
+        font-size: 1rem;
+    }
+    
+    #currentPrice {
+        font-size: 1.25rem;
+    }
+    
+    #priceChange {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    /* K线周期按钮 */
+    .period-btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    /* K线图 */
+    #klineChart {
+        height: 250px !important;
+    }
+    
+    /* 交易面板 */
+    #tradeAmount {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    #buyBtn,
+    #sellBtn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    #maxBuyAmount,
+    #maxBuyValue {
+        font-size: 0.75rem;
+    }
+    
+    /* 持仓列表 */
+    #portfolioList .bg-gray-50 {
+        padding: 0.75rem;
+    }
+    
+    /* 右侧面板 - AI和排行榜 */
+    #rightPanel {
+        display: none !important;
+    }
+    
+    /* 排行榜弹窗 - 移动端优化 */
+    #leaderboardModal .bg-white {
+        width: 95vw;
+        max-width: 95vw;
+        max-height: 85vh;
+        margin: 2.5vh auto;
+    }
+    
+    #leaderboardModal h2 {
+        font-size: 1.25rem;
+    }
+    
+    #leaderboardModal .text-sm {
+        font-size: 0.75rem;
+    }
+    
+    #leaderboardModal .text-xs {
+        font-size: 0.625rem;
+    }
+    
+    /* 演示模式弹窗 */
+    #tutorialTooltip {
+        max-width: 95vw;
+        margin: 0 2.5vw;
+    }
+    
+    /* 消息提示 */
+    #messageContainer {
+        left: 0.5rem;
+        right: 0.5rem;
+        top: 0.5rem;
+    }
+    
+    .message-item {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* 小屏幕移动设备 (小于480px) */
+@media (max-width: 479px) {
+    /* 进一步优化小屏幕 */
+    header h1 {
+        font-size: 1.125rem;
+    }
+    
+    header .text-3xl {
+        font-size: 1.5rem;
+    }
+    
+    .mode-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    #totalAssets,
+    #todayProfit {
+        font-size: 0.75rem;
+    }
+    
+    header .text-sm {
+        font-size: 0.5rem;
+    }
+    
+    #leaderboardBtn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.7rem;
+    }
+    
+    #currentPrice {
+        font-size: 1.125rem;
+    }
+    
+    #klineChart {
+        height: 200px !important;
+    }
+    
+    .crypto-item .text-2xl {
+        font-size: 1.25rem;
+    }
+    
+    .crypto-item .text-lg {
+        font-size: 0.875rem;
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 767px) and (orientation: landscape) {
+    header .container {
+        padding: 0.5rem;
+    }
+    
+    header .flex.items-center.space-x-4:first-child {
+        flex: 0 0 auto;
+        margin-bottom: 0;
+    }
+    
+    #modeSwitch {
+        flex: 0 0 auto;
+        margin-bottom: 0;
+    }
+    
+    header .flex.items-center.space-x-4:last-child {
+        flex: 1 1 auto;
+    }
+    
+    #klineChart {
+        height: 180px !important;
+    }
+    
+    #cryptoList {
+        max-height: 300px;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    /* 增大可点击区域 */
+    button,
+    .crypto-item,
+    .period-btn {
+        min-height: 44px;
+    }
+    
+    /* 移除悬停效果 */
+    .crypto-item:hover::before {
+        display: none;
+    }
+    
+    /* 优化触摸反馈 */
+    button:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+}
+
+/* ========================================
+   移动端专项优化 - 演示模式和实战模式
+   ======================================== */
+
+/* 移动端 - 演示模式专项优化 */
+@media (max-width: 767px) {
+    /* 演示模式：顶部导航栏更紧凑 */
+    body[data-mode="tutorial"] header .container {
+        padding: 0.5rem;
+    }
+    
+    body[data-mode="tutorial"] header .flex {
+        gap: 0.375rem;
+    }
+    
+    body[data-mode="tutorial"] header h1 {
+        font-size: 1.125rem;
+    }
+    
+    body[data-mode="tutorial"] header .text-3xl {
+        font-size: 1.5rem;
+    }
+    
+    /* 演示模式：币种列表更紧凑 */
+    body[data-mode="tutorial"] #leftPanel .bg-white {
+        padding: 0.5rem;
+    }
+    
+    body[data-mode="tutorial"] #leftPanel h2 {
+        font-size: 0.875rem;
+    }
+    
+    body[data-mode="tutorial"] #cryptoList {
+        max-height: 300px;
+    }
+    
+    body[data-mode="tutorial"] .crypto-item {
+        padding: 0.5rem;
+    }
+    
+    body[data-mode="tutorial"] .crypto-item .text-2xl {
+        font-size: 1.25rem;
+    }
+    
+    body[data-mode="tutorial"] .crypto-item .text-lg {
+        font-size: 0.875rem;
+    }
+    
+    body[data-mode="tutorial"] .crypto-item .text-sm {
+        font-size: 0.625rem;
+    }
+    
+    /* 演示模式：教学弹窗更小巧 */
+    body[data-mode="tutorial"] #tutorialTooltip {
+        max-width: 85vw;
+    }
+    
+    body[data-mode="tutorial"] #tutorialTooltip .bg-white {
+        padding: 0.875rem;
+    }
+    
+    body[data-mode="tutorial"] #tutorialTitle {
+        font-size: 1rem;
+    }
+    
+    body[data-mode="tutorial"] #tutorialContent {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+    
+    /* 实战模式：布局调整 */
+    body[data-mode="practice"] #mainGrid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    /* 实战模式：币种列表缩短 */
+    body[data-mode="practice"] #cryptoList {
+        max-height: 250px;
+    }
+    
+    body[data-mode="practice"] .crypto-item {
+        padding: 0.625rem;
+    }
+    
+    /* 实战模式：右侧面板显示为提示区 */
+    body[data-mode="practice"] #rightPanel {
+        display: block !important;
+        order: 2;
+    }
+    
+    body[data-mode="practice"] #leftPanel {
+        order: 1;
+    }
+    
+    body[data-mode="practice"] #centerPanel {
+        order: 3;
+    }
+    
+    /* 实战模式：AI提示区优化 */
+    body[data-mode="practice"] #rightPanel .bg-white {
+        padding: 0.75rem;
+    }
+    
+    body[data-mode="practice"] #rightPanel h2 {
+        font-size: 0.875rem;
+    }
+    
+    body[data-mode="practice"] #agentList {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    body[data-mode="practice"] .agent-card {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    body[data-mode="practice"] .agent-card .text-sm {
+        font-size: 0.7rem;
+    }
+    
+    body[data-mode="practice"] .agent-card .text-xs {
+        font-size: 0.6rem;
+    }
+    
+    /* 实战模式：Epoch封神榜独立显示 */
+    body[data-mode="practice"] #leaderboardBtn {
+        flex: 1 1 100%;
+        justify-content: center;
+        padding: 0.625rem 1rem;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn span {
+        display: inline;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn i {
+        margin-right: 0.5rem;
+    }
+    
+    /* 实战模式：排行榜弹窗更小 */
+    body[data-mode="practice"] #leaderboardModal .bg-white {
+        width: 90vw;
+        max-width: 90vw;
+        max-height: 75vh;
+    }
+    
+    body[data-mode="practice"] #leaderboardModal .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    body[data-mode="practice"] #leaderboardModal .py-4 {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+    
+    /* 实战模式：消息提示位置调整，避免遮挡 */
+    body[data-mode="practice"] #messageContainer {
+        top: auto;
+        bottom: 1rem;
+        left: 0.5rem;
+        right: 0.5rem;
+    }
+    
+    body[data-mode="practice"] .message-item {
+        padding: 0.625rem;
+        font-size: 0.8rem;
+        max-width: 100%;
+    }
+}
+
+/* 小屏幕移动设备 - 进一步优化 */
+@media (max-width: 479px) {
+    /* 演示模式：更紧凑的布局 */
+    body[data-mode="tutorial"] header h1 {
+        font-size: 1rem;
+    }
+    
+    body[data-mode="tutorial"] #cryptoList {
+        max-height: 250px;
+    }
+    
+    body[data-mode="tutorial"] .crypto-item {
+        padding: 0.4rem;
+    }
+    
+    body[data-mode="tutorial"] #tutorialTooltip {
+        max-width: 90vw;
+    }
+    
+    body[data-mode="tutorial"] #tutorialTitle {
+        font-size: 0.9rem;
+    }
+    
+    body[data-mode="tutorial"] #tutorialContent {
+        font-size: 0.75rem;
+    }
+    
+    /* 实战模式：币种列表进一步缩短 */
+    body[data-mode="practice"] #cryptoList {
+        max-height: 200px;
+    }
+    
+    /* 实战模式：AI提示区更紧凑 */
+    body[data-mode="practice"] #agentList {
+        max-height: 150px;
+    }
+    
+    body[data-mode="practice"] .agent-card {
+        padding: 0.4rem;
+    }
+    
+    /* 实战模式：Epoch封神榜按钮 */
+    body[data-mode="practice"] #leaderboardBtn {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.875rem;
+    }
+}
+
+/* ========================================
+   移动端适配优化 - 专项改进版本
+   ======================================== */
+
+/* 移动端通用优化 */
+@media (max-width: 767px) {
+    /* 确保桌面端样式完全不受影响 */
+    /* 只针对移动端进行优化 */
+    
+    /* 主内容区域重排 */
+    #mainGrid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    /* 实战模式布局顺序：币种列表 -> 价格走势 -> 交易面板 -> 我的持仓 */
+    body[data-mode="practice"] #leftPanel {
+        order: 1 !important;
+        width: 100% !important;
+        margin-bottom: 0.5rem;
+    }
+    
+    body[data-mode="practice"] #centerPanel {
+        order: 2 !important;
+        width: 100% !important;
+        margin-bottom: 0.5rem;
+    }
+    
+    body[data-mode="practice"] #centerPanel > div:first-child {
+        /* 价格走势图 */
+        margin-bottom: 0.5rem;
+    }
+    
+    body[data-mode="practice"] #centerPanel > div:nth-child(2) {
+        /* 交易面板 */
+        margin-bottom: 0.5rem;
+    }
+    
+    body[data-mode="practice"] #centerPanel > div:nth-child(3) {
+        /* 我的持仓 */
+        margin-bottom: 0.5rem;
+    }
+    
+    /* 底部区域：左侧AI对手动态，右侧排行榜 */
+    body[data-mode="practice"] #rightPanel {
+        order: 3 !important;
+        width: 100% !important;
+        display: flex !important;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    body[data-mode="practice"] #rightPanel > div:first-child {
+        /* AI对手动态 */
+        flex: 1 !important;
+        margin-bottom: 0;
+    }
+    
+    body[data-mode="practice"] #rightPanel > div:last-child {
+        /* 排行榜 */
+        flex: 1 !important;
+        margin-bottom: 0;
+    }
+    
+    /* 优化币种列表 - 横向滚动 */
+    body[data-mode="practice"] #cryptoList {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        max-height: none !important;
+        gap: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+        scroll-snap-type: x mandatory !important;
+    }
+    
+    body[data-mode="practice"] #cryptoList .crypto-item {
+        flex: 0 0 auto !important;
+        width: 140px !important;
+        scroll-snap-align: start !important;
+        padding: 0.75rem !important;
+    }
+    
+    body[data-mode="practice"] #cryptoList .crypto-item .flex.items-center.justify-between {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+    
+    body[data-mode="practice"] #cryptoList .crypto-item .text-right {
+        text-align: left !important;
+        width: 100% !important;
+    }
+    
+    /* 隐藏币种列表的成交量和市值信息（移动端节省空间） */
+    body[data-mode="practice"] #cryptoList .crypto-item .text-xs.text-gray-500 {
+        display: none !important;
+    }
+    
+    /* 优化价格走势图高度 */
+    body[data-mode="practice"] #klineChart {
+        height: 250px !important;
+    }
+    
+    /* 优化交易面板 */
+    body[data-mode="practice"] #centerPanel > div:nth-child(2) {
+        padding: 1rem !important;
+    }
+    
+    body[data-mode="practice"] .grid.grid-cols-2 {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+    }
+    
+    body[data-mode="practice"] .grid.grid-cols-2 button {
+        width: 100% !important;
+    }
+    
+    /* 优化我的持仓 */
+    body[data-mode="practice"] #portfolioList {
+        max-height: 300px !important;
+        overflow-y: auto !important;
+    }
+    
+    /* 优化AI对手动态 */
+    body[data-mode="practice"] #agentList {
+        max-height: 250px !important;
+        overflow-y: auto !important;
+    }
+    
+    body[data-mode="practice"] .agent-card {
+        padding: 0.75rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 优化排行榜 */
+    body[data-mode="practice"] #leaderboard {
+        max-height: 250px !important;
+        overflow-y: auto !important;
+    }
+    
+    /* 弹窗提示美化缩小 */
+    body[data-mode="practice"] #messageContainer {
+        position: fixed !important;
+        bottom: 1rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        top: auto !important;
+        z-index: 100 !important;
+    }
+    
+    body[data-mode="practice"] .message-item {
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-radius: 0.75rem !important;
+        padding: 0.75rem 1rem !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 0.875rem !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        animation: slideUp 0.3s ease-out !important;
+    }
+    
+    /* 消息提示动画 */
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* 成功消息样式 */
+    body[data-mode="practice"] .message-item.success {
+        background: rgba(34, 197, 94, 0.95) !important;
+        color: white !important;
+    }
+    
+    /* 错误消息样式 */
+    body[data-mode="practice"] .message-item.error {
+        background: rgba(239, 68, 68, 0.95) !important;
+        color: white !important;
+    }
+    
+    /* 警告消息样式 */
+    body[data-mode="practice"] .message-item.warning {
+        background: rgba(245, 158, 11, 0.95) !important;
+        color: white !important;
+    }
+    
+    /* 移动端优化Epoch封神榜按钮显示 */
+    body[data-mode="practice"] #leaderboardBtn {
+        display: flex !important;
+        font-size: 0.8rem !important;
+        padding: 0.6rem 1rem !important;
+        min-width: auto !important;
+        flex-shrink: 0 !important;
+        margin-right: 0.5rem !important;
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important;
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        border: 1px solid rgba(251, 191, 36, 0.3) !important;
+        position: relative !important;
+        overflow: hidden !important;
+        transition: all 0.3s ease !important;
+        border-radius: 0.75rem !important;
+        font-weight: 700 !important;
+        text-transform: none !important;
+        letter-spacing: 0.025em !important;
+    }
+    
+    /* 添加扫光动画效果 */
+    body[data-mode="practice"] #leaderboardBtn::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+        transition: left 0.5s ease !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:hover::before {
+        left: 100% !important;
+    }
+    
+    /* 添加内发光效果 */
+    body[data-mode="practice"] #leaderboardBtn::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 1px !important;
+        left: 1px !important;
+        right: 1px !important;
+        bottom: 1px !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%) !important;
+        border-radius: 0.625rem !important;
+        pointer-events: none !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn i {
+        font-size: 1rem !important;
+        margin-right: 0.5rem !important;
+        color: #ffffff !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn span {
+        font-weight: 700 !important;
+        color: #ffffff !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+        position: relative !important;
+        z-index: 2 !important;
+    }
+    
+    /* 悬停效果增强 */
+    body[data-mode="practice"] #leaderboardBtn:hover {
+        transform: translateY(-2px) scale(1.05) !important;
+        box-shadow: 0 6px 16px rgba(251, 191, 36, 0.5), 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #d97706 100%) !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:hover i {
+        transform: rotate(15deg) scale(1.1) !important;
+        color: #fffacd !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:active {
+        transform: translateY(0) scale(0.98) !important;
+        box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4) !important;
+    }
+    
+    /* 图标动画 */
+    body[data-mode="practice"] #leaderboardBtn i {
+        transition: transform 0.3s ease !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:hover i {
+        transform: rotate(15deg) scale(1.1) !important;
+    }
+    
+    /* 模式切换按钮优化 */
+    body[data-mode="practice"] #modeSwitch {
+        scale: 0.9 !important;
+    }
+    
+    body[data-mode="practice"] .mode-btn {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+/* 小屏幕移动设备进一步优化 */
+@media (max-width: 479px) {
+    body[data-mode="practice"] #cryptoList .crypto-item {
+        width: 120px !important;
+        padding: 0.5rem !important;
+    }
+    
+    body[data-mode="practice"] #klineChart {
+        height: 200px !important;
+    }
+    
+    body[data-mode="practice"] #rightPanel {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+    
+    body[data-mode="practice"] #messageContainer {
+        left: 0.5rem !important;
+        right: 0.5rem !important;
+        bottom: 0.5rem !important;
+    }
+    
+    body[data-mode="practice"] .message-item {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    /* 小屏幕Epoch封神榜按钮优化 */
+    body[data-mode="practice"] #leaderboardBtn {
+        font-size: 0.75rem !important;
+        padding: 0.5rem 0.75rem !important;
+        margin-right: 0.25rem !important;
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important;
+        box-shadow: 0 3px 10px rgba(251, 191, 36, 0.4) !important;
+        border-radius: 0.625rem !important;
+        min-width: auto !important;
+        max-width: none !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn i {
+        font-size: 0.875rem !important;
+        margin-right: 0.375rem !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn span {
+        font-weight: 700 !important;
+        font-size: 0.75rem !important;
+        display: block !important; /* 确保文本始终显示 */
+        white-space: nowrap !important;
+    }
+    
+    /* 调整扫光动画为小屏幕优化 */
+    body[data-mode="practice"] #leaderboardBtn::before {
+        animation: mobileSweep 2s ease-in-out infinite !important;
+    }
+    
+    @keyframes mobileSweep {
+        0% { left: -100%; opacity: 0; }
+        50% { opacity: 0.5; }
+        100% { left: 100%; opacity: 0; }
+    }
+    
+    /* 小屏幕悬停效果保持 */
+    body[data-mode="practice"] #leaderboardBtn:hover {
+        transform: translateY(-1px) scale(1.02) !important;
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.5) !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:hover i {
+        transform: rotate(10deg) scale(1.05) !important;
+    }
+    
+    /* 小屏幕脉冲动画调整 */
+    @keyframes leaderboardPulseSmall {
+        0% {
+            box-shadow: 0 3px 10px rgba(251, 191, 36, 0.3);
+        }
+        50% {
+            box-shadow: 0 3px 10px rgba(251, 191, 36, 0.3), 0 0 15px rgba(251, 191, 36, 0.4);
+        }
+        100% {
+            box-shadow: 0 3px 10px rgba(251, 191, 36, 0.3);
+        }
+    }
+    
+    /* 为小屏幕应用专用脉冲动画 */
+    @media (max-width: 479px) {
+        body[data-mode="practice"] #leaderboardBtn {
+            animation: leaderboardPulseSmall 3s ease-in-out infinite !important;
+        }
+    }
+    
+    /* 移除原来的tooltip，因为现在文本始终显示 */
+    body[data-mode="practice"] #leaderboardBtn::after {
+        display: none !important;
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 767px) and (orientation: landscape) {
+    body[data-mode="practice"] #klineChart {
+        height: 180px !important;
+    }
+    
+    body[data-mode="practice"] #agentList,
+    body[data-mode="practice"] #leaderboard {
+        max-height: 180px !important;
+    }
+    
+    body[data-mode="practice"] #portfolioList {
+        max-height: 200px !important;
+    }
+    
+    /* 横屏模式Epoch封神榜按钮优化 */
+    body[data-mode="practice"] header {
+        padding: 0.5rem 0 !important;
+        min-height: auto !important;
+    }
+    
+    body[data-mode="practice"] header .container {
+        padding: 0.5rem 1rem !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn {
+        font-size: 0.75rem !important;
+        padding: 0.4rem 0.6rem !important;
+        margin-right: 0.5rem !important;
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important;
+        box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3) !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn i {
+        font-size: 0.875rem !important;
+        margin-right: 0.375rem !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn span {
+        font-weight: 700 !important;
+        font-size: 0.75rem !important;
+    }
+    
+    /* 横屏模式悬停效果调整 */
+    body[data-mode="practice"] #leaderboardBtn:hover {
+        transform: translateY(-1px) scale(1.03) !important;
+        box-shadow: 0 3px 10px rgba(251, 191, 36, 0.4) !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:hover i {
+        transform: rotate(12deg) scale(1.08) !important;
+    }
+    
+    /* 横屏模式用户信息区域紧凑显示 */
+    body[data-mode="practice"] header .flex.items-center.space-x-4:last-child {
+        gap: 0.375rem !important;
+    }
+    
+    body[data-mode="practice"] header .text-right .text-sm {
+        font-size: 0.65rem !important;
+    }
+    
+    body[data-mode="practice"] header .text-right .text-xl {
+        font-size: 0.8rem !important;
+    }
+    
+    /* 横屏模式Logo和标题紧凑显示 */
+    body[data-mode="practice"] header h1 {
+        font-size: 1.125rem !important;
+    }
+    
+    body[data-mode="practice"] header p {
+        font-size: 0.65rem !important;
+    }
+    
+    body[data-mode="practice"] header .text-3xl {
+        font-size: 1.5rem !important;
+    }
+    
+    /* 横屏模式扫光动画加速 */
+    body[data-mode="practice"] #leaderboardBtn::before {
+        animation: landscapeSweep 1.5s ease-in-out infinite !important;
+    }
+    
+    @keyframes landscapeSweep {
+        0% { left: -100%; opacity: 0; }
+        50% { opacity: 0.6; }
+        100% { left: 100%; opacity: 0; }
+    }
+}
+
+/* ========================================
+   Epoch封神榜按钮脉冲动画效果
+   ======================================== */
+
+/* 脉冲动画定义 - 增强版 */
+@keyframes leaderboardPulse {
+    0% {
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+    }
+    25% {
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3), 0 0 8px rgba(251, 191, 36, 0.2);
+    }
+    50% {
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3), 0 0 20px rgba(251, 191, 36, 0.4);
+    }
+    75% {
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3), 0 0 8px rgba(251, 191, 36, 0.2);
+    }
+    100% {
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+    }
+}
+
+/* 移动端应用脉冲动画 */
+@media (max-width: 767px) {
+    body[data-mode="practice"] #leaderboardBtn {
+        animation: leaderboardPulse 3s ease-in-out infinite !important;
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:hover {
+        animation-play-state: paused !important;
+    }
+    
+    /* 图标微动画 - 增强版 */
+    body[data-mode="practice"] #leaderboardBtn i {
+        animation: iconBounce 2s ease-in-out infinite;
+        transform-origin: center center;
+    }
+    
+    @keyframes iconBounce {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        25% {
+            transform: translateY(-1px) rotate(2deg);
+        }
+        50% {
+            transform: translateY(-2px) rotate(0deg);
+        }
+        75% {
+            transform: translateY(-1px) rotate(-2deg);
+        }
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:hover i {
+        animation-play-state: paused;
+        transform: rotate(15deg) scale(1.1);
+    }
+    
+    /* 文字呼吸效果 */
+    body[data-mode="practice"] #leaderboardBtn span {
+        animation: textBreathing 2.5s ease-in-out infinite;
+    }
+    
+    @keyframes textBreathing {
+        0%, 100% {
+            opacity: 0.95;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        50% {
+            opacity: 1;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 8px rgba(251, 191, 36, 0.2);
+        }
+    }
+    
+    body[data-mode="practice"] #leaderboardBtn:hover span {
+        animation-play-state: paused;
+        opacity: 1;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 12px rgba(251, 191, 36, 0.4);
+    }
+}
+
+/* 顶部导航栏优化 */
+body[data-mode="practice"] header .container {
+    padding: 0.75rem 1rem !important;
+}
+
+body[data-mode="practice"] header .flex.items-center.space-x-4 {
+    gap: 0.5rem !important;
+}
+
+body[data-mode="practice"] header h1 {
+    font-size: 1.25rem !important;
+}
+
+body[data-mode="practice"] #totalAssets,
+body[data-mode="practice"] #todayProfit {
+    font-size: 0.875rem !important;
+}
+
+/* 移动端用户信息区域优化 - 重新排列 */
+body[data-mode="practice"] header .flex.items-center.space-x-4:last-child {
+    flex-wrap: nowrap !important;
+    gap: 0.5rem !important;
+    align-items: center !important;
+}
+
+/* Epoch封神榜按钮单独成组，更加突出 */
+body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :first-child {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* 保存和载入按钮组 */
+body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :nth-child(2),
+body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :nth-child(3) {
+    display: flex !important;
+    gap: 0.25rem !important;
+}
+
+/* 资产信息组 */
+body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :nth-child(4),
+body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :nth-child(5) {
+    display: flex !important;
+    gap: 0.25rem !important;
+    min-width: auto !important;
+}
+
+/* 用户头像 */
+body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :last-child {
+    flex-shrink: 0 !important;
+}
+
+/* 资产信息文字优化 */
+body[data-mode="practice"] header .text-right .text-sm {
+    font-size: 0.7rem !important;
+    line-height: 1.2 !important;
+}
+
+body[data-mode="practice"] header .text-right .text-xl {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+}
+
+/* 用户头像优化 */
+body[data-mode="practice"] #userAvatar {
+    padding: 0.5rem !important;
+    font-size: 0.75rem !important;
+    min-width: auto !important;
+}
+
+body[data-mode="practice"] #userAvatar i {
+    font-size: 0.875rem !important;
+    margin-right: 0.25rem !important;
+}
+
+/* 实战模式：导航栏专项优化 - 与演示模式保持一致的渐变色 */
+body[data-mode="practice"] header {
+    background: linear-gradient(to right, #2563eb, #7c3aed, #2563eb);
+}
+
+body[data-mode="practice"] #leaderboardBtn {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+    transition: all 0.3s ease;
+    max-width: fit-content;
+    white-space: nowrap;
+}
+
+body[data-mode="practice"] #leaderboardBtn:hover {
+    background: linear-gradient(135deg, #ff8c42 0%, #ffa500 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+}
+
+body[data-mode="practice"] #leaderboardBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(255, 107, 53, 0.3);
+}
+
+body[data-mode="practice"] #saveBtn,
+body[data-mode="practice"] #loadBtn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+body[data-mode="practice"] #saveBtn:hover,
+body[data-mode="practice"] #loadBtn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 移动端用户信息区域完整显示优化 */
+@media (max-width: 767px) {
+    body[data-mode="practice"] header .flex.items-center.space-x-4:last-child {
+        flex-wrap: wrap !important;
+        gap: 0.75rem !important;
+        justify-content: space-between !important;
+        align-items: stretch !important;
+    }
+
+    /* Epoch封神榜按钮 - 独占第一行，加长占满整行 */
+    body[data-mode="practice"] #leaderboardBtn {
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        padding: 0.75rem 1rem !important;
+        font-size: 0.875rem !important;
+        border-radius: 0.5rem !important;
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+        transition: all 0.3s ease;
+        width: 100% !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
+        flex: 1 1 100% !important;
+        justify-content: center !important;
+        display: flex !important;
+        align-items: center !important;
+        order: 1 !important;
+    }
+
+    body[data-mode="practice"] #leaderboardBtn i {
+        font-size: 1rem !important;
+        margin-right: 0.5rem !important;
+    }
+
+    body[data-mode="practice"] #leaderboardBtn span {
+        font-size: 0.875rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* 第二行：保存、载入、总资产、收益率 - 更加紧凑的布局 */
+    body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :nth-child(2),
+    body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :nth-child(3),
+    body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :nth-child(4),
+    body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :nth-child(5) {
+        order: 2 !important;
+        flex: 1 1 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* 保存和载入按钮 - 缩小尺寸，更加紧凑 */
+    body[data-mode="practice"] #saveBtn,
+    body[data-mode="practice"] #loadBtn {
+        padding: 0.375rem 0.5rem !important;
+        min-width: 2rem !important;
+        width: 2rem !important;
+        height: 2rem !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+        border-radius: 0.375rem !important;
+        font-size: 0.75rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    body[data-mode="practice"] #saveBtn i,
+    body[data-mode="practice"] #loadBtn i {
+        font-size: 0.75rem !important;
+        margin: 0 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    body[data-mode="practice"] #saveBtn:hover,
+    body[data-mode="practice"] #loadBtn:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        transform: scale(1.05) !important;
+    }
+
+    /* 总资产和收益率信息 - 缩小字体，紧凑显示 */
+    body[data-mode="practice"] header .text-right {
+        text-align: center !important;
+        padding: 0 0.25rem !important;
+    }
+
+    body[data-mode="practice"] header .text-right .text-sm {
+        font-size: 0.6rem !important;
+        line-height: 1.1 !important;
+        color: rgba(219, 234, 254, 0.85) !important;
+        margin-bottom: 0.125rem !important;
+        font-weight: 500 !important;
+    }
+
+    body[data-mode="practice"] header .text-right .text-xl {
+        font-size: 0.7rem !important;
+        font-weight: 700 !important;
+        line-height: 1.1 !important;
+        color: #ffffff !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    /* 隐藏用户头像 - 节省空间 */
+    body[data-mode="practice"] header .flex.items-center.space-x-4:last-child > :last-child {
+        display: none !important;
+    }
+
+    /* 第二行整体布局优化 - 四个元素均匀分布 */
+    body[data-mode="practice"] header .flex.items-center.space-x-4:last-child {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+        align-items: center !important;
+    }
+
+    /* 小屏幕设备进一步紧凑化 */
+    @media (max-width: 479px) {
+        body[data-mode="practice"] header .flex.items-center.space-x-4:last-child {
+            gap: 0.375rem !important;
+        }
+
+        body[data-mode="practice"] #leaderboardBtn {
+            padding: 0.625rem 0.875rem !important;
+            font-size: 0.8rem !important;
+        }
+
+        /* 小屏幕：保存载入按钮进一步缩小 */
+        body[data-mode="practice"] #saveBtn,
+        body[data-mode="practice"] #loadBtn {
+            padding: 0.3125rem 0.375rem !important;
+            min-width: 1.75rem !important;
+            width: 1.75rem !important;
+            height: 1.75rem !important;
+            border-radius: 0.3125rem !important;
+        }
+
+        body[data-mode="practice"] #saveBtn i,
+        body[data-mode="practice"] #loadBtn i {
+            font-size: 0.6875rem !important;
+        }
+
+        /* 小屏幕：资产信息进一步压缩 */
+        body[data-mode="practice"] header .text-right .text-sm {
+            font-size: 0.5625rem !important;
+        }
+
+        body[data-mode="practice"] header .text-right .text-xl {
+            font-size: 0.625rem !important;
+        }
+    }
+
+    /* 横屏模式优化 - 保持紧凑 */
+    @media (max-width: 767px) and (orientation: landscape) {
+        body[data-mode="practice"] header .flex.items-center.space-x-4:last-child {
+            gap: 0.375rem !important;
+        }
+
+        /* 横屏：保存载入按钮保持紧凑 */
+        body[data-mode="practice"] #saveBtn,
+        body[data-mode="practice"] #loadBtn {
+            padding: 0.3125rem 0.4375rem !important;
+            min-width: 1.875rem !important;
+            width: 1.875rem !important;
+            height: 1.875rem !important;
+        }
+
+        body[data-mode="practice"] #saveBtn i,
+        body[data-mode="practice"] #loadBtn i {
+            font-size: 0.71875rem !important;
+        }
+
+        /* 横屏：资产信息紧凑显示 */
+        body[data-mode="practice"] header .text-right .text-sm {
+            font-size: 0.59375rem !important;
+        }
+
+        body[data-mode="practice"] header .text-right .text-xl {
+            font-size: 0.65625rem !important;
+        }
+    }
+}
+
+/* 实战模式移动端消息提示 - 淡蓝色底色白色字 */
+body[data-mode="practice"] .message-item {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+body[data-mode="practice"] .message-item i {
+    color: #ffffff !important;
+    opacity: 0.9 !important;
+}
+
+body[data-mode="practice"] .message-item span {
+    color: #ffffff !important;
+    font-weight: 500 !important;
+}
+
+/* 重复的横屏模式代码已移除 - 使用上方统一的横屏样式定义 */
+
+/* ========================================
+   Epoch封神榜移动端专项优化
+   ======================================== */
+
+/* 移动端排行榜弹窗全局优化 */
+@media (max-width: 767px) {
+    /* 排行榜弹窗主体优化 */
+    #leaderboardModal .bg-white {
+        width: 98vw !important;
+        max-width: 98vw !important;
+        max-height: 88vh !important;
+        margin: 1vh auto;
+        border-radius: 1rem;
+    }
+    
+    /* 弹窗头部优化 */
+    #leaderboardModal .bg-gradient-to-r {
+        padding: 1rem 1.25rem !important;
+    }
+    
+    #leaderboardModal h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.25rem;
+    }
+    
+    #leaderboardModal .text-sm {
+        font-size: 0.75rem !important;
+    }
+    
+    /* 弹窗内容区域优化 */
+    #leaderboardModal .p-6 {
+        padding: 1rem !important;
+    }
+    
+    /* 前三名区域 - 移动端紧凑布局 */
+    #topThree {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    #topThree > div {
+        max-width: 100% !important;
+        transform: none !important;
+        scale: 1 !important;
+    }
+    
+    #topThree .relative {
+        position: relative;
+    }
+    
+    #topThree .absolute {
+        position: absolute;
+        top: -0.75rem !important;
+        left: 1rem !important;
+        transform: none !important;
+    }
+    
+    #topThree .bg-white\\/90 {
+        padding: 1rem !important;
+        border-radius: 0.75rem !important;
+    }
+    
+    /* 前三名用户信息优化 - 确保第一名和二三名字体大小一致 */
+    #topThree .font-bold.text-gray-900.text-lg {
+        font-size: 1rem !important; /* 第一名总资产字体大小，与二三名一致 */
+        line-height: 1.2 !important;
+    }
+    
+    #topThree .font-semibold.text-gray-800.text-base {
+        font-size: 1rem !important; /* 第一名用户名字体大小，与二三名一致 */
+        color: #374151 !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 确保第二名和第三名的称号字体大小与第一名一致 */
+    #topThree .grid .font-bold {
+        font-size: 1rem !important; /* 与第一名总资产字体大小一致 */
+    }
+    
+    #topThree .grid .font-semibold {
+        font-size: 1rem !important; /* 与第一名用户名字体大小一致 */
+    }
+    
+    /* 前三名资产信息优化 - 紧凑布局 */
+    #topThree .space-y-2 {
+        gap: 0.5rem !important;
+        space-y: 0.5rem !important;
+    }
+    
+    #topThree .bg-white\\/70 {
+        padding: 0.5rem !important;
+        border-radius: 0.5rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+    
+    #topThree .text-xs {
+        font-size: 0.625rem !important;
+        margin-bottom: 0.125rem !important;
+    }
+    
+    #topThree .font-bold {
+        font-size: 1rem !important; /* 统一前三名收益率字体大小 */
+        line-height: 1.3 !important;
+    }
+    
+    /* Emoji优化 */
+    #topThree .text-4xl {
+        font-size: 2rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 排名徽章优化 */
+    #topThree .w-10 {
+        width: 2rem !important;
+        height: 2rem !important;
+        font-size: 0.75rem !important;
+    }
+    
+    /* 其他排名区域优化 */
+    #otherRanks {
+        gap: 0.5rem !important;
+    }
+    
+    #otherRanks > div {
+        padding: 0.75rem !important;
+        border-radius: 0.5rem !important;
+    }
+    
+    /* 其他排名布局 - 紧凑显示 */
+    #otherRanks .flex.items-center.space-x-4 {
+        gap: 0.75rem !important;
+        align-items: center !important;
+    }
+    
+    #otherRanks .flex-shrink-0 {
+        flex-shrink: 0 !important;
+    }
+    
+    #otherRanks .w-10 {
+        width: 2rem !important;
+        height: 2rem !important;
+        font-size: 0.75rem !important;
+    }
+    
+    /* 其他排名用户信息 - 用户名和称号紧凑一行 */
+    #otherRanks .font-semibold {
+        font-size: 0.875rem !important;
+        font-weight: 600 !important;
+    }
+    
+    #otherRanks .px-3 {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+        margin-left: 0.5rem !important;
+    }
+    
+    /* 优化称号布局：更紧凑地显示在用户名右侧 */
+    #otherRanks .flex.items-center.gap-2 {
+        gap: 0.5rem !important;
+        align-items: center !important;
+    }
+    
+    #otherRanks .px-2 {
+        padding-left: 0.375rem !important;
+        padding-right: 0.375rem !important;
+    }
+    
+    #otherRanks .py-0\.5 {
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
+    }
+    
+    #otherRanks .text-xs {
+        font-size: 0.6875rem !important; /* 稍微小一点的字体 */
+        font-weight: 500 !important;
+    }
+    
+    /* 其他排名资产信息 - 总资产和收益率紧凑一行 */
+    #otherRanks .text-right {
+        text-align: right !important;
+        flex-shrink: 0 !important;
+        min-width: 5rem !important;
+    }
+    
+    #otherRanks .font-bold.text-gray-900 {
+        font-size: 0.875rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 0.125rem !important;
+    }
+    
+    #otherRanks .text-sm.font-semibold {
+        font-size: 0.75rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* 更新时间优化 */
+    #leaderboardUpdateTime {
+        font-size: 0.625rem !important;
+        margin-top: 0.75rem !important;
+    }
+    
+    /* 滚动优化 */
+    .overflow-y-auto {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175, 0.5);
+        border-radius: 2px;
+    }
+}
+
+/* 小屏幕移动设备进一步优化 */
+@media (max-width: 479px) {
+    /* 更紧凑的前三名布局 */
+    #topThree .bg-white\\/90 {
+        padding: 0.75rem !important;
+    }
+    
+    #topThree .text-4xl {
+        font-size: 1.75rem !important;
+    }
+    
+    #topThree .font-bold.text-gray-900.text-lg {
+        font-size: 0.875rem !important;
+    }
+    
+    #topThree .font-semibold.text-gray-800.text-sm {
+        font-size: 0.75rem !important;
+    }
+    
+    /* 更紧凑的资产显示 */
+    #topThree .bg-white\\/70 {
+        padding: 0.375rem !important;
+    }
+    
+    #topThree .font-bold {
+        font-size: 0.75rem !important;
+    }
+    
+    /* 更紧凑的其他排名 */
+    #otherRanks > div {
+        padding: 0.5rem !important;
+    }
+    
+    #otherRanks .font-semibold {
+        font-size: 0.75rem !important;
+    }
+    
+    #otherRanks .text-sm {
+        font-size: 0.6875rem !important;
+    }
+    
+    #otherRanks .font-bold.text-gray-900 {
+        font-size: 0.75rem !important;
+    }
+    
+    #otherRanks .text-sm.font-semibold {
+        font-size: 0.6875rem !important;
+    }
+    
+    /* 更小的称号标签 */
+    #otherRanks .px-3 {
+        padding-left: 0.375rem !important;
+        padding-right: 0.375rem !important;
+        margin-left: 0.375rem !important;
+    }
+    
+    /* 调整头像大小 */
+    #otherRanks img {
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+    }
+    
+    /* 弹窗头部进一步优化 */
+    #leaderboardModal h2 {
+        font-size: 1.25rem !important;
+    }
+    
+    #leaderboardModal .text-sm {
+        font-size: 0.6875rem !important;
+    }
+}
+
+/* 横屏模式特殊优化 */
+@media (max-width: 767px) and (orientation: landscape) {
+    /* 排行榜弹窗横屏优化 */
+    #leaderboardModal .bg-white {
+        max-height: 92vh !important;
+    }
+    
+    /* 前三名横向布局优化 */
+    #topThree {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.5rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    #topThree .bg-white\\/90 {
+        padding: 0.75rem !important;
+    }
+    
+    #topThree .text-4xl {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+    
+    #topThree .font-bold.text-gray-900.text-lg {
+        font-size: 0.75rem !important;
+    }
+    
+    #topThree .font-semibold.text-gray-800.text-sm {
+        font-size: 0.6875rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+    
+    #topThree .bg-white\\/70 {
+        padding: 0.25rem !important;
+        margin-bottom: 0.125rem !important;
+    }
+    
+    #topThree .font-bold {
+        font-size: 0.6875rem !important;
+    }
+    
+    /* 其他排名紧凑显示 */
+    #otherRanks > div {
+        padding: 0.5rem !important;
+    }
+}
+
+/* 移动端排行榜优化样式 */
+@media (max-width: 767px) {
+    /* 排行榜弹窗移动端优化 */
+    #leaderboardModal .bg-white {
+        width: 95vw;
+        max-width: none;
+        margin: 0 2.5vw;
+        max-height: 85vh;
+    }
+    
+    /* 前三名容器移动端布局优化 */
+    #leaderboardModal #topThree {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* 第一名移动端特殊样式 - 独占一行，更显眼 */
+    #leaderboardModal #topThree > div > div:first-child {
+        width: 100% !important;
+        order: -1 !important;
+    }
+    
+    /* 第二三名移动端并排显示 */
+    #leaderboardModal #topThree > div > div:last-child {
+        width: 100% !important;
+    }
+    
+    #leaderboardModal #topThree .grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.75rem !important;
+    }
+    
+    /* 前三名卡片移动端优化 */
+    #leaderboardModal #topThree .bg-white\/90 {
+        padding: 0.75rem !important;
+    }
+    
+    /* 第一名移动端更大更突出 */
+    #leaderboardModal #topThree .bg-white\/90:first-child {
+        padding: 1rem !important;
+        transform: scale(1.02);
+    }
+    
+    /* 第一名的徽章在移动端更大 */
+    #leaderboardModal #topThree .bg-white\/90:first-child .absolute .w-12 {
+        width: 3rem !important;
+        height: 3rem !important;
+        font-size: 1.125rem !important;
+    }
+    
+    /* 第一名的emoji在移动端更大 */
+    #leaderboardModal #topThree .bg-white\/90:first-child .text-5xl {
+        font-size: 3rem !important;
+    }
+    
+    /* 第一名的标题在移动端与二三名保持一致 */
+    #leaderboardModal #topThree .bg-white\/90:first-child .text-xl {
+        font-size: 1rem !important; /* 与二三名标题字体大小一致 */
+    }
+    
+    /* 第二三名的徽章在移动端适中 */
+    #leaderboardModal #topThree .grid .absolute .w-10 {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+    }
+    
+    /* 第二三名的emoji在移动端适中 */
+    #leaderboardModal #topThree .grid .text-3xl {
+        font-size: 2rem !important;
+    }
+    
+    /* 移动端资产信息卡片更紧凑 */
+    #leaderboardModal #topThree .bg-white\/70 {
+        padding: 0.5rem !important;
+        border-radius: 0.5rem !important;
+    }
+    
+    /* 第一名的资产信息在移动端稍大 */
+    #leaderboardModal #topThree .bg-white\/90:first-child .bg-white\/70 {
+        padding: 0.75rem !important;
+    }
+    
+    /* 移动端其他排名列表优化 */
+    #leaderboardModal #otherRanks .rounded-lg {
+        padding: 0.75rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 移动端其他排名用户名和称号紧凑显示 */
+    #leaderboardModal #otherRanks .flex.items-center.flex-wrap {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.25rem !important;
+    }
+    
+    /* 移动端其他排名资产信息调整 */
+    #leaderboardModal #otherRanks .text-right {
+        text-align: right !important;
+        min-width: 120px !important;
+    }
+    
+    /* 移动端排行榜弹窗头部优化 */
+    #leaderboardModal .bg-gradient-to-r {
+        padding: 1rem !important;
+    }
+    
+    #leaderboardModal .bg-gradient-to-r .text-2xl {
+        font-size: 1.5rem !important;
+    }
+    
+    #leaderboardModal .bg-gradient-to-r .text-3xl {
+        font-size: 1.75rem !important;
+    }
+    
+    /* 移动端排行榜内容区域优化 */
+    #leaderboardModal .p-6 {
+        padding: 1rem !important;
+    }
+    
+    /* 移动端前三名和其他名次之间的间距优化 */
+    #leaderboardModal #topThree {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    #leaderboardModal .bg-gray-50 {
+        padding: 0.75rem !important;
+        border-radius: 0.75rem !important;
+    }
+}
+
+/* 超小屏幕进一步优化 (小于480px) */
+@media (max-width: 479px) {
+    /* 排行榜弹窗超小屏幕优化 */
+    #leaderboardModal .bg-white {
+        width: 98vw;
+        margin: 0 1vw;
+        max-height: 90vh;
+    }
+    
+    /* 第二三名在超小屏幕改为单列显示 */
+    #leaderboardModal #topThree .grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.5rem !important;
+    }
+    
+    /* 超小屏幕前三名卡片更紧凑 */
+    #leaderboardModal #topThree .bg-white\/90 {
+        padding: 0.5rem !important;
+    }
+    
+    /* 第一名在超小屏幕也适当缩小 */
+    #leaderboardModal #topThree .bg-white\/90:first-child {
+        padding: 0.75rem !important;
+        transform: scale(1);
+    }
+    
+    /* 第一名的emoji在超小屏幕调整 */
+    #leaderboardModal #topThree .bg-white\/90:first-child .text-5xl {
+        font-size: 2.5rem !important;
+    }
+    
+    /* 超小屏幕资产信息更紧凑 */
+    #leaderboardModal #topThree .bg-white\/70 {
+        padding: 0.375rem !important;
+    }
+    
+    /* 第一名的资产信息在超小屏幕 */
+    #leaderboardModal #topThree .bg-white\/90:first-child .bg-white\/70 {
+        padding: 0.5rem !important;
+    }
+    
+    /* 超小屏幕其他排名优化 */
+    #leaderboardModal #otherRanks .rounded-lg {
+        padding: 0.5rem !important;
+    }
+    
+    /* 超小屏幕其他排名资产信息字体调整 */
+    #leaderboardModal #otherRanks .text-right .font-bold {
+        font-size: 0.875rem !important;
+    }
+    
+    #leaderboardModal #otherRanks .text-right .text-sm {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* 横屏模式移动端优化 */
+@media (max-width: 767px) and (orientation: landscape) {
+    /* 横屏模式排行榜弹窗优化 */
+    #leaderboardModal .bg-white {
+        max-height: 95vh;
+    }
+    
+    /* 横屏模式前三名横向布局 */
+    #leaderboardModal #topThree {
+        flex-direction: row !important;
+        gap: 0.75rem !important;
+    }
+    
+    /* 横屏模式第一名单独占左侧 */
+    #leaderboardModal #topThree > div > div:first-child {
+        flex: 1.5 !important;
+        width: auto !important;
+    }
+    
+    /* 横屏模式第二三名占右侧 */
+    #leaderboardModal #topThree > div > div:last-child {
+        flex: 1 !important;
+        width: auto !important;
+    }
+    
+    /* 横屏模式第二三名垂直排列 */
+    #leaderboardModal #topThree .grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.5rem !important;
+    }
+    
+    /* 横屏模式前三名高度调整 */
+    #leaderboardModal #topThree .bg-white\/90 {
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+}
+
+/* 小屏幕设备额外优化 */
+@media (max-width: 479px) {
+    /* 弹窗宽度调整 */
+    #leaderboardModal .bg-white {
+        margin: 0.5rem !important;
+        max-width: calc(100vw - 1rem) !important;
+    }
+    
+    /* 前三名进一步紧凑 */
+    #topThree {
+        gap: 0.5rem !important;
+    }
+    
+    #topThree .bg-white\/90 {
+        padding: 0.75rem !important;
+    }
+    
+    #topThree .text-5xl {
+        font-size: 2.5rem !important;
+    }
+    
+    #topThree .text-xl {
+        font-size: 1rem !important; /* 保持字体大小统一 */
+    }
+    
+    #topThree .text-base {
+        font-size: 1rem !important; /* 保持与二三名字体大小一致 */
+    }
+    
+    #topThree .text-lg {
+        font-size: 1rem !important;
+    }
+    
+    /* 其他排名进一步紧凑 */
+    #otherRanks > div {
+        padding: 0.5rem !important;
+    }
+    
+    #otherRanks .w-10 {
+        width: 1.75rem !important;
+        height: 1.75rem !important;
+        font-size: 0.6875rem !important;
+    }
+    
+    #otherRanks .font-semibold {
+        font-size: 0.75rem !important;
+    }
+    
+    #otherRanks .px-2 {
+        padding-left: 0.25rem !important;
+        padding-right: 0.25rem !important;
+    }
+    
+    #otherRanks .text-xs {
+        font-size: 0.625rem !important;
+    }
+    
+    #otherRanks .text-right {
+        min-width: 4rem !important;
+    }
+    
+    #otherRanks .font-bold.text-gray-900 {
+        font-size: 0.75rem !important;
+    }
+    
+    #otherRanks .text-sm.font-semibold {
+        font-size: 0.625rem !important;
+    }
+}
+
+/* 超小屏幕设备优化 */
+@media (max-width: 359px) {
+    /* 极小屏幕的极端优化 */
+    #topThree .text-5xl {
+        font-size: 2rem !important;
+    }
+    
+    #otherRanks .flex.items-center.space-x-4 {
+        gap: 0.5rem !important;
+    }
+    
+    #otherRanks .flex.items-center.gap-2 {
+        gap: 0.25rem !important;
+    }
+}
+
+/* ========================================
+   移动端保存/载入按钮优化
+   ======================================== */
+@media (max-width: 767px) {
+    /* 确保保存和载入按钮在移动端可见且可点击 */
+    #saveBtn, #loadBtn {
+        /* 确保按钮可见 */
+        display: flex !important;
+        z-index: 50 !important;
+        
+        /* 增大点击区域，符合移动端最小触控尺寸 */
+        min-width: 44px !important;
+        min-height: 44px !important;
+        
+        /* 确保不被遮挡 */
+        position: relative !important;
+        
+        /* 增强视觉反馈 */
+        transition: all 0.2s ease !important;
+    }
+    
+    /* 隐藏状态 */
+    #saveBtn.hidden, #loadBtn.hidden {
+        display: none !important;
+    }
+    
+    /* 按下效果 */
+    #saveBtn:active, #loadBtn:active {
+        transform: scale(0.95) !important;
+        opacity: 0.8 !important;
+    }
+    
+    /* 确保图标可见 */
+    #saveBtn i, #loadBtn i {
+        font-size: 1.125rem !important;
+    }
+}
+
+/* ==================== 弹幕样式 ==================== */
+
+/* 弹幕容器 */
+#danmakuContainer {
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* 弹幕项 - 现代化设计（优化版：更亮、更清晰） */
+.danmaku-item {
+    position: absolute;
+    left: 100%;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    letter-spacing: 0.5px;
+    /* 增强文字阴影，使文字更清晰、更有立体感 */
+    text-shadow: 
+        0 0 8px rgba(255, 255, 255, 0.8),
+        0 0 4px rgba(255, 255, 255, 0.6),
+        0 2px 6px rgba(0, 0, 0, 0.5),
+        0 1px 3px rgba(0, 0, 0, 0.7),
+        1px 0 0 rgba(255, 255, 255, 0.3),
+        -1px 0 0 rgba(255, 255, 255, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.3),
+        0 -1px 0 rgba(255, 255, 255, 0.3);
+    animation: danmaku-scroll 12s linear;
+    pointer-events: none;
+    user-select: none;
+    padding: 7px 16px;
+    border-radius: 22px;
+    /* 更亮的背景渐变 */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.25));
+    backdrop-filter: blur(10px);
+    /* 更明显的边框 */
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    /* 增强阴影效果 */
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        0 2px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    /* 添加微妙的发光效果 */
+    filter: brightness(1.1) contrast(1.05);
+}
+
+/* 弹幕滚动动画 */
+@keyframes danmaku-scroll {
+    0% {
+        left: 100%;
+        opacity: 0;
+        transform: translateX(0) scale(0.95);
+    }
+    3% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    97% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        left: -100%;
+        opacity: 0;
+        transform: translateX(0) scale(0.95);
+    }
+}
+
+/* 弹幕输入框样式优化 */
+#danmakuInput {
+    transition: all 0.3s ease;
+}
+
+#danmakuInput:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+}
+
+/* 发送按钮动画 */
+#sendDanmakuBtn {
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
+}
+
+#sendDanmakuBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+}
+
+#sendDanmakuBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(168, 85, 247, 0.3);
+}
+
+/* 移动端弹幕优化 */
+@media (max-width: 767px) {
+    .danmaku-item {
+        font-size: 14px;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 18px;
+        /* 移动端也保持清晰的文字效果 */
+        text-shadow: 
+            0 0 6px rgba(255, 255, 255, 0.7),
+            0 0 3px rgba(255, 255, 255, 0.5),
+            0 2px 4px rgba(0, 0, 0, 0.5),
+            0 1px 2px rgba(0, 0, 0, 0.7),
+            1px 0 0 rgba(255, 255, 255, 0.3),
+            -1px 0 0 rgba(255, 255, 255, 0.3);
+    }
+    
+    /* 移动端弹幕滚动速度稍快 */
+    @keyframes danmaku-scroll {
+        0% {
+            left: 100%;
+            opacity: 0;
+            transform: translateX(0) scale(0.95);
+        }
+        3% {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+        97% {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+        100% {
+            left: -100%;
+            opacity: 0;
+            transform: translateX(0) scale(0.95);
+        }
+    }
+}

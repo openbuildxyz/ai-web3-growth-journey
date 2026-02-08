@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>币神进化论 - 路演PPT</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- html2pdf for export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'orbitron': ['Orbitron', 'sans-serif'],
+                        'chinese': ['Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        'neon-blue': '#00f3ff',
+                        'neon-purple': '#bc13fe',
+                        'neon-green': '#0aff0a',
+                        'cyber-bg': '#0a0a1a',
+                        'cyber-dark': '#050508',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @page {
+            size: 1280px 720px;
+            margin: 0;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .slide {
+            width: 1280px;
+            height: 720px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+            break-after: page;
+            background: #0a0a1a;
+            box-sizing: border-box;
+        }
+        
+        .slide:last-child {
+            page-break-after: auto;
+            break-after: auto;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #00f3ff 0%, #bc13fe 50%, #0aff0a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+        
+        .cyber-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+        
+        .glow-border {
+            position: relative;
+        }
+        
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #00f3ff, #bc13fe, #0aff0a, #00f3ff);
+            background-size: 400% 400%;
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .agent-card {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.08), rgba(188, 19, 254, 0.08));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 16px;
+        }
+        
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .progress-dot.active {
+            background: #00f3ff;
+            box-shadow: 0 0 10px #00f3ff;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: #0a0a1a !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .slide {
+                page-break-after: always;
+                break-after: page;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+        
+        /* Presentation mode */
+        .presentation-mode .slide {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+        }
+        
+        .presentation-mode .slide.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (no-print) -->
+    <div class="fixed top-4 right-4 z-50 flex items-center space-x-3 no-print">
+        <button onclick="presentMode()" class="px-4 py-2 bg-neon-blue/20 border border-neon-blue/40 rounded-lg text-neon-blue hover:bg-neon-blue/30 transition-all">
+            <i class="fas fa-play mr-2"></i>放映
+        </button>
+        <button onclick="exportPDF()" class="px-4 py-2 bg-neon-purple/20 border border-neon-purple/40 rounded-lg text-neon-purple hover:bg-neon-purple/30 transition-all">
+            <i class="fas fa-download mr-2"></i>导出PDF
+        </button>
+        <a href="index.html" class="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all">
+            <i class="fas fa-home mr-2"></i>返回
+        </a>
+    </div>
+    
+    <!-- Slide Counter (no-print) -->
+    <div class="fixed bottom-4 right-4 z-50 text-white text-sm no-print">
+        <span id="currentSlide">1</span> / 6
+    </div>
+
+    <!-- ==================== SLIDE 1: 封面 ==================== -->
+    <div class="slide" id="slide1">
+        <div class="cyber-grid"></div>
+        <div class="w-full h-full flex flex-col items-center justify-center relative p-16">
+            <div class="absolute top-8 left-8 flex items-center space-x-3">
+                <span class="text-3xl">🧬</span>
+                <span class="text-xl font-orbitron gradient-text font-bold">CoinGod Evolution</span>
+            </div>
+            
+            <div class="absolute top-8 right-8 text-right">
+                <p class="text-sm text-gray-500">路演版</p>
+                <p class="text-xs text-gray-600">v2.0.0</p>
+            </div>
+            
+            <div class="text-center z-10">
+                <div class="mb-6">
+                    <span class="text-8xl inline-block">🧬</span>
+                </div>
+                <h1 class="text-6xl font-black mb-6 font-orbitron">
+                    <span class="gradient-text">币神进化论</span>
+                </h1>
+                <p class="text-2xl text-gray-300 mb-4 font-light tracking-wider font-orbitron">
+                    CoinGod Evolution
+                </p>
+                <div class="inline-block px-6 py-3 rounded-full border border-neon-blue/30 bg-neon-blue/10 mb-8">
+                    <p class="text-xl text-neon-blue font-medium">
+                        "Don't Copy Trade. Let AI Copy You."
+                    </p>
+                </div>
+                <p class="text-lg text-gray-500 max-w-lg mx-auto">
+                    全球首个"众包进化型"链上 AI 对冲基金
+                </p>
+            </div>
+            
+            <div class="absolute bottom-8 flex items-center space-x-6">
+                <div class="flex items-center space-x-2 text-gray-500 text-sm">
+                    <i class="fas fa-robot"></i>
+                    <span>5大AI Agent</span>
+                </div>
+                <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+                <div class="flex items-center space-x-2 text-gray-500 text-sm">
+                    <i class="fas fa-dna"></i>
+                    <span>众包进化</span>
+                </div>
+                <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+                <div class="flex items-center space-x-2 text-gray-500 text-sm">
+                    <i class="fas fa-coins"></i>
+                    <span>永久分红</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page number -->
+        <div class="absolute bottom-4 right-8 text-gray-600 text-sm">1</div>
+    </div>
+
+    <!-- ==================== SLIDE 2: 五大AI Agent ==================== -->
+    <div class="slide" id="slide2">
+        <div class="cyber-grid"></div>
+        <div class="w-full h-full flex flex-col p-12 relative">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-4xl font-bold font-orbitron gradient-text">五大实盘 Agent</h2>
+                    <p class="text-gray-400 mt-2">每个 Agent 都是一个 ERC-6551 钱包，拥有独立资产和交易权限</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm text-gray-500">总资金规模</div>
+                    <div class="text-2xl font-bold text-neon-blue font-orbitron">$2.5M+</div>
+                </div>
+            </div>
+            
+            <!-- Agent Cards -->
+            <div class="flex-1 grid grid-cols-5 gap-4">
+                <!-- Agent 1: 巴菲特基金 -->
+                <div class="agent-card flex flex-col">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-2xl">
+                        🏛️
+                    </div>
+                    <h3 class="text-lg font-bold text-center mb-1">巴菲特基金</h3>
+                    <p class="text-xs text-gray-400 text-center mb-4">Agent-1</p>
+                    
+                    <div class="flex-1 space-y-3 text-sm">
+                        <div class="card-glass p-3">
+                            <p class="text-neon-blue text-xs mb-1 font-semibold">策略</p>
+                            <p class="text-gray-300 text-xs">大盘定投 & 质押<br/>只买BTC/ETH，不做空</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-red-400 text-xs mb-1 font-semibold">缺陷</p>
+                            <p class="text-gray-300 text-xs">熊市回撤大<br/>资金利用率低</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-neon-purple text-xs mb-1 font-semibold">进化</p>
+                            <p class="text-gray-300 text-xs">学会套保对冲</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-t border-white/10 text-center">
+                        <p class="text-xs text-gray-500 italic">→ Hedged Buffett</p>
+                    </div>
+                </div>
+                
+                <!-- Agent 2: 量化基金 -->
+                <div class="agent-card flex flex-col">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-2xl">
+                        📊
+                    </div>
+                    <h3 class="text-lg font-bold text-center mb-1">量化基金</h3>
+                    <p class="text-xs text-gray-400 text-center mb-4">Agent-2</p>
+                    
+                    <div class="flex-1 space-y-3 text-sm">
+                        <div class="card-glass p-3">
+                            <p class="text-neon-blue text-xs mb-1 font-semibold">策略</p>
+                            <p class="text-gray-300 text-xs">DEX 链上套利<br/>监控价差搬砖</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-red-400 text-xs mb-1 font-semibold">缺陷</p>
+                            <p class="text-gray-300 text-xs">Gas费高时亏损<br/>不懂宏观情绪</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-neon-purple text-xs mb-1 font-semibold">进化</p>
+                            <p class="text-gray-300 text-xs">Gas优化/暂停交易</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-t border-white/10 text-center">
+                        <p class="text-xs text-gray-500 italic">→ Smart Gas Quant</p>
+                    </div>
+                </div>
+                
+                <!-- Agent 3: 趋势基金 -->
+                <div class="agent-card flex flex-col">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-orange-400 to-red-600 flex items-center justify-center text-2xl">
+                        🎯
+                    </div>
+                    <h3 class="text-lg font-bold text-center mb-1">趋势基金</h3>
+                    <p class="text-xs text-gray-400 text-center mb-4">Agent-3</p>
+                    
+                    <div class="flex-1 space-y-3 text-sm">
+                        <div class="card-glass p-3">
+                            <p class="text-neon-blue text-xs mb-1 font-semibold">策略</p>
+                            <p class="text-gray-300 text-xs">均线突破<br/>MA20买卖信号</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-red-400 text-xs mb-1 font-semibold">缺陷</p>
+                            <p class="text-gray-300 text-xs">震荡市频繁磨损<br/>本金消耗快</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-neon-purple text-xs mb-1 font-semibold">进化</p>
+                            <p class="text-gray-300 text-xs">震荡区间高抛低吸</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-t border-white/10 text-center">
+                        <p class="text-xs text-gray-500 italic">→ Adaptive Hunter</p>
+                    </div>
+                </div>
+                
+                <!-- Agent 4: 佛系指数 -->
+                <div class="agent-card flex flex-col">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-purple-400 to-pink-600 flex items-center justify-center text-2xl">
+                        🧘
+                    </div>
+                    <h3 class="text-lg font-bold text-center mb-1">佛系指数</h3>
+                    <p class="text-xs text-neon-green text-center mb-4">Agent-4 | 基准</p>
+                    
+                    <div class="flex-1 space-y-3 text-sm">
+                        <div class="card-glass p-3">
+                            <p class="text-neon-blue text-xs mb-1 font-semibold">策略</p>
+                            <p class="text-gray-300 text-xs">被动持有<br/>50BTC/30ETH/20SOL</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-yellow-400 text-xs mb-1 font-semibold">规则</p>
+                            <p class="text-gray-300 text-xs">跑不赢的不配<br/>教导其他AI</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-neon-purple text-xs mb-1 font-semibold">进化</p>
+                            <p class="text-gray-300 text-xs">极难，需长期证明</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-t border-white/10 text-center">
+                        <p class="text-xs text-gray-500 italic">→ Market Index</p>
+                    </div>
+                </div>
+                
+                <!-- Agent 5: 巨鲸暗池 -->
+                <div class="agent-card glow-border flex flex-col border-neon-blue/30">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#00f3ff] to-[#bc13fe] flex items-center justify-center text-2xl shadow-lg shadow-neon-blue/30">
+                        🐋
+                    </div>
+                    <h3 class="text-lg font-bold text-center mb-1">巨鲸暗池</h3>
+                    <p class="text-xs text-neon-green text-center mb-4">Agent-5 | 终极Alpha</p>
+                    
+                    <div class="flex-1 space-y-3 text-sm">
+                        <div class="card-glass p-3">
+                            <p class="text-neon-blue text-xs mb-1 font-semibold">策略</p>
+                            <p class="text-gray-300 text-xs">高频+巨鲸监控<br/>情绪分析+暗池</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-yellow-400 text-xs mb-1 font-semibold">特点</p>
+                            <p class="text-gray-300 text-xs">资金池最大<br/>持仓不公开</p>
+                        </div>
+                        <div class="card-glass p-3">
+                            <p class="text-neon-purple text-xs mb-1 font-semibold">进化</p>
+                            <p class="text-gray-300 text-xs">Top 1%触发<br/>吞噬激进策略</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-t border-white/10 text-center">
+                        <p class="text-xs text-gray-500 italic">→ Whale Alpha 🏆</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="mt-6 flex items-center justify-between text-sm text-gray-500">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-info-circle"></i>
+                    <span>所有Agent均运行于真实链上环境，使用ERC-6551 Token Bound Account</span>
+                </div>
+                <div>2</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 3: 核心逻辑 ==================== -->
+    <div class="slide" id="slide3">
+        <div class="cyber-grid"></div>
+        <div class="w-full h-full flex flex-col p-12 relative">
+            <!-- Header -->
+            <div class="mb-6">
+                <h2 class="text-4xl font-bold font-orbitron gradient-text">核心逻辑：进化与反馈</h2>
+                <p class="text-gray-400 mt-2">当人类击败AI时，Agent会"拜师"学习并分红回馈</p>
+            </div>
+            
+            <div class="flex-1 grid grid-cols-2 gap-6">
+                <!-- Left: Current Status -->
+                <div class="space-y-4">
+                    <div class="card-glass p-6 border-l-4 border-red-500">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-robot text-2xl text-red-400 mr-3"></i>
+                            <h3 class="text-xl font-bold">现状：5个独立链上基金</h3>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-red-400 mr-2 mt-1"></i>
+                                <span>各自持有真实资金（DAO Funds）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-red-400 mr-2 mt-1"></i>
+                                <span>24/7 在 Uniswap/Binance 自主交易</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-triangle text-yellow-400 mr-2 mt-1"></i>
+                                <span>策略很强，但不够完美</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-glass p-6 border-l-4 border-neon-blue">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-bolt text-2xl text-neon-blue mr-3"></i>
+                            <h3 class="text-xl font-bold">冲突：用户 vs Agent</h3>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li class="flex items-start">
+                                <i class="fas fa-user text-neon-blue mr-2 mt-1"></i>
+                                <span>用户连接钱包进行自己的交易</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-chart-line text-neon-blue mr-2 mt-1"></i>
+                                <span>系统实时监控收益率对比</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-trophy text-neon-blue mr-2 mt-1"></i>
+                                <span>每日 UTC 0:00 结算排名</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Right: Evolution Process -->
+                <div class="space-y-4">
+                    <div class="card-glass p-6 border border-neon-purple/30">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-dna text-neon-purple mr-3"></i>
+                            进化触发条件
+                        </h3>
+                        <div class="bg-gradient-to-r from-neon-blue/10 to-neon-purple/10 p-4 rounded-lg mb-4">
+                            <p class="text-lg font-semibold text-center">
+                                用户 24h 收益率 <span class="text-neon-green">></span> Agent 收益率
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-4 gap-3 text-center">
+                            <div class="card-glass p-3">
+                                <div class="text-2xl mb-1">🙏</div>
+                                <p class="text-xs text-gray-400">拜师</p>
+                            </div>
+                            <div class="card-glass p-3">
+                                <div class="text-2xl mb-1">📖</div>
+                                <p class="text-xs text-gray-400">读取操作</p>
+                            </div>
+                            <div class="card-glass p-3">
+                                <div class="text-2xl mb-1">🧠</div>
+                                <p class="text-xs text-gray-400">提取特征</p>
+                            </div>
+                            <div class="card-glass p-3">
+                                <div class="text-2xl mb-1">⚡</div>
+                                <p class="text-xs text-gray-400">修改代码</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-glass p-6 border border-neon-green/30 bg-neon-green/5">
+                        <h3 class="text-xl font-bold mb-3 flex items-center text-neon-green">
+                            <i class="fas fa-gift mr-3"></i>
+                            回馈机制
+                        </h3>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-300 text-sm mb-2">Agent 使用新策略产生的利润</p>
+                                <div class="flex items-center space-x-4">
+                                    <div class="text-center">
+                                        <div class="text-3xl font-bold text-neon-green">10%</div>
+                                        <div class="text-xs text-gray-500">人类导师</div>
+                                    </div>
+                                    <div class="text-gray-600">+</div>
+                                    <div class="text-center">
+                                        <div class="text-3xl font-bold text-neon-blue">10%</div>
+                                        <div class="text-xs text-gray-500">DAO财库</div>
+                                    </div>
+                                    <div class="text-gray-600">+</div>
+                                    <div class="text-center">
+                                        <div class="text-3xl font-bold text-gray-400">80%</div>
+                                        <div class="text-xs text-gray-500">投资者</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right border-l border-white/10 pl-6">
+                                <p class="text-xs text-gray-500 mb-1">分红方式</p>
+                                <p class="text-neon-green font-semibold">Superfluid 流支付</p>
+                                <p class="text-xs text-gray-500 mt-1">实时打入钱包</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Quote -->
+            <div class="mt-4 text-center">
+                <p class="text-lg font-orbitron italic text-gray-400">
+                    "Code once, earn forever." <span class="text-sm">—— 一次操作，永久躺赚</span>
+                </p>
+            </div>
+            
+            <!-- Footer -->
+            <div class="absolute bottom-4 right-8 text-gray-600 text-sm">3</div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 4: 玩法流程 ==================== -->
+    <div class="slide" id="slide4">
+        <div class="cyber-grid"></div>
+        <div class="w-full h-full flex flex-col p-12 relative">
+            <!-- Header -->
+            <div class="mb-6">
+                <h2 class="text-4xl font-bold font-orbitron gradient-text">玩法流程：从"竞争"到"共生"</h2>
+                <p class="text-gray-400 mt-2">挑战 → 注入 → 获利 完整闭环</p>
+            </div>
+            
+            <div class="flex-1 grid grid-cols-3 gap-6">
+                <!-- Step 1: Challenge -->
+                <div class="card-glass p-6 border-t-4 border-neon-blue flex flex-col">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-blue to-blue-600 flex items-center justify-center text-2xl font-bold mr-4">
+                            01
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">挑战</h3>
+                            <p class="text-xs text-neon-blue">Challenge</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 space-y-3">
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-blue/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-user-plus text-neon-blue text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">注册绑定</p>
+                                <p class="text-xs text-gray-400">绑定交易所API或钱包地址</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-blue/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-exchange-alt text-neon-blue text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">自主交易</p>
+                                <p class="text-xs text-gray-400">无需托管资金，只读取数据</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-blue/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-trophy text-neon-blue text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">实时排名</p>
+                                <p class="text-xs text-gray-400">排行榜显示User vs Agent</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-white/10">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400">结算周期</span>
+                            <span class="text-neon-blue font-semibold">每日UTC 0:00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Injection -->
+                <div class="card-glass p-6 border-t-4 border-neon-purple flex flex-col relative">
+                    <div class="absolute -right-3 top-1/2 transform -translate-y-1/2 z-10 hidden lg:block">
+                        <i class="fas fa-chevron-right text-2xl text-neon-purple"></i>
+                    </div>
+                    
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-purple to-purple-600 flex items-center justify-center text-2xl font-bold mr-4">
+                            02
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">注入</h3>
+                            <p class="text-xs text-neon-purple">Injection - 核心创新</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 space-y-3">
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-purple/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-filter text-neon-purple text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">Top 1 选拔</p>
+                                <p class="text-xs text-gray-400">选出击败Agent-X的胜者</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-purple/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-history text-neon-purple text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">交易分析</p>
+                                <p class="text-xs text-gray-400">抓取历史输入LLM分析</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-purple/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-code text-neon-purple text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">代码生成</p>
+                                <p class="text-xs text-gray-400">GPT-4o生成优化代码</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-purple/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-check-double text-neon-purple text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">沙盒回测</p>
+                                <p class="text-xs text-gray-400">30天数据验证后实装</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-white/10">
+                        <div class="flex items-center text-neon-purple text-sm">
+                            <i class="fas fa-brain mr-2"></i>
+                            <span>Powered by GPT-4o</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Profit -->
+                <div class="card-glass p-6 border-t-4 border-neon-green flex flex-col">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-green to-green-600 flex items-center justify-center text-2xl font-bold mr-4">
+                            03
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">获利</h3>
+                            <p class="text-xs text-neon-green">Profit Sharing</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 space-y-3">
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-green/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-medal text-neon-green text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">策略NFT</p>
+                                <p class="text-xs text-gray-400">铸造Strategy NFT权益</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-green/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-coins text-neon-green text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">超额收益</p>
+                                <p class="text-xs text-gray-400">7天内新策略产生的Alpha</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-green/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-percentage text-neon-green text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">自动分红</p>
+                                <p class="text-xs text-gray-400">10%利润智能合约计算</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-3 bg-white/5 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-neon-green/20 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-stream text-neon-green text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">流支付</p>
+                                <p class="text-xs text-gray-400">Superfluid实时到账</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-white/10 text-center">
+                        <p class="text-lg font-bold text-neon-green font-orbitron">"Code once, earn forever"</p>
+                        <p class="text-xs text-gray-500">一次操作，永久躺赚</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="absolute bottom-4 right-8 text-gray-600 text-sm">4</div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 5: 技术架构 ==================== -->
+    <div class="slide" id="slide5">
+        <div class="cyber-grid"></div>
+        <div class="w-full h-full flex flex-col p-12 relative">
+            <!-- Header -->
+            <div class="mb-6">
+                <h2 class="text-4xl font-bold font-orbitron gradient-text">技术架构</h2>
+                <p class="text-gray-400 mt-2">硬核技术栈实现"实盘"和"自主"</p>
+            </div>
+            
+            <div class="flex-1 grid grid-cols-2 gap-6">
+                <!-- Agent Core -->
+                <div class="card-glass p-6 border-l-4 border-neon-blue">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-neon-blue/20 flex items-center justify-center mr-4">
+                            <i class="fas fa-brain text-2xl text-neon-blue"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Agent 核心</h3>
+                            <p class="text-xs text-gray-400">The Brain</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center p-4 bg-white/5 rounded-lg">
+                            <i class="fas fa-link text-neon-blue text-xl mr-4"></i>
+                            <div>
+                                <p class="font-semibold">LangChain + AutoGPT</p>
+                                <p class="text-sm text-gray-400">自主决策和执行交易</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-4 bg-white/5 rounded-lg">
+                            <i class="fas fa-plug text-neon-blue text-xl mr-4"></i>
+                            <div>
+                                <p class="font-semibold">CCXT / Web3.py</p>
+                                <p class="text-sm text-gray-400">连接交易所和链上DEX实盘下单</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Evolution Engine -->
+                <div class="card-glass p-6 border-l-4 border-neon-purple">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-neon-purple/20 flex items-center justify-center mr-4">
+                            <i class="fas fa-dna text-2xl text-neon-purple"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">进化引擎</h3>
+                            <p class="text-xs text-gray-400">Evolution Engine</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center p-4 bg-white/5 rounded-lg">
+                            <i class="fas fa-database text-neon-purple text-xl mr-4"></i>
+                            <div>
+                                <p class="font-semibold">Vector Database (Pinecone)</p>
+                                <p class="text-sm text-gray-400">存储人类优秀交易模式</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-4 bg-white/5 rounded-lg">
+                            <i class="fas fa-magic text-neon-purple text-xl mr-4"></i>
+                            <div>
+                                <p class="font-semibold">LLM Code Generation</p>
+                                <p class="text-sm text-gray-400">动态修改交易策略脚本</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- On-Chain Identity -->
+                <div class="card-glass p-6 border-l-4 border-neon-green">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-neon-green/20 flex items-center justify-center mr-4">
+                            <i class="fas fa-id-card text-2xl text-neon-green"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">链上身份</h3>
+                            <p class="text-xs text-gray-400">On-Chain Identity</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center p-4 bg-white/5 rounded-lg">
+                            <i class="fas fa-cube text-neon-green text-xl mr-4"></i>
+                            <div>
+                                <p class="font-semibold">ERC-6551 (TBA)</p>
+                                <p class="text-sm text-gray-400">Agent NFT绑定真实合约钱包</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-4 bg-white/5 rounded-lg">
+                            <i class="fas fa-shield-alt text-neon-green text-xl mr-4"></i>
+                            <div>
+                                <p class="font-semibold">Chainlink Functions</p>
+                                <p class="text-sm text-gray-400">CEX收益数据去中心化上链</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Economic Model -->
+                <div class="card-glass p-6 border border-yellow-400/30 bg-yellow-400/5">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-yellow-400/20 flex items-center justify-center mr-4">
+                            <i class="fas fa-crown text-2xl text-yellow-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">造神税模型</h3>
+                            <p class="text-xs text-gray-400">God Tax</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="p-4 bg-white/5 rounded-lg">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-yellow-400 font-semibold">资金来源</span>
+                                <span class="text-xs bg-yellow-400/20 px-2 py-1 rounded text-yellow-400">Vault TVL</span>
+                            </div>
+                            <p class="text-sm text-gray-300">管理费: 利润的 20%</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-lg">
+                            <p class="text-yellow-400 font-semibold mb-3">资金分配</p>
+                            <div class="flex items-center justify-between">
+                                <div class="text-center">
+                                    <div class="text-xl font-bold text-neon-green">10%</div>
+                                    <div class="text-xs text-gray-400">人类导师</div>
+                                </div>
+                                <div class="text-gray-600">+</div>
+                                <div class="text-center">
+                                    <div class="text-xl font-bold text-neon-blue">10%</div>
+                                    <div class="text-xs text-gray-400">DAO财库</div>
+                                </div>
+                                <div class="text-gray-600">+</div>
+                                <div class="text-center">
+                                    <div class="text-xl font-bold text-gray-400">80%</div>
+                                    <div class="text-xs text-gray-400">散户</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="absolute bottom-4 right-8 text-gray-600 text-sm">5</div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 6: Demo剧本 ==================== -->
+    <div class="slide" id="slide6">
+        <div class="cyber-grid"></div>
+        <div class="w-full h-full flex flex-col p-12 relative">
+            <!-- Header -->
+            <div class="mb-6">
+                <h2 class="text-4xl font-bold font-orbitron gradient-text">现场 Demo 剧本</h2>
+                <p class="text-gray-400 mt-2">展示真实链上数据 · 150秒完整演示</p>
+            </div>
+            
+            <div class="flex-1 grid grid-cols-2 gap-6">
+                <!-- Timeline -->
+                <div class="space-y-4">
+                    <!-- 0-30s -->
+                    <div class="card-glass p-5 border-l-4 border-neon-blue">
+                        <div class="flex items-center mb-3">
+                            <span class="px-3 py-1 bg-neon-blue/20 text-neon-blue text-sm rounded-full mr-3">0-30s</span>
+                            <h3 class="text-lg font-bold">展示实盘</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-3">打开Agent-3(趋势猎人)的Etherscan页面</p>
+                        <div class="bg-black/30 p-3 rounded font-mono text-xs space-y-1">
+                            <p class="text-neon-blue">"大家看，这是Agent-3的钱包"</p>
+                            <p class="text-gray-400">"10分钟前刚在Uniswap卖出ETH"</p>
+                            <p class="text-red-400">"今天亏了1%，没躲过插针"</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 30-90s -->
+                    <div class="card-glass p-5 border-l-4 border-neon-purple">
+                        <div class="flex items-center mb-3">
+                            <span class="px-3 py-1 bg-neon-purple/20 text-neon-purple text-sm rounded-full mr-3">30-90s</span>
+                            <h3 class="text-lg font-bold">展示人类英雄</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-3">切换到排行榜</p>
+                        <div class="bg-black/30 p-3 rounded font-mono text-xs space-y-1">
+                            <p class="text-neon-purple">"这位0xUser...精准做空，赚20%"</p>
+                            <p class="text-gray-400">"系统正在提取他的交易基因"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- 90-120s -->
+                    <div class="card-glass p-5 border-l-4 border-neon-green">
+                        <div class="flex items-center mb-3">
+                            <span class="px-3 py-1 bg-neon-green/20 text-neon-green text-sm rounded-full mr-3">90-120s</span>
+                            <h3 class="text-lg font-bold">进化时刻</h3>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 mb-3">
+                            <div class="bg-black/30 p-2 rounded text-center">
+                                <p class="text-xs text-gray-500">生成</p>
+                                <p class="text-sm text-neon-green">hedging.py</p>
+                            </div>
+                            <div class="bg-black/30 p-2 rounded text-center">
+                                <p class="text-xs text-gray-500">回测</p>
+                                <p class="text-sm text-neon-green">Passed ✓</p>
+                            </div>
+                            <div class="bg-black/30 p-2 rounded text-center">
+                                <p class="text-xs text-gray-500">实装</p>
+                                <p class="text-sm text-neon-green">NFT升级</p>
+                            </div>
+                        </div>
+                        <div class="bg-black/30 p-3 rounded font-mono text-xs">
+                            <p class="text-neon-green">"看！Agent-3学会了！刚刚自动下了空单！"</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 120-150s -->
+                    <div class="card-glass p-5 border-l-4 border-yellow-400">
+                        <div class="flex items-center mb-3">
+                            <span class="px-3 py-1 bg-yellow-400/20 text-yellow-400 text-sm rounded-full mr-3">120-150s</span>
+                            <h3 class="text-lg font-bold">分红到账</h3>
+                        </div>
+                        <div class="bg-black/30 p-3 rounded font-mono text-xs mb-3">
+                            <p class="text-yellow-400">"0xUser...钱包收到USDC分红！"</p>
+                        </div>
+                        <div class="text-center p-4 bg-gradient-to-r from-neon-blue/10 to-neon-purple/10 rounded-lg">
+                            <p class="text-xl font-bold gradient-text font-orbitron">CoinGod Evolution</p>
+                            <p class="text-sm text-gray-300 mt-1">人类提供智慧 · AI执行操作 · 共同收割市场</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom CTA -->
+            <div class="mt-4 flex items-center justify-between">
+                <div class="flex items-center space-x-6 text-sm text-gray-500">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-robot"></i>
+                        <span>AI实时进化</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-coins"></i>
+                        <span>链上真实收益</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-infinity"></i>
+                        <span>永久被动收入</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-2xl font-bold gradient-text font-orbitron">"Don't Copy Trade. Let AI Copy You."</p>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="absolute bottom-4 right-8 text-gray-600 text-sm">6</div>
+        </div>
+        
+        <!-- With Signature -->
+        <p style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); color: #666; font-size: 12px;">由 <a href="https://with.woa.com/" style="color: #8A2BE2;" target="_blank">With</a> 通过自然语言生成</p>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // Navigation
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            currentSlideIndex = index;
+            document.getElementById('currentSlide').textContent = index + 1;
+        }
+        
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                showSlide(currentSlideIndex + 1);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                showSlide(currentSlideIndex - 1);
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.body.classList.contains('presentation-mode')) {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevSlide();
+                } else if (e.key === 'Escape') {
+                    exitPresentMode();
+                }
+            }
+        });
+        
+        // Presentation mode
+        function presentMode() {
+            document.body.classList.add('presentation-mode');
+            showSlide(0);
+        }
+        
+        function exitPresentMode() {
+            document.body.classList.remove('presentation-mode');
+            slides.forEach(slide => {
+                slide.style.display = '';
+                slide.style.position = '';
+            });
+        }
+        
+        // Export PDF
+        function exportPDF() {
+            const element = document.body;
+            const opt = {
+                margin: 0,
+                filename: 'CoinGod-Evolution-路演PPT.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#0a0a1a'
+                },
+                jsPDF: { 
+                    unit: 'px', 
+                    format: [1280, 720],
+                    orientation: 'landscape'
+                },
+                pagebreak: { mode: ['css', 'legacy'] }
+            };
+            
+            // Temporarily hide navigation
+            const nav = document.querySelectorAll('.no-print');
+            nav.forEach(el => el.style.display = 'none');
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                nav.forEach(el => el.style.display = '');
+            });
+        }
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
