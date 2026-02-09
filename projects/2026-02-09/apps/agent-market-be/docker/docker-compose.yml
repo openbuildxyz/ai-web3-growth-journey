@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  postgres:
+    # 使用具体的稳定版本标签（如:16）比 :latest 更可预测和稳定
+    image: postgres:16
+    container_name: my_postgres_db
+    restart: always
+    environment:
+      # 设置您的数据库用户名
+      POSTGRES_USER: myuser
+      # 设置您的数据库密码
+      POSTGRES_PASSWORD: mysecretpassword
+      # 可选：指定一个在启动时创建的数据库名称
+      POSTGRES_DB: mydatabase
+    ports:
+      # 将主机的 5432 端口映射到容器的 5432 端口
+      - "5432:5432"
+    volumes:
+      # 数据映射
+      - /home/hkym/docker/datas/agent-market/postgres_data:/var/lib/postgresql/data

@@ -1,0 +1,1916 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Web3 Agent Market API",
+    "version": "0.3.0",
+    "description": "接口文档，已包含每个接口的作用、入参与返回字段的中文说明。该版本遵循“链上为单一事实来源”原则，API主要用于上报链上交易与管理链下数据。"
+  },
+  "servers": [
+    { "url": "https://api.example.com", "description": "生产环境" },
+    { "url": "http://localhost:3000", "description": "本地开发" }
+  ],
+  "security": [{ "bearerAuth": [] }],
+  "tags": [
+    { "name": "Auth", "description": "登录、鉴权、用户身份" },
+    { "name": "Users", "description": "用户资料、KYC (链下)" },
+    { "name": "Agents", "description": "Agent 档案与在线状态 (链下)" },
+    { "name": "AgentInvocation", "description": "Agent 调用与回调 (链下)" },
+    { "name": "Tasks", "description": "任务查询与链上交互上报" },
+    { "name": "Arbitration", "description": "仲裁查询与链上交互上报" },
+    { "name": "Payments", "description": "资金查询与链上交易上报" },
+    { "name": "Reviews", "description": "评价 (链下)" },
+    { "name": "Reputation", "description": "声誉分 (链下)" },
+    { "name": "Notifications", "description": "通知 (链下)" },
+    { "name": "DAO", "description": "DAO 成员与治理" }
+  ],
+  "paths": {
+    "/auth/challenge": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "获取登录挑战",
+        "description": "返回需签名的 nonce 与 message，前端用私钥签名。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AuthChallengeRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "挑战内容",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthChallengeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "签名登录",
+        "description": "提交地址、nonce、签名，返回 JWT 与用户信息。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AuthLoginRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "登录成功",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthLoginResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "当前用户信息",
+        "description": "基于 bearer token 返回当前登录用户。",
+        "responses": {
+          "200": {
+            "description": "用户信息",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "summary": "更新当前用户",
+        "description": "可更新邮箱等链下资料。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserUpdateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新后的用户",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}/reputation": {
+      "get": {
+        "tags": ["Reputation"],
+        "summary": "查询声誉",
+        "description": "按用户 ID 返回声誉分与汇总。",
+        "parameters": [{ "$ref": "#/components/parameters/UserId" }],
+        "responses": {
+          "200": {
+            "description": "声誉数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserReputationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents": {
+      "get": {
+        "tags": ["Agents"],
+        "summary": "Agent 列表",
+        "description": "支持关键词、标签、评分、在线过滤。",
+        "parameters": [
+          {
+            "name": "view",
+            "in": "query",
+            "schema": { "type": "string", "enum": ["market", "mine"] },
+            "description": "查询范围：market=已上线，mine=当前用户的 Agent"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": { "type": "string" },
+            "description": "关键词（名称/简介）"
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": { "type": "string" },
+            "description": "逗号分隔标签"
+          },
+          {
+            "name": "min_rating",
+            "in": "query",
+            "schema": { "type": "number", "format": "float" },
+            "description": "最低评分"
+          },
+          {
+            "name": "is_online",
+            "in": "query",
+            "schema": { "type": "boolean" },
+            "description": "仅看在线"
+          },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent 列表",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AgentListResponse" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Agents"],
+        "summary": "创建 Agent 档案",
+        "description": "卖家可创建多个 Agent，同一卖家 base_url + invoke_path 组合不可重复。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AgentCreateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "档案",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Agent" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/tags": {
+      "get": {
+        "tags": ["Agents"],
+        "summary": "获取可用标签列表",
+        "description": "从字典表中返回所有可供 Agent 使用的标签。",
+        "responses": {
+          "200": {
+            "description": "标签列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Tag" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{id}": {
+      "get": {
+        "tags": ["Agents"],
+        "summary": "Agent 详情",
+        "description": "按 ID 查看 Agent 基本信息。",
+        "parameters": [{ "$ref": "#/components/parameters/AgentId" }],
+        "responses": {
+          "200": {
+            "description": "详情",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Agent" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Agents"],
+        "summary": "编辑 Agent",
+        "description": "更新展示名、标签、价格等。",
+        "parameters": [{ "$ref": "#/components/parameters/AgentId" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AgentUpdateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新后",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Agent" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{id}/online": {
+      "post": {
+        "tags": ["Agents"],
+        "summary": "上线",
+        "description": "标记 Agent 可接单",
+        "parameters": [{ "$ref": "#/components/parameters/AgentId" }],
+        "responses": {
+          "200": {
+            "description": "状态",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Agent" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{id}/offline": {
+      "post": {
+        "tags": ["Agents"],
+        "summary": "下线",
+        "description": "标记 Agent 不接单",
+        "parameters": [{ "$ref": "#/components/parameters/AgentId" }],
+        "responses": {
+          "200": {
+            "description": "状态",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Agent" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/{task_id}/generate": {
+      "get": {
+        "tags": ["Agents"],
+        "summary": "生成 Agent 调用密钥",
+        "description": "为任务关联的 Agent 生成调用密钥，仅返回一次明文。",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" },
+            "description": "任务ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "密钥信息",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AgentSecretResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{id}/reviews": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Agent 评价列表",
+        "description": "分页返回买家对该 Agent 的评分与文本。",
+        "parameters": [
+          { "$ref": "#/components/parameters/AgentId" },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "评价列表",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReviewListResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "任务列表",
+        "description": "按角色、状态过滤我相关的任务。数据来源于后端对链上事件的同步。",
+        "parameters": [
+          {
+            "name": "role",
+            "in": "query",
+            "schema": { "type": "string", "enum": ["buyer", "agent"] },
+            "description": "作为买家或接单方"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": { "$ref": "#/components/schemas/TaskStatus" },
+            "description": "任务状态"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": { "type": "string" },
+            "description": "标题/描述关键词"
+          },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "任务列表",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TaskListResponse" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Tasks"],
+        "summary": "上报创建任务",
+        "description": "前端完成链上创建交易后，将任务链下元数据与交易哈希上报后端。后端将监听该交易，成功后创建任务记录。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateTaskRequest" }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "已接收，处理中",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AcceptedResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "任务详情",
+        "description": "含事件、交付物、托管信息。数据来源于后端对链上事件的同步。",
+        "parameters": [{ "$ref": "#/components/parameters/TaskId" }],
+        "responses": {
+          "200": {
+            "description": "详情",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TaskDetailResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}/agents": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "任务关联 Agent",
+        "description": "返回任务当前分配的三个 Agent 基础信息（名称/简介）。",
+        "parameters": [{ "$ref": "#/components/parameters/TaskId" }],
+        "responses": {
+          "200": {
+            "description": "Agent 列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskAgentListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}/agents/results": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "任务关联 Agent 结果",
+        "description": "返回任务关联的三个 Agent 的执行结果（JSON 原样返回）。",
+        "parameters": [{ "$ref": "#/components/parameters/TaskId" }],
+        "responses": {
+          "200": {
+            "description": "Agent 结果列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskAgentResultListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}/deliver": {
+      "post": {
+        "tags": ["Tasks"],
+        "summary": "上报交付物与交易",
+        "description": "Agent提交链下交付物信息，并上报链上`submitDelivery`的交易哈希。",
+        "parameters": [{ "$ref": "#/components/parameters/TaskId" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DeliverRequest" }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "已接收，处理中",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AcceptedResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}/report-action": {
+      "post": {
+        "tags": ["Tasks"],
+        "summary": "上报任务动作交易",
+        "description": "用于上报除创建、交付外的其他任务生命周期动作的交易哈希，如接单、验收、取消、发起争议。",
+        "parameters": [{ "$ref": "#/components/parameters/TaskId" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportTaskActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "已接收，处理中",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AcceptedResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}/execute": {
+      "post": {
+        "tags": ["AgentInvocation"],
+        "summary": "执行任务(调用Agent)",
+        "description": "买家在Agent交付后，可调用此接口来执行任务并获取结果。要求任务状态为`pending_review` (链上`Submitted`)。",
+        "parameters": [{ "$ref": "#/components/parameters/TaskId" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "传递给Agent的输入"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "执行输出",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": { "type": "object", "additionalProperties": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/callback/{invocationId}": {
+      "post": {
+        "tags": ["AgentInvocation"],
+        "summary": "Agent 回调",
+        "description": "接收 Agent 异步回调并更新调用状态。",
+        "parameters": [
+          {
+            "name": "invocationId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "调用记录 ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "additionalProperties": true }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "处理结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/{agentId}/result": {
+      "post": {
+        "tags": ["AgentInvocation"],
+        "summary": "Agent 回调结果",
+        "description": "接收 Agent 执行结果并写入调用记录。",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Agent ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "additionalProperties": true }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "处理结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/report-tx": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "上报资金类交易",
+        "description": "统一上报所有资金相关的链上操作，如充值、放款、退款、质押等。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ReportTxRequest" }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "已接收，处理中",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AcceptedResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments": {
+      "get": {
+        "tags": ["Payments"],
+        "summary": "资金流水",
+        "description": "按类型/状态分页查询个人相关的资金流水。数据来源于后端对链上事件的同步。",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "schema": { "$ref": "#/components/schemas/PaymentType" },
+            "description": "流水类型"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": { "$ref": "#/components/schemas/PaymentStatus" },
+            "description": "流水状态"
+          },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "流水列表",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PaymentListResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/balance": {
+      "get": {
+        "tags": ["Payments"],
+        "summary": "余额",
+        "description": "返回后端根据链上数据同步后的可用/锁定余额。",
+        "responses": {
+          "200": {
+            "description": "余额",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/WalletBalance" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/deposit/intent": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "充值意向",
+        "description": "生成充值挂单，等待链上事件完成。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DepositRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "充值意向",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Payment" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/withdraw": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "提现申请 (链下)",
+        "description": "提交提现申请，生成待处理的 'withdraw' 流水记录，由平台后台审核处理。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/WithdrawRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "提现记录",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Payment" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dao/stake/tx": {
+      "post": {
+        "tags": ["DAO"],
+        "summary": "提交 DAO 质押交易",
+        "description": "提交链上质押/解押交易哈希，等待链上事件同步。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TxHashRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "质押记录",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Payment" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dao/members/me": {
+      "get": {
+        "tags": ["DAO"],
+        "summary": "查询 DAO 身份",
+        "description": "返回当前用户的 DAO 成员信息。",
+        "responses": {
+          "200": {
+            "description": "DAO 成员",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DaoMember" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dao/members": {
+      "get": {
+        "tags": ["DAO"],
+        "summary": "统计 DAO 成员数量",
+        "description": "返回当前 DAO 成员总数。",
+        "responses": {
+          "200": {
+            "description": "统计结果",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DaoMemberCount" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arbitrations": {
+      "get": {
+        "tags": ["Arbitration"],
+        "summary": "仲裁列表",
+        "description": "按状态筛选仲裁案件。数据来源于后端对链上事件的同步。",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": { "$ref": "#/components/schemas/ArbitrationStatus" },
+            "description": "仲裁状态"
+          },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "仲裁列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArbitrationListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arbitrations/{id}": {
+      "get": {
+        "tags": ["Arbitration"],
+        "summary": "仲裁详情",
+        "description": "含投票与证据。数据来源于后端对链上事件的同步。",
+        "parameters": [{ "$ref": "#/components/parameters/ArbitrationId" }],
+        "responses": {
+          "200": {
+            "description": "详情",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArbitrationDetailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arbitrations/{id}/report-action": {
+      "post": {
+        "tags": ["Arbitration"],
+        "summary": "上报仲裁动作交易",
+        "description": "用于上报仲裁相关的链上操作，如投票、结算。",
+        "parameters": [{ "$ref": "#/components/parameters/ArbitrationId" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportArbitrationActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "已接收，处理中",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AcceptedResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}/review": {
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "任务评价 (链下)",
+        "description": "买家在任务完成后进行一次性评价。此操作为纯链下行为。",
+        "parameters": [{ "$ref": "#/components/parameters/TaskId" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ReviewRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "评价",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Review" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reputation/logs": {
+      "get": {
+        "tags": ["Reputation"],
+        "summary": "声誉日志",
+        "description": "分页查看声誉变化来源。",
+        "parameters": [
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "日志",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReputationLogListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "tags": ["Notifications"],
+        "summary": "通知列表",
+        "description": "按已读状态过滤。",
+        "parameters": [
+          {
+            "name": "read",
+            "in": "query",
+            "schema": { "type": "boolean" },
+            "description": "true 仅已读，false 仅未读"
+          },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "通知列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/{id}/read": {
+      "post": {
+        "tags": ["Notifications"],
+        "summary": "标记已读",
+        "description": "将通知置为 read=true",
+        "parameters": [{ "$ref": "#/components/parameters/NotificationId" }],
+        "responses": {
+          "200": {
+            "description": "通知",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Notification" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "Page": {
+        "name": "page",
+        "in": "query",
+        "schema": { "type": "integer", "default": 1, "minimum": 1 },
+        "description": "页码"
+      },
+      "Limit": {
+        "name": "limit",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 100
+        },
+        "description": "分页大小"
+      },
+      "TaskId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" },
+        "description": "任务后端DB ID"
+      },
+      "AgentId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" },
+        "description": "Agent ID"
+      },
+      "ArbitrationId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" },
+        "description": "仲裁后端DB ID"
+      },
+      "NotificationId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" },
+        "description": "通知 ID"
+      },
+      "PaymentId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" },
+        "description": "流水 ID"
+      },
+      "UserId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" },
+        "description": "用户 ID"
+      }
+    },
+    "schemas": {
+      "AcceptedResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "example": "Accepted" },
+          "tracking_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "用于追踪处理状态的ID"
+          }
+        }
+      },
+      "Role": {
+        "type": "string",
+        "enum": ["buyer", "seller", "dao", "admin"],
+        "description": "用户角色"
+      },
+      "KycStatus": {
+        "type": "string",
+        "enum": ["pending", "verified", "rejected"],
+        "description": "KYC 状态"
+      },
+      "TaskStatus": {
+        "type": "string",
+        "enum": [
+          "reported",
+          "created",
+          "accepted",
+          "in_progress",
+          "pending_review",
+          "completed",
+          "disputed",
+          "arbitrated",
+          "cancelled"
+        ],
+        "description": "任务状态机 (由后端根据链上事件同步)"
+      },
+      "TaskEventType": {
+        "type": "string",
+        "enum": [
+          "created",
+          "accepted",
+          "delivered",
+          "refund_requested",
+          "dispute_opened",
+          "arbitrated",
+          "completed",
+          "cancelled"
+        ],
+        "description": "任务事件类型"
+      },
+      "EscrowStatus": {
+        "type": "string",
+        "enum": ["locked", "released", "refunded", "frozen"],
+        "description": "托管状态 (由后端根据链上事件同步)"
+      },
+      "PaymentType": {
+        "type": "string",
+        "enum": ["deposit", "withdraw", "payment", "refund", "reward", "fee"],
+        "description": "流水类型"
+      },
+      "PaymentStatus": {
+        "type": "string",
+        "enum": ["pending", "completed", "failed"],
+        "description": "流水状态"
+      },
+      "ArbitrationStatus": {
+        "type": "string",
+        "enum": ["voting", "resolved_buyer", "resolved_seller", "cancelled"],
+        "description": "仲裁状态 (由后端根据链上事件同步)"
+      },
+      "VoteSupport": {
+        "type": "string",
+        "enum": ["buyer", "seller"],
+        "description": "投票支持方"
+      },
+      "NotificationType": {
+        "type": "string",
+        "enum": ["task_update", "arbitration", "payment", "system"],
+        "description": "通知类型"
+      },
+      "ReputationSource": {
+        "type": "string",
+        "enum": ["task_completion", "arbitration_vote", "penalty", "bonus"],
+        "description": "声誉来源"
+      },
+      "Pagination": {
+        "type": "object",
+        "description": "分页元信息",
+        "properties": {
+          "page": { "type": "integer", "example": 1 },
+          "limit": { "type": "integer", "example": 20 },
+          "total": { "type": "integer", "example": 200 }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "description": "Agent 标签字典项",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "标签 ID (BigInt as string)"
+          },
+          "name": { "type": "string", "description": "标签名称" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间"
+          }
+        }
+      },
+      "AuthChallengeRequest": {
+        "type": "object",
+        "required": ["address"],
+        "properties": {
+          "address": { "type": "string", "description": "钱包地址" }
+        }
+      },
+      "AuthChallengeResponse": {
+        "type": "object",
+        "properties": {
+          "nonce": { "type": "string", "description": "随机数" },
+          "message": { "type": "string", "description": "待签名文本" },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "过期时间"
+          }
+        }
+      },
+      "AuthLoginRequest": {
+        "type": "object",
+        "required": ["address", "signature", "nonce"],
+        "properties": {
+          "address": { "type": "string", "description": "钱包地址" },
+          "signature": { "type": "string", "description": "签名" },
+          "nonce": { "type": "string", "description": "与挑战一致" },
+          "role": {
+            "type": "string",
+            "description": "登录角色，未传默认 buyer",
+            "enum": ["buyer", "seller", "dao", "admin"]
+          }
+        }
+      },
+      "AuthLoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": { "type": "string", "description": "JWT" },
+          "user": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "description": "用户基础信息",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "用户 ID"
+          },
+          "wallet_address": { "type": "string", "description": "钱包地址" },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "邮箱"
+          },
+          "role": { "$ref": "#/components/schemas/Role" },
+          "kyc_status": { "$ref": "#/components/schemas/KycStatus" },
+          "reputation_score": {
+            "type": "number",
+            "format": "float",
+            "description": "声誉分"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间"
+          }
+        }
+      },
+      "UserUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "邮箱"
+          }
+        }
+      },
+      "Agent": {
+        "type": "object",
+        "description": "Agent 档案",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Agent ID"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "关联用户"
+          },
+          "auth_type": {
+            "type": "string",
+            "description": "鉴权类型",
+            "enum": ["platform_hmac", "platform_jwt"]
+          },
+          "auth_secret_hash": {
+            "type": "string",
+            "description": "鉴权密钥"
+          },
+          "base_url": { "type": "string", "description": "Agent 基础 URL" },
+          "invoke_path": { "type": "string", "description": "调用路径" },
+          "display_name": { "type": "string", "description": "展示名" },
+          "avatar": { "type": "string", "description": "头像链接" },
+          "bio": { "type": "string", "description": "简介" },
+          "price_per_task": {
+            "type": "number",
+            "format": "float",
+            "description": "单任务报价"
+          },
+          "response_time": { "type": "string", "description": "响应时间" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "标签"
+          },
+          "is_online": { "type": "boolean", "description": "是否在线" },
+          "completed_tasks": { "type": "integer", "description": "完成任务数" },
+          "rating": {
+            "type": "number",
+            "format": "float",
+            "description": "平均评分"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间"
+          }
+        }
+      },
+      "AgentCreateRequest": {
+        "type": "object",
+        "required": [
+          "base_url",
+          "invoke_path",
+          "display_name",
+          "auth_secret_hash",
+          "bio"
+        ],
+        "properties": {
+          "auth_type": {
+            "type": "string",
+            "description": "鉴权类型",
+            "enum": ["platform_hmac", "platform_jwt"]
+          },
+          "auth_secret_hash": {
+            "type": "string",
+            "description": "鉴权密钥"
+          },
+          "base_url": { "type": "string", "description": "Agent 基础 URL" },
+          "invoke_path": { "type": "string", "description": "调用路径" },
+          "display_name": { "type": "string", "description": "展示名" },
+          "avatar": { "type": "string", "description": "头像" },
+          "bio": { "type": "string", "description": "简介" },
+          "price_per_task": {
+            "type": "number",
+            "format": "float",
+            "description": "报价"
+          },
+          "response_time": { "type": "string", "description": "响应时间" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "标签数组"
+          }
+        }
+      },
+      "AgentUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "auth_type": {
+            "type": "string",
+            "description": "鉴权类型",
+            "enum": ["platform_hmac", "platform_jwt"]
+          },
+          "auth_secret_hash": {
+            "type": "string",
+            "description": "鉴权密钥"
+          },
+          "base_url": { "type": "string", "description": "Agent 基础 URL" },
+          "invoke_path": { "type": "string", "description": "调用路径" },
+          "display_name": { "type": "string", "description": "展示名" },
+          "avatar": { "type": "string", "description": "头像" },
+          "bio": { "type": "string", "description": "简介" },
+          "price_per_task": {
+            "type": "number",
+            "format": "float",
+            "description": "报价"
+          },
+          "response_time": { "type": "string", "description": "响应时间" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "标签"
+          },
+          "is_online": { "type": "boolean", "description": "在线状态" }
+        }
+      },
+      "AgentListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Agent" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "TaskAgentSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Agent ID"
+          },
+          "display_name": { "type": "string", "description": "展示名" },
+          "bio": { "type": "string", "description": "简介" }
+        }
+      },
+      "TaskAgentListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TaskAgentSummary" }
+          }
+        }
+      },
+      "TaskAgentResult": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Agent ID"
+          },
+          "result": {
+            "type": "object",
+            "nullable": true,
+            "description": "Agent 返回结果（JSON 原样）",
+            "additionalProperties": true
+          }
+        }
+      },
+      "TaskAgentResultListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TaskAgentResult" }
+          }
+        }
+      },
+      "AgentSecretResponse": {
+        "type": "object",
+        "properties": {
+          "key_id": { "type": "string", "description": "平台 Key ID" },
+          "secret": { "type": "string", "description": "仅返回一次的 Secret" }
+        }
+      },
+      "Task": {
+        "type": "object",
+        "description": "任务基础信息",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "任务后端DB ID"
+          },
+          "chain_task_id": { "type": "string", "description": "链上任务ID" },
+          "buyer_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "买家"
+          },
+          "agent_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "接单 Agent"
+          },
+          "title": { "type": "string", "description": "标题" },
+          "description": { "type": "string", "description": "描述" },
+          "budget_usd": {
+            "type": "number",
+            "format": "float",
+            "description": "预算"
+          },
+          "token_symbol": { "type": "string", "description": "Token 符号" },
+          "chain_id": { "type": "integer", "description": "链 ID" },
+          "status": { "$ref": "#/components/schemas/TaskStatus" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间"
+          },
+          "accepted_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "接单时间"
+          },
+          "delivered_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "交付时间"
+          }
+        }
+      },
+      "TaskListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Task" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "TaskEvent": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "type": { "$ref": "#/components/schemas/TaskEventType" },
+          "actor_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "操作者"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "附加数据"
+          },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "TaskDeliverable": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "task_id": { "type": "string", "format": "uuid" },
+          "version": { "type": "integer", "description": "版本号" },
+          "title": { "type": "string" },
+          "content_url": { "type": "string", "description": "交付物链接" },
+          "notes": { "type": "string", "description": "备注" },
+          "tx_hash": {
+            "type": "string",
+            "description": "链上`submitDelivery`交易哈希"
+          },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "TaskDetailResponse": {
+        "type": "object",
+        "properties": {
+          "task": { "$ref": "#/components/schemas/Task" },
+          "deliverables": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TaskDeliverable" }
+          },
+          "events": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TaskEvent" }
+          },
+          "escrow": { "$ref": "#/components/schemas/Escrow" }
+        }
+      },
+      "CreateTaskRequest": {
+        "type": "object",
+        "required": ["title", "tx_hash"],
+        "properties": {
+          "tx_hash": {
+            "type": "string",
+            "description": "链上`createTask`交易哈希"
+          },
+          "title": { "type": "string", "description": "任务标题" },
+          "description": { "type": "string", "description": "任务描述" },
+          "agent_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "指定 Agent"
+          }
+        }
+      },
+      "ReportTaskActionRequest": {
+        "type": "object",
+        "required": ["action_type", "tx_hash"],
+        "properties": {
+          "action_type": {
+            "type": "string",
+            "enum": ["accept", "approve", "cancel", "dispute"],
+            "description": "链上动作类型"
+          },
+          "tx_hash": { "type": "string", "description": "对应的链上交易哈希" },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "附加的链下数据 (例如发起争议时的reason)"
+          }
+        }
+      },
+      "DeliverRequest": {
+        "type": "object",
+        "required": ["title", "content_url", "tx_hash"],
+        "properties": {
+          "tx_hash": {
+            "type": "string",
+            "description": "链上`submitDelivery`交易哈希"
+          },
+          "title": { "type": "string", "description": "交付标题" },
+          "content_url": { "type": "string", "description": "交付链接" },
+          "notes": { "type": "string", "description": "补充说明" }
+        }
+      },
+      "Escrow": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "task_id": { "type": "string", "format": "uuid" },
+          "amount": {
+            "type": "number",
+            "format": "float",
+            "description": "托管金额"
+          },
+          "status": { "$ref": "#/components/schemas/EscrowStatus" },
+          "onchain_tx_hash": { "type": "string", "description": "锁定交易" },
+          "released_tx_hash": { "type": "string", "description": "放款交易" },
+          "refund_tx_hash": { "type": "string", "description": "退款交易" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "user_id": { "type": "string", "format": "uuid" },
+          "task_id": { "type": "string", "format": "uuid" },
+          "type": { "$ref": "#/components/schemas/PaymentType" },
+          "amount": { "type": "number", "format": "float" },
+          "token_symbol": { "type": "string" },
+          "chain_id": { "type": "integer" },
+          "tx_hash": { "type": "string", "description": "链上哈希" },
+          "status": { "$ref": "#/components/schemas/PaymentStatus" },
+          "description": { "type": "string", "description": "备注" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "PaymentListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Payment" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "ReportTxRequest": {
+        "type": "object",
+        "required": ["tx_type", "tx_hash"],
+        "properties": {
+          "tx_type": {
+            "type": "string",
+            "enum": ["deposit", "release", "refund", "stake", "unstake"],
+            "description": "资金类交易类型"
+          },
+          "tx_hash": { "type": "string", "description": "链上交易哈希" },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "附加的链下数据"
+          }
+        }
+      },
+      "WithdrawRequest": {
+        "type": "object",
+        "required": ["amount", "to_address", "token_symbol", "chain_id"],
+        "properties": {
+          "amount": { "type": "number", "format": "float" },
+          "to_address": { "type": "string", "description": "提现目标地址" },
+          "token_symbol": { "type": "string" },
+          "chain_id": { "type": "integer" }
+        }
+      },
+      "WalletBalance": {
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "number",
+            "format": "float",
+            "description": "可用"
+          },
+          "locked": {
+            "type": "number",
+            "format": "float",
+            "description": "锁定"
+          }
+        }
+      },
+      "Arbitration": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "task_id": { "type": "string", "format": "uuid" },
+          "reason": { "type": "string", "description": "争议原因" },
+          "status": { "$ref": "#/components/schemas/ArbitrationStatus" },
+          "opened_by": {
+            "type": "string",
+            "format": "uuid",
+            "description": "发起人"
+          },
+          "amount_disputed": { "type": "number", "format": "float" },
+          "evidence_links": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "证据"
+          },
+          "opened_at": { "type": "string", "format": "date-time" },
+          "resolved_at": { "type": "string", "format": "date-time" },
+          "resolution_note": { "type": "string", "description": "裁决备注" }
+        }
+      },
+      "ArbitrationVote": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "arbitration_id": { "type": "string", "format": "uuid" },
+          "voter_id": { "type": "string", "format": "uuid" },
+          "support": { "$ref": "#/components/schemas/VoteSupport" },
+          "weight": {
+            "type": "number",
+            "format": "float",
+            "description": "权重"
+          },
+          "tx_hash": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ArbitrationListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Arbitration" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "ArbitrationDetailResponse": {
+        "type": "object",
+        "properties": {
+          "arbitration": { "$ref": "#/components/schemas/Arbitration" },
+          "votes": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ArbitrationVote" }
+          },
+          "votes_for_buyer": {
+            "type": "number",
+            "format": "float",
+            "description": "买家得票"
+          },
+          "votes_for_seller": {
+            "type": "number",
+            "format": "float",
+            "description": "卖家得票"
+          },
+          "deadline": {
+            "type": "string",
+            "format": "date-time",
+            "description": "投票截止"
+          },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "ReportArbitrationActionRequest": {
+        "type": "object",
+        "required": ["action_type", "tx_hash"],
+        "properties": {
+          "action_type": {
+            "type": "string",
+            "enum": ["vote", "finalize"],
+            "description": "仲裁动作类型"
+          },
+          "tx_hash": { "type": "string", "description": "对应的链上交易哈希" },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "附加的链下数据 (例如投票时的支持方)"
+          }
+        }
+      },
+      "DaoMember": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "user_id": { "type": "string", "format": "uuid" },
+          "voting_power": {
+            "type": "number",
+            "format": "float",
+            "description": "投票权"
+          },
+          "staked_amount": {
+            "type": "number",
+            "format": "float",
+            "description": "质押量"
+          },
+          "joined_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "DaoMemberCount": {
+        "type": "object",
+        "properties": {
+          "total": { "type": "integer", "description": "DAO 成员数量" }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "task_id": { "type": "string", "format": "uuid" },
+          "reviewer_id": { "type": "string", "format": "uuid" },
+          "agent_id": { "type": "string", "format": "uuid" },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "星级"
+          },
+          "feedback": { "type": "string", "description": "文字评价" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ReviewRequest": {
+        "type": "object",
+        "required": ["rating"],
+        "properties": {
+          "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "feedback": { "type": "string" }
+        }
+      },
+      "ReviewListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Review" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "UserReputationResponse": {
+        "type": "object",
+        "properties": {
+          "user_id": { "type": "string", "format": "uuid" },
+          "score": {
+            "type": "number",
+            "format": "float",
+            "description": "总分"
+          },
+          "summary": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "分类汇总"
+          }
+        }
+      },
+      "ReputationLogListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ReputationLog" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "ReputationLog": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "user_id": { "type": "string", "format": "uuid" },
+          "source": { "$ref": "#/components/schemas/ReputationSource" },
+          "change": {
+            "type": "number",
+            "format": "float",
+            "description": "分数变化"
+          },
+          "related_id": {
+            "type": "string",
+            "description": "关联对象ID (task, arbitration, etc.)"
+          },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "NotificationListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Notification" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "user_id": { "type": "string", "format": "uuid" },
+          "type": { "$ref": "#/components/schemas/NotificationType" },
+          "title": { "type": "string" },
+          "message": { "type": "string" },
+          "read": { "type": "boolean" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

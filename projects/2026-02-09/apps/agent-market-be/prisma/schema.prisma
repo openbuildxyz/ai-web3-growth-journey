@@ -1,0 +1,564 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Agent调用执行记录表，用于记录平台调用Agent API的全过程，作为任务交付与DAO仲裁的重要证据
+model agent_invocations {
+  /// Agent调用记录主键ID
+  id                               BigInt                  @id @default(autoincrement())
+  /// 关联的任务ID，表示此次Agent调用属于哪个任务
+  task_id                          String                  @db.Uuid
+  /// 被调用的Agent ID
+  agent_id                         String                  @db.Uuid
+  requester_user_id                String                  @db.Uuid
+  /// Agent调用执行状态
+  status                           agent_invocation_status @default(pending)
+  /// 调用Agent时请求内容的Hash，用于审计与仲裁，不存原文
+  request_hash                     String                  @db.VarChar(255)
+  /// Agent返回结果内容的Hash，用于审计与仲裁，不存原文
+  response_hash                    String?                 @db.VarChar(255)
+  requester_wallet_address         String                  @db.VarChar(66)
+  task_status_snapshot             String?                 @db.VarChar(32)
+  /// Agent调用开始时间
+  started_at                       DateTime                @default(now()) @db.Timestamptz(6)
+  /// Agent调用结束时间
+  finished_at                      DateTime?               @db.Timestamptz(6)
+  /// Agent调用失败或超时的错误信息
+  error_message                    String?
+  /// Agent调用记录创建时间
+  created_at                       DateTime                @default(now()) @db.Timestamptz(6)
+  CREATE_TABLE_agent_invocations__ Json?                   @map("CREATE TABLE agent_invocations (")
+  agents                           agents                  @relation(fields: [agent_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                            users                   @relation(fields: [requester_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tasks                            tasks                   @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([agent_id], map: "idx_agent_invocations_agent_id")
+  @@index([status], map: "idx_agent_invocations_status")
+  @@index([task_id], map: "idx_agent_invocations_task_id")
+}
+
+/// Agent标签字典表，用于统一管理平台允许使用的Agent标签
+model agent_tag_dict {
+  /// 标签ID
+  id         BigInt       @id @default(autoincrement())
+  /// 标签名称，例如：LLM、爬虫、自动化
+  name       String       @unique @db.VarChar(64)
+  /// 标签创建时间
+  created_at DateTime     @default(now()) @db.Timestamptz(6)
+  agent_tags agent_tags[]
+}
+
+/// Agent与标签的关联表，用于描述某个Agent具备哪些能力标签
+model agent_tags {
+  /// Agent ID
+  agent_id       String         @db.Uuid
+  /// 标签ID
+  tag_id         BigInt
+  /// 标签关联创建时间
+  created_at     DateTime       @default(now()) @db.Timestamptz(6)
+  agents         agents         @relation(fields: [agent_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  agent_tag_dict agent_tag_dict @relation(fields: [tag_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([agent_id, tag_id])
+  @@index([agent_id], map: "idx_agent_tags_agent_id")
+  @@index([tag_id], map: "idx_agent_tags_tag_id")
+}
+
+/// Agent 资料
+model agents {
+  /// Agent ID
+  id                    String                  @id @db.Uuid
+  /// 关联的用户ID
+  user_id               String                  @db.Uuid
+  /// Agent对外提供服务的基础URL，例如：https://agent.example.com
+  base_url              String?                 @db.VarChar(512)
+  /// Agent执行接口路径，例如：/run 或 /execute
+  invoke_path           String?                 @db.VarChar(255)
+  /// 平台调用Agent接口的超时时间（毫秒）
+  timeout_ms            Int?                    @default(30000)
+  /// 平台调用Agent接口时使用的鉴权方式
+  auth_type             agent_auth_type?
+  /// Agent API鉴权密钥的Hash值，仅存Hash不存明文
+  auth_secret_hash      String                  @db.VarChar(255)
+  /// Agent是否支持异步回调执行结果
+  supports_callback     Boolean?                @default(false)
+  /// Agent当前状态：draft草稿、active可用、disabled禁用
+  status                agent_status?           @default(draft)
+  /// 展示名
+  display_name          String
+  /// 头像/表情
+  avatar                String?
+  /// 简介
+  bio                   String?
+  /// 单任务报价（USDT）
+  price_per_task        Decimal?                @db.Decimal(12, 2)
+  /// 平均响应时间
+  response_time         String?
+  /// 技能/标签数组
+  tags                  String[]
+  /// 是否在线
+  is_online             Boolean                 @default(false)
+  /// 完成任务数
+  completed_tasks       Int                     @default(0)
+  /// 平均评分
+  rating                Decimal?                @db.Decimal(3, 2)
+  /// 创建时间
+  created_at            DateTime                @default(now()) @db.Timestamptz(6)
+  agent_api_credentials agent_api_credentials[]
+  agent_invocations     agent_invocations[]
+  agent_tags            agent_tags[]
+  users                 users                   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  reviews               reviews[]
+  tasks                 tasks[]
+
+  @@index([tags], map: "idx_agents_tags_gin", type: Gin)
+}
+
+/// 仲裁投票记录
+model arbitration_votes {
+  /// 投票ID
+  id             String       @id @db.Uuid
+  /// 关联仲裁ID
+  arbitration_id String       @db.Uuid
+  /// 投票人用户ID
+  voter_id       String       @db.Uuid
+  /// 支持买家或卖家
+  support        vote_support
+  /// 投票权重
+  weight         Decimal      @default(1) @db.Decimal(18, 4)
+  /// 链上投票交易Hash
+  tx_hash        String?
+  /// 投票时间
+  created_at     DateTime     @default(now()) @db.Timestamptz(6)
+  arbitrations   arbitrations @relation(fields: [arbitration_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users          users        @relation(fields: [voter_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([arbitration_id, voter_id])
+}
+
+/// 仲裁案件
+model arbitrations {
+  /// 仲裁ID
+  id                String              @id @db.Uuid
+  /// 关联任务ID（1:1）
+  task_id           String              @unique @db.Uuid
+  /// 仲裁原因
+  reason            String?
+  /// 仲裁状态
+  status            arbitration_status  @default(voting)
+  /// 发起人用户ID
+  opened_by         String              @db.Uuid
+  /// 争议金额
+  amount_disputed   Decimal?            @db.Decimal(12, 2)
+  /// 证据链接数组
+  evidence_links    String[]
+  /// 开启时间
+  opened_at         DateTime            @default(now()) @db.Timestamptz(6)
+  /// 裁决时间
+  resolved_at       DateTime?           @db.Timestamptz(6)
+  /// 裁决备注
+  resolution_note   String?
+  arbitration_votes arbitration_votes[]
+  users             users               @relation(fields: [opened_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tasks             tasks               @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([status, opened_at(sort: Desc)], map: "idx_arbitrations_status_time")
+}
+
+/// DAO 成员表
+model dao_members {
+  /// 成员记录ID
+  id            String   @id @db.Uuid
+  /// 用户ID（唯一）
+  user_id       String   @unique @db.Uuid
+  /// 当前投票权重
+  voting_power  Decimal  @default(0) @db.Decimal(18, 4)
+  /// 质押数量
+  staked_amount Decimal  @default(0) @db.Decimal(18, 4)
+  /// 加入时间
+  joined_at     DateTime @default(now()) @db.Timestamptz(6)
+  users         users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// 托管资金记录
+model escrows {
+  /// 托管ID
+  id                     String        @id @default(uuid()) @db.Uuid
+  /// 关联任务ID（唯一1:1）
+  task_id                String        @unique @db.Uuid
+  /// 托管金额
+  amount                 Decimal       @db.Decimal(12, 2)
+  /// 托管状态
+  status                 escrow_status @default(locked)
+  locked_amount_snapshot Decimal?      @db.Decimal(38, 18)
+  /// 锁定资金交易Hash
+  onchain_tx_hash        String?
+  /// 放款交易Hash
+  released_tx_hash       String?
+  /// 退款交易Hash
+  refund_tx_hash         String?
+  /// 创建时间
+  created_at             DateTime      @default(now()) @db.Timestamptz(6)
+  /// 更新时间
+  updated_at             DateTime      @default(now()) @db.Timestamptz(6)
+  tasks                  tasks         @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// 通知消息
+model notifications {
+  /// 通知ID
+  id         String            @id @db.Uuid
+  /// 目标用户ID
+  user_id    String            @db.Uuid
+  /// 通知类型
+  type       notification_type
+  /// 标题
+  title      String
+  /// 内容
+  content    String?
+  /// 是否已读
+  read       Boolean           @default(false)
+  /// 创建时间
+  created_at DateTime          @default(now()) @db.Timestamptz(6)
+  users      users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([user_id, read, created_at(sort: Desc)], map: "idx_notifications_user_read_time")
+}
+
+/// 资金流水台账（充值/提现/付款/退款/奖励/手续费）
+model payments {
+  /// 流水ID
+  id           String         @id @db.Uuid
+  /// 所属用户ID
+  user_id      String         @db.Uuid
+  /// 关联任务ID（可空）
+  task_id      String?        @db.Uuid
+  /// 流水类型
+  type         payment_type
+  /// 金额（可正负）
+  amount       Decimal        @db.Decimal(14, 2)
+  /// Token符号
+  token_symbol String         @default("Q")
+  /// 链ID
+  chain_id     Int?
+  /// 链上交易Hash
+  tx_hash      String?
+  /// 流水状态
+  status       payment_status @default(pending)
+  /// 描述
+  description  String?
+  /// 创建时间
+  created_at   DateTime       @default(now()) @db.Timestamptz(6)
+  tasks        tasks?         @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users        users          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([user_id, created_at(sort: Desc)], map: "idx_payments_user_time")
+}
+
+/// 声誉变更日志
+model reputation_logs {
+  /// 日志ID
+  id         String            @id @db.Uuid
+  /// 用户ID
+  user_id    String            @db.Uuid
+  /// 声誉来源
+  source     reputation_source
+  /// 变动值
+  delta      Decimal           @db.Decimal(12, 2)
+  /// 原因说明
+  reason     String?
+  /// 记录时间
+  created_at DateTime          @default(now()) @db.Timestamptz(6)
+  users      users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([user_id, created_at], map: "idx_reputation_logs_user_time")
+}
+
+/// 任务评价
+model reviews {
+  /// 评价ID
+  id          String   @id @db.Uuid
+  /// 关联任务ID（唯一一条）
+  task_id     String   @unique @db.Uuid
+  /// 评价人用户ID
+  reviewer_id String   @db.Uuid
+  /// 被评Agent ID
+  agent_id    String   @db.Uuid
+  /// 评分 1-5
+  rating      Int
+  /// 文字反馈
+  feedback    String?
+  /// 评价时间
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  agents      agents   @relation(fields: [agent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users       users    @relation(fields: [reviewer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tasks       tasks    @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// 任务交付物版本记录
+model task_deliverables {
+  /// 交付物ID
+  id          String   @id @db.Uuid
+  /// 关联任务ID
+  task_id     String   @db.Uuid
+  /// 版本号（递增）
+  version     Int
+  /// 交付标题
+  title       String?
+  /// 交付内容链接/存储地址
+  content_url String?
+  /// 备注
+  notes       String?
+  /// 提交时间
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  tasks       tasks    @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([task_id, version])
+}
+
+/// 任务时间线/事件日志
+model task_events {
+  /// 事件ID
+  id         String          @id @db.Uuid
+  /// 关联任务ID
+  task_id    String          @db.Uuid
+  /// 事件类型
+  type       task_event_type
+  /// 触发人用户ID
+  actor_id   String?         @db.Uuid
+  /// 额外元数据（JSON）
+  data       Json?
+  /// 事件时间
+  created_at DateTime        @default(now()) @db.Timestamptz(6)
+  users      users?          @relation(fields: [actor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tasks      tasks           @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([task_id, created_at], map: "idx_task_events_task_time")
+}
+
+/// 任务主表
+model tasks {
+  /// 任务ID
+  id                   String              @id @db.Uuid
+  /// 买家用户ID
+  buyer_id             String              @db.Uuid
+  /// 接单Agent ID（可为空，待分配）
+  agent_id             String?             @db.Uuid
+  /// 任务标题
+  title                String
+  /// 任务描述
+  description          String?
+  /// 任务预算（USDT计价）
+  budget_usd           Decimal             @db.Decimal(12, 2)
+  /// 平台费用金额
+  platform_fee         Decimal?            @db.Decimal(12, 2)
+  /// 托管Token符号
+  token_symbol         String              @default("Q")
+  /// 链ID
+  chain_id             BigInt?
+  /// 链上任务ID，由智能合约生成，初始为空，监听解析后更新
+  chain_task_id        BigInt?
+  /// 创建任务的链上交易Hash，创建时的唯一索引
+  create_tx_hash       String?             @unique @db.VarChar(66)
+  buyer_wallet_address String?             @db.VarChar(66)
+  agent_wallet_address String?             @db.VarChar(66)
+  /// 任务状态机
+  status               task_status         @default(created)
+  /// 执行进度百分比
+  progress             Int?
+  /// 创建时间
+  created_at           DateTime            @default(now()) @db.Timestamptz(6)
+  /// 接单时间
+  accepted_at          DateTime?           @db.Timestamptz(6)
+  /// 交付时间
+  delivered_at         DateTime?           @db.Timestamptz(6)
+  /// 验收截止时间
+  review_deadline      DateTime?           @db.Timestamptz(6)
+  /// 仲裁截止时间
+  arbitration_deadline DateTime?           @db.Timestamptz(6)
+  agent_invocations    agent_invocations[]
+  arbitrations         arbitrations?
+  escrows              escrows?
+  payments             payments[]
+  reviews              reviews?
+  task_deliverables    task_deliverables[]
+  task_events          task_events[]
+  agents               agents?             @relation(fields: [agent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users                users               @relation(fields: [buyer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([chain_id, chain_task_id], map: "uniq_tasks_chain_task")
+  @@index([agent_id, status, created_at(sort: Desc)], map: "idx_tasks_agent_status_time")
+  @@index([buyer_id, status, created_at(sort: Desc)], map: "idx_tasks_buyer_status_time")
+}
+
+/// 用户基础表，买家/卖家/DAO
+model users {
+  /// 用户ID
+  id                String              @id @default(uuid()) @db.Uuid
+  /// 链上钱包地址，唯一
+  wallet_address    String              @unique
+  /// 邮箱（可选）
+  email             String?
+  /// 角色：buyer/seller/dao/admin
+  role              user_role
+  /// KYC 状态
+  kyc_status        kyc_status          @default(pending)
+  /// 声誉积分累计
+  reputation_score  Decimal             @default(0) @db.Decimal(12, 2)
+  /// 创建时间
+  created_at        DateTime            @default(now()) @db.Timestamptz(6)
+  agent_invocations agent_invocations[]
+  agents            agents[]
+  arbitration_votes arbitration_votes[]
+  arbitrations      arbitrations[]
+  dao_members       dao_members?
+  notifications     notifications[]
+  payments          payments[]
+  reputation_logs   reputation_logs[]
+  reviews           reviews[]
+  task_events       task_events[]
+  tasks             tasks[]
+  wallet_balances   wallet_balances?
+}
+
+/// 用户钱包余额视图（可用/锁定）
+model wallet_balances {
+  /// 用户ID
+  user_id    String   @id @db.Uuid
+  /// 可用余额
+  available  Decimal  @default(0) @db.Decimal(14, 2)
+  /// 锁定余额（托管中）
+  locked     Decimal  @default(0) @db.Decimal(14, 2)
+  /// 更新时间
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model agent_api_credentials {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  agent_id    String    @db.Uuid
+  key_id      String    @db.VarChar(64)
+  secret_hash String    @db.VarChar(255)
+  status      String    @default("active") @db.VarChar(32)
+  created_at  DateTime  @default(now()) @db.Timestamptz(6)
+  revoked_at  DateTime? @db.Timestamptz(6)
+  agents      agents    @relation(fields: [agent_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([agent_id, key_id])
+}
+
+/// Agent API鉴权方式，平台调用Agent时使用
+enum agent_auth_type {
+  platform_hmac
+  platform_jwt
+}
+
+/// Agent调用执行状态，用于记录一次Agent API调用的执行结果
+enum agent_invocation_status {
+  pending
+  running
+  success
+  failed
+  timeout
+}
+
+/// Agent当前状态，用于控制平台是否允许调用该Agent
+enum agent_status {
+  draft
+  active
+  disabled
+}
+
+enum arbitration_status {
+  voting
+  resolved_buyer
+  resolved_seller
+  cancelled
+}
+
+enum escrow_status {
+  locked
+  released
+  refunded
+  frozen
+}
+
+enum kyc_status {
+  pending
+  verified
+  rejected
+}
+
+enum notification_type {
+  task_update
+  arbitration
+  payment
+  system
+}
+
+enum payment_status {
+  pending
+  completed
+  failed
+}
+
+enum payment_type {
+  deposit
+  withdraw
+  payment
+  refund
+  reward
+  fee
+}
+
+enum reputation_source {
+  task_completion
+  arbitration_vote
+  penalty
+  bonus
+}
+
+enum task_event_type {
+  created
+  accepted
+  delivered
+  refund_requested
+  dispute_opened
+  arbitrated
+  completed
+  cancelled
+  agent_registered
+  agent_invocation_started
+  agent_invocation_completed
+  agent_invocation_failed
+  agent_callback_received
+}
+
+enum task_status {
+  created
+  accepted
+  in_progress
+  pending_review
+  completed
+  disputed
+  arbitrated
+  cancelled
+}
+
+enum user_role {
+  buyer
+  seller
+  dao
+  admin
+}
+
+enum vote_support {
+  buyer
+  seller
+}

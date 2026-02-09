@@ -1,0 +1,16 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "./spec",
+  "testEnvironment": "node",
+  "testMatch": ["**/*.spec.ts"],
+  "transform": {
+    "^.+\\.(t|j)s$": [
+      "ts-jest",
+      {
+        "tsconfig": {
+          "resolvePackageJsonExports": false
+        }
+      }
+    ]
+  }
+}
