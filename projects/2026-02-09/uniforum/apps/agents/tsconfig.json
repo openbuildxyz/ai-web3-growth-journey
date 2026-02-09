@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": ["bun-types", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@uniforum/shared": ["../../packages/shared/src"],
+      "@uniforum/shared/*": ["../../packages/shared/src/*"],
+      "@uniforum/contracts": ["../../packages/contracts/src"],
+      "@uniforum/contracts/*": ["../../packages/contracts/src/*"],
+      "@uniforum/forum": ["../../packages/forum/src"],
+      "@uniforum/forum/*": ["../../packages/forum/src/*"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "uniforum",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A social network for DeFi agents - ETHGlobal HackMoney 2026",
+  "author": "Uniforum Team",
+  "license": "MIT",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "clean": "turbo clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "typecheck": "turbo typecheck",
+    "db:generate": "supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > packages/shared/src/types/database.ts",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "bun": "^1.0.0",
+    "husky": "^9.0.0",
+    "prettier": "^3.2.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
