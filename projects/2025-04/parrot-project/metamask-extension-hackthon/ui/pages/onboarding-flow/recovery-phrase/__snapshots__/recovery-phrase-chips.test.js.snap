@@ -1,0 +1,509 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Recovery Phrase Chips Component should match snapshot 1`] = `
+<div>
+  <div
+    class="mm-box mm-box--display-flex mm-box--gap-4 mm-box--flex-direction-column"
+  >
+    <div
+      class="mm-box recovery-phrase__secret mm-box--padding-4 mm-box--display-grid mm-box--width-full mm-box--background-color-background-muted mm-box--rounded-lg"
+    >
+      <div
+        class="mm-box recovery-phrase__chips mm-box--display-grid mm-box--gap-2 mm-box--justify-content-center mm-box--align-items-center"
+        data-quiz-words="[]"
+        data-recovery-phrase="debris:dizzy:just:program:just:float:decrease:vacant:alarm:reduce:speak:stadium"
+        data-testid="recovery-phrase-chips"
+      >
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            1
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-0"
+            focused="false"
+            readonly=""
+            type="text"
+            value="debris"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            2
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-1"
+            focused="false"
+            readonly=""
+            type="text"
+            value="dizzy"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            3
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-2"
+            focused="false"
+            readonly=""
+            type="text"
+            value="just"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            4
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-3"
+            focused="false"
+            readonly=""
+            type="text"
+            value="program"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            5
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-4"
+            focused="false"
+            readonly=""
+            type="text"
+            value="just"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            6
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-5"
+            focused="false"
+            readonly=""
+            type="text"
+            value="float"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            7
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-6"
+            focused="false"
+            readonly=""
+            type="text"
+            value="decrease"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            8
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-7"
+            focused="false"
+            readonly=""
+            type="text"
+            value="vacant"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            9
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-8"
+            focused="false"
+            readonly=""
+            type="text"
+            value="alarm"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            10
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-9"
+            focused="false"
+            readonly=""
+            type="text"
+            value="reduce"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            11
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-10"
+            focused="false"
+            readonly=""
+            type="text"
+            value="speak"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            12
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-11"
+            focused="false"
+            readonly=""
+            type="text"
+            value="stadium"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Recovery Phrase Chips Component should match snapshot of confirm recovery phrase with inputs of indicies to check 1`] = `
+<div>
+  <div
+    class="mm-box mm-box--display-flex mm-box--gap-4 mm-box--flex-direction-column"
+  >
+    <div
+      class="mm-box recovery-phrase__secret mm-box--padding-4 mm-box--display-grid mm-box--width-full mm-box--background-color-background-muted mm-box--rounded-lg"
+    >
+      <div
+        class="mm-box recovery-phrase__chips mm-box--display-grid mm-box--gap-2 mm-box--justify-content-center mm-box--align-items-center"
+        data-quiz-words="[]"
+        data-recovery-phrase="debris:dizzy:just:program:just:float:decrease:vacant:alarm:reduce:speak:stadium"
+        data-testid="recovery-phrase-chips"
+      >
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            1
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-0"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="debris"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            2
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-1"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="dizzy"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            3
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-2"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="just"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            4
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-3"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="program"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            5
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-4"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="just"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            6
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-5"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="float"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            7
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-6"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="decrease"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            8
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-7"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="vacant"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            9
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-8"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="alarm"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            10
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-9"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="reduce"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            11
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-10"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="speak"
+          />
+        </div>
+        <div
+          class="mm-box mm-text-field mm-text-field--size-md mm-text-field--disabled mm-text-field--truncate mm-box--padding-right-0 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid"
+        >
+          <p
+            class="mm-box mm-text recovery-phrase__word-index mm-text--body-md mm-box--color-text-alternative"
+          >
+            12
+            .
+          </p>
+          <input
+            autocomplete="off"
+            class="mm-box mm-text mm-input mm-input--disable-state-styles mm-input--disabled mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-2 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
+            data-testid="recovery-phrase-chip-11"
+            disabled=""
+            focused="false"
+            readonly=""
+            type="text"
+            value="stadium"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

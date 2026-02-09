@@ -1,0 +1,103 @@
+# MetaMask 交易分析功能 PRD
+
+## 1. 项目背景
+
+普通用户在使用 MetaMask进行交易时，往往缺乏足够的专业知识或耐心去理解复杂的交易细节。盲目批准交易可能导致资金损失等严重风险。为了解决这个问题，我们提出在 MetaMask 中集成一个新功能，利用大型语言模型（LLM）来分析交易和连接请求的细节，并以自然语言的形式向用户展示潜在风险。
+
+## 2. 核心功能
+
+本功能旨在通过 AI 的力量，为用户的关键操作提供安全辅助。主要包括两大核心能力：
+
+- **交易分析**: 在用户确认交易的页面，提供一个“AI分析”按钮。点击后，将交易详情发送给 LLM 进行分析，并将结果（包括交易摘要、风险等级和风险解释）展示给用户。
+- **连接分析**: 在 DApp 请求连接钱包的页面，提供一个“AI分析”按钮。点击后，将请求方的网站来源（origin）发送给 LLM 进行分析，评估该网站的信誉和潜在风险。
+
+### 限制与说明
+- 本项目当前为概念验证（PoC）阶段，以跑通核心流程为主要目标。
+- 功能实现是非阻塞式的，用户在等待 AI 分析结果时，仍可随时手动确认或拒绝操作。
+- 分析结果使用中文展示。
+- 暂不深入考虑健壮性、易用性和多语言支持等问题。
+
+---
+
+## 3. 技术实现方案
+
+### 3.1 核心集成点
+
+- **交易确认页面**:
+  - `ui/pages/confirmations/confirm/confirm.tsx`: 在此页面集成 `LlmAnalysisSection` 组件，作为交易分析功能的 UI 入口。
+- **钱包连接页面**:
+  - `ui/pages/connected-accounts/connected-accounts.component.js`: 在此页面复用 `LlmAnalysisSection` 组件，作为连接分析功能的 UI 入口。
+
+### 3.2 关键模块与组件
+
+- **可复用UI组件**:
+  - `ui/components/app/llm-analysis-section/index.js`: 创建了可复用的核心组件 `LlmAnalysisSection`，它封装了 API Key 输入、状态管理（加载、错误、成功）、分析按钮和结果展示的全部逻辑。
+    - `AnalysisButton.tsx`: 供用户点击以触发分析的按钮。
+    - `AnalysisResult.tsx`: 用于展示 LLM 返回的分析结果。
+
+- **服务层**:
+  - `shared/lib/llm-analysis-service.ts`: 创建了 `LlmTransactionAnalysisService` 类，负责封装对 OpenRouter LLM API 的所有网络请求，包括请求构建、API Key 管理和响应解析。
+
+- **工具函数**:
+  - `ui/pages/confirmations/utils/llm-analytics.util.ts`: 包含 `formatTransactionForLLM` 函数，用于将 MetaMask 内部的交易对象转换为适合 LLM 分析的结构化 JSON。
+  - `ui/pages/connected-accounts/utils/llm-analytics.js`: 包含 `formatConnectionRequestForLLM` 函数，用于将网站连接请求的 `origin` 转换为发送给 LLM 的 prompt。
+
+### 3.3 关键实现细节
+
+- **模块导入**: 项目中存在 ES Module 和 CommonJS 混用。导入自定义类（如 `LlmTransactionAnalysisService`）时，需使用命名导入 (`import { ... }`) 以避免 `is not a constructor` 错误。
+- **LLM 响应解析**: LLM 返回的 JSON 数据常被包裹在 Markdown 代码块中 ( ` ```json ... ``` ` )。在 `JSON.parse` 前，必须先用正则表达式提取出纯净的 JSON 字符串。
+- **类型定义**: 需注意 MetaMask 内部对象的类型，例如交易对象中的 `value` 可能是可选的 (`string | undefined`)，在定义接口时需保持一致。
+
+---
+
+## 4. Prompt 设计
+
+为了获取精准、结构化的分析结果，我们为不同场景设计了特定的 Prompt 模板。所有 Prompt 都要求 LLM 扮演“区块链安全专家”的角色，并以包含 `analysis` 和 `riskLevel` 两个键的 JSON 对象格式返回结果。
+
+### 4.1 交易分析 Prompt
+
+#### 4.1.1 基础模板 (普通 ETH 转账)
+- **触发条件**: 交易不包含 `data` 字段。
+- **`transaction_details` 核心字段**: `from`, `to`, `value`, `gas`, `gasPrice`, `chainId`, `type: "plain_eth_transfer"`
+- **分析重点**: 评估接收地址的风险，确认转账金额。
+
+#### 4.1.2 扩展模板 (代币转账 - ERC20)
+- **触发条件**: 交易 `data` 字段被解码为 ERC20 `transfer` 或 `transferFrom` 方法。
+- **`transaction_details` 核心字段**: `from`, `to_contract`, `type: "token_transfer"`, 以及包含 `recipient`, `amount`, `token_info` 的 `decoded_data` 对象。
+- **分析重点**: 除了常规风险，还提示用户注意代币合约本身是否经过审计、是否为仿冒代币。
+
+#### 4.1.3 高级模板 (通用合约交互)
+- **触发条件**: 所有其他包含 `data` 字段的复杂交易。
+- **`transaction_details` 核心字段**: `from`, `to_contract`, `type: "contract_interaction"`, 以及包含 `function_name`, `function_signature`, `arguments` 的 `decoded_data` 对象。
+- **分析重点**: 必须明确指出操作的真实意图，特别是高风险的授权操作（如 `approve`），并解释 `spender`（授权对象）和 `amount`（授权额度，尤其是无限授权）的含义和风险。
+
+### 4.2 连接请求分析 Prompt
+
+- **触发条件**: DApp 请求连接到用户钱包。
+- **请求核心字段**: `origin` (请求连接的网站源)。
+- **分析重点**: 评估请求网站的信誉、历史和已知的安全风险。向用户解释“连接钱包”的权限范围——即只能读取地址和发起请求，无法直接动用资产。
+
+---
+
+## 5. 单元测试
+
+为了确保新增逻辑的稳定性和 Prompt 生成的准确性，我们编写了全面的单元测试。
+
+### 5.1 测试范围
+
+- **连接请求格式化**:
+  - `ui/pages/connected-accounts/utils/llm-analytics.test.js`: 测试 `formatConnectionRequestForLLM` 函数能否为不同网站生成正确的 Prompt。
+- **交易格式化**:
+  - `ui/pages/confirmations/utils/llm-analytics.util.test.ts`: 全面测试 `formatTransactionForLLM` 函数，覆盖普通 ETH 转账、ERC20 代币转账及高风险合约交互（特别是无限授权 `approve`）等关键场景。
+- **核心UI组件**:
+  - `ui/components/app/llm-analysis-section/index.test.js`: 测试 `LlmAnalysisSection` 组件的渲染、用户交互、API Mock 调用以及各种状态下的 UI 表现。
+
+### 5.2 测试命令
+
+可以通过运行以下命令来执行所有与 LLM 分析功能相关的单元测试：
+
+```bash
+yarn test:llm
+```
+
+该命令已在 `package.json` 中配置，确保覆盖所有相关测试文件。

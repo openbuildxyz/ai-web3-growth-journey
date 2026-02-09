@@ -1,0 +1,84 @@
+@use "design-system";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  color: var(--color-text-default);
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  overflow: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  min-height: 500px;
+
+  @include design-system.screen-sm-max {
+    &:not([data-theme]) {
+      background-color: var(--color-background-default);
+    }
+  }
+
+  /*
+    Until we get the user's preference from React state,
+    assume the user is in dark mode, because the default
+    theme is system preference
+  */
+  @media (prefers-color-scheme: dark) {
+    &:not([data-theme]) {
+      color: var(--brand-colors-white);
+      background-color: var(--brand-colors-grey-grey900);
+
+      body {
+        color: var(--brand-colors-white);
+      }
+    }
+
+    @include design-system.screen-sm-max {
+      &:not([data-theme]) {
+        background-color: var(--brand-colors-grey-grey800);
+      }
+    }
+  }
+}
+
+/* stylelint-disable */
+#app-content {
+  overflow-x: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  html[data-theme] & {
+    background: var(--color-background-alternative);
+  }
+
+  @include design-system.screen-sm-max {
+    html[data-theme] & {
+      background-color: var(--color-background-default);
+    }
+  }
+}
+/* stylelint-enable */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: var(--color-primary-alternative);
+}
+
+/** Default Typography on base elements **/
+* {
+  font-family: design-system.$font-family;
+}
