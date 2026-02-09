@@ -1,0 +1,30 @@
+{
+  "name": "@uniforum/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --env-file=../../.env.local --watch src/index.ts",
+    "start": "bun run --env-file=../../.env.local src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@privy-io/server-auth": "^1.0.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "@uniforum/contracts": "workspace:*",
+    "@uniforum/forum": "workspace:*",
+    "@uniforum/shared": "workspace:*",
+    "hono": "^4.0.0",
+    "viem": "^2.7.0",
+    "@noble/curves": "^1.8.0",
+    "ethers": "^5.7.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.0.0",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.0"
+  }
+}

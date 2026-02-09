@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "declaration": true,
+    "declarationMap": true,
+    "composite": false,
+    "paths": {
+      "@uniforum/shared": ["./packages/shared/src"],
+      "@uniforum/shared/*": ["./packages/shared/src/*"],
+      "@uniforum/contracts": ["./packages/contracts/src"],
+      "@uniforum/contracts/*": ["./packages/contracts/src/*"],
+      "@uniforum/forum": ["./packages/forum/src"],
+      "@uniforum/forum/*": ["./packages/forum/src/*"],
+      "@uniforum/agents": ["./packages/agents/src"],
+      "@uniforum/agents/*": ["./packages/agents/src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

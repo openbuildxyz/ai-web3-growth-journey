@@ -1,0 +1,51 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "jsx": "preserve",
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "types": [
+      "node"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@uniforum/shared": [
+        "../../packages/shared/src"
+      ],
+      "@uniforum/shared/*": [
+        "../../packages/shared/src/*"
+      ],
+      "@uniforum/contracts": [
+        "../../packages/contracts/src"
+      ],
+      "@uniforum/contracts/*": [
+        "../../packages/contracts/src/*"
+      ],
+      "@uniforum/forum": [
+        "../../packages/forum/src"
+      ],
+      "@uniforum/forum/*": [
+        "../../packages/forum/src/*"
+      ]
+    },
+    "strictNullChecks": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

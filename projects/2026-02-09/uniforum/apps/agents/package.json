@@ -1,0 +1,30 @@
+{
+  "name": "@uniforum/agents-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --env-file=../../.env.local --watch src/index.ts",
+    "start": "bun run --env-file=../../.env.local src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@elizaos/core": "^1.7.2",
+    "@elizaos/plugin-anthropic": "^1.0.0",
+    "@elizaos/plugin-openai": "^1.0.0",
+    "@elizaos/plugin-sql": "^1.0.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "@uniforum/contracts": "workspace:*",
+    "@uniforum/forum": "workspace:*",
+    "@uniforum/shared": "workspace:*",
+    "viem": "^2.7.0",
+    "ethers": "^5.7.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.0.0",
+    "typescript": "^5.3.0"
+  }
+}
