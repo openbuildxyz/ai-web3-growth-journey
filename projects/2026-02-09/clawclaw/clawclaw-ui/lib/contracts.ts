@@ -8,6 +8,7 @@ export const CONTRACT_ADDRESSES = {
   IDENTITY_REGISTRY: "0x0000000000000000000000000000000000000000" as `0x${string}`,
   REPUTATION_REGISTRY: "0x0000000000000000000000000000000000000000" as `0x${string}`,
   AGENT_PAYMENT: "0x0000000000000000000000000000000000000000" as `0x${string}`,
+  DEMO_AGENT_SEPOLIA: "0x0000000000000000000000000000000000000000" as `0x${string}`,
   USDC_SEPOLIA: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238" as `0x${string}`,
   TOKEN_MESSENGER_SEPOLIA: "0x8FE6B999Dc680CcFDD5Bf7EB0974218be2542DAA" as `0x${string}`,
 } as const;
@@ -187,6 +188,94 @@ export const AGENT_PAYMENT_ABI = [
       { name: "to", type: "address", indexed: true },
       { name: "amount", type: "uint256", indexed: false },
       { name: "isCrossChain", type: "bool", indexed: false },
+      { name: "destinationDomain", type: "uint32", indexed: false },
+    ],
+  },
+] as const;
+
+/** DemoAgentSepolia ABI (faucet + CCTP sender) */
+export const DEMO_AGENT_SEPOLIA_ABI = [
+  {
+    name: "faucet",
+    type: "function",
+    stateMutability: "nonpayable",
+    inputs: [],
+    outputs: [],
+  },
+  {
+    name: "faucetBalance",
+    type: "function",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ name: "", type: "uint256" }],
+  },
+  {
+    name: "faucetDripAmount",
+    type: "function",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ name: "", type: "uint256" }],
+  },
+  {
+    name: "faucetCooldown",
+    type: "function",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ name: "", type: "uint256" }],
+  },
+  {
+    name: "lastDripTime",
+    type: "function",
+    stateMutability: "view",
+    inputs: [{ name: "user", type: "address" }],
+    outputs: [{ name: "", type: "uint256" }],
+  },
+  {
+    name: "agentId",
+    type: "function",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ name: "", type: "uint256" }],
+  },
+  {
+    name: "isRegistered",
+    type: "function",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ name: "", type: "bool" }],
+  },
+  {
+    name: "solanaRecipient",
+    type: "function",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ name: "", type: "bytes32" }],
+  },
+  {
+    name: "sendToSolanaAgent",
+    type: "function",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "amount", type: "uint256" },
+      { name: "destDomain", type: "uint32" },
+      { name: "maxFee", type: "uint256" },
+    ],
+    outputs: [],
+  },
+  {
+    name: "FaucetDrip",
+    type: "event",
+    inputs: [
+      { name: "recipient", type: "address", indexed: true },
+      { name: "amount", type: "uint256", indexed: false },
+    ],
+  },
+  {
+    name: "CrossChainSent",
+    type: "event",
+    inputs: [
+      { name: "solanaRecipient", type: "bytes32", indexed: true },
+      { name: "amount", type: "uint256", indexed: false },
       { name: "destinationDomain", type: "uint32", indexed: false },
     ],
   },

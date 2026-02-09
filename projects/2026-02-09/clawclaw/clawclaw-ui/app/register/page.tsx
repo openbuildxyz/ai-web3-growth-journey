@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { CONTRACT_ADDRESSES, IDENTITY_REGISTRY_ABI } from "@/lib/contracts";
+
+/** Zero address constant for contract deployment check */
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 /**
  * Agent Registration Page
@@ -16,6 +19,12 @@ export default function RegisterPage() {
   const [agentImage, setAgentImage] = useState("");
   const [solanaAddress, setSolanaAddress] = useState("");
   const [mcpEndpoint, setMcpEndpoint] = useState("");
+
+  /** Check if the IdentityRegistry contract has been deployed */
+  const isContractDeployed = useMemo(
+    () => CONTRACT_ADDRESSES.IDENTITY_REGISTRY !== ZERO_ADDRESS,
+    []
+  );
 
   const {
     data: txHash,
@@ -51,9 +60,9 @@ export default function RegisterPage() {
     return `data:application/json;base64,${base64}`;
   }, [agentName, agentDescription, agentImage, solanaAddress, mcpEndpoint]);
 
-  /** Handle form submission */
+  /** Handle form submission — guards against undeployed contract */
   const handleRegister = useCallback(() => {
-    if (!agentName.trim()) return;
+    if (!agentName.trim() || !isContractDeployed) return;
     const agentURI = buildAgentURI();
     writeContract({
       address: CONTRACT_ADDRESSES.IDENTITY_REGISTRY,
@@ -61,7 +70,7 @@ export default function RegisterPage() {
       functionName: "register",
       args: [agentURI],
     });
-  }, [agentName, buildAgentURI, writeContract]);
+  }, [agentName, isContractDeployed, buildAgentURI, writeContract]);
 
   if (!isConnected) {
     return (
@@ -187,17 +196,35 @@ export default function RegisterPage() {
           </p>
         </div>
 
+        {/* Contract not deployed warning */}
+        {!isContractDeployed && (
+          <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 dark:border-amber-700 dark:bg-amber-950">
+            <p className="text-sm font-medium text-amber-700 dark:text-amber-300">
+              Contracts not deployed yet
+            </p>
+            <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">
+              The IdentityRegistry contract address is not configured. Deploy the
+              contracts to Sepolia first, then update the address in{" "}
+              <code className="rounded bg-amber-100 px-1 dark:bg-amber-900">
+                lib/contracts.ts
+              </code>.
+            </p>
+          </div>
+        )}
+
         {/* Submit */}
         <button
           onClick={handleRegister}
-          disabled={!agentName.trim() || isWriting || isConfirming}
+          disabled={!agentName.trim() || !isContractDeployed || isWriting || isConfirming}
           className="w-full rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isWriting
-            ? "Signing Transaction..."
-            : isConfirming
-              ? "Confirming on-chain..."
-              : "Register Agent (Mint NFT)"}
+          {!isContractDeployed
+            ? "Deploy Contracts First"
+            : isWriting
+              ? "Signing Transaction..."
+              : isConfirming
+                ? "Confirming on-chain..."
+                : "Register Agent (Mint NFT)"}
         </button>
 
         {/* Success */}
