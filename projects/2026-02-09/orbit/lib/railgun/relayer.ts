@@ -1,6 +1,6 @@
 /**
  * RAILGUN Relayer Service
- * Manages funded server wallet for gas abstraction
+ * Manages funded server wallet for gas abstraction (shield/unshield txs).
  */
 
 import { ethers, Wallet } from 'ethers';
@@ -11,12 +11,13 @@ export class RelayerService {
   private wallet: Wallet | null = null;
   private provider: ethers.JsonRpcProvider | null = null;
   private config: RelayerConfig;
+  private initPromise: Promise<void> | null = null;
 
   private constructor() {
     this.config = {
       privateKey: process.env.RELAYER_PRIVATE_KEY || '',
-      rpcUrls: process.env.RELAYER_RPC_URL?.split(',') || [],
-      fallbackRpcUrls: process.env.RELAYER_FALLBACK_RPC_URLS?.split(',') || [],
+      rpcUrls: process.env.RELAYER_RPC_URL?.split(',').map((u) => u.trim()).filter(Boolean) || [],
+      fallbackRpcUrls: process.env.RELAYER_FALLBACK_RPC_URLS?.split(',').map((u) => u.trim()).filter(Boolean) || [],
     };
   }
 
@@ -27,20 +28,35 @@ export class RelayerService {
     return RelayerService.instance;
   }
 
+  isConfigured(): boolean {
+    return Boolean(this.config.privateKey);
+  }
+
+  async ensureInitialized(): Promise<void> {
+    if (this.wallet && this.provider) return;
+    if (!this.config.privateKey) {
+      throw new Error('RELAYER_PRIVATE_KEY environment variable is required');
+    }
+    if (this.initPromise) return this.initPromise;
+    this.initPromise = this.initialize();
+    return this.initPromise;
+  }
+
   async initialize(): Promise<void> {
+    if (this.wallet && this.provider) return;
     if (!this.config.privateKey) {
       throw new Error('RELAYER_PRIVATE_KEY environment variable is required');
     }
 
-    // Try each RPC URL until one works
     const allUrls = [...this.config.rpcUrls, ...this.config.fallbackRpcUrls];
+    if (allUrls.length === 0) {
+      allUrls.push('https://sepolia.infura.io/v3/2ede8e829bdc4f709b22c9dcf1184009');
+    }
 
     for (const rpcUrl of allUrls) {
       try {
         this.provider = new ethers.JsonRpcProvider(rpcUrl);
         this.wallet = new Wallet(this.config.privateKey, this.provider);
-
-        // Verify connection
         await this.provider.getNetwork();
         console.log('[RELAYER] Connected to RPC:', rpcUrl);
         break;
@@ -53,6 +69,21 @@ export class RelayerService {
     if (!this.wallet || !this.provider) {
       throw new Error('Failed to connect to any RPC URL');
     }
+    this.initPromise = null;
+  }
+
+  getWallet(): Wallet {
+    if (!this.wallet) {
+      throw new Error('Relayer not initialized. Call ensureInitialized() first.');
+    }
+    return this.wallet;
+  }
+
+  getProvider(): ethers.JsonRpcProvider {
+    if (!this.provider) {
+      throw new Error('Relayer not initialized. Call ensureInitialized() first.');
+    }
+    return this.provider;
   }
 
   getAddress(): string {

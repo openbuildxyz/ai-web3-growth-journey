@@ -687,5 +687,6 @@ export function usePrivateSwap() {
     tokens: TOKENS,
     initializeEngine,
     ensureRailgunWallet,
+    getWalletCredentials,
   };
 }

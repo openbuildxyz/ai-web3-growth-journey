@@ -5,10 +5,51 @@ import { useAccount } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { Loader2, ExternalLink } from 'lucide-react';
 import { useRealSwap } from '@/hooks/useRealSwap';
+import { usePrivateSwap } from '@/hooks/usePrivateSwap';
 import { parseUnits } from 'viem';
 
-export function RealSwap() {
-  const { isConnected } = useAccount();
+const WETH_SEPOLIA = '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14';
+
+function parseSSE(response: Response, onData: (obj: { type?: string; data?: unknown; error?: string }) => void): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const reader = response.body?.getReader();
+    if (!reader) {
+      reject(new Error('No response body'));
+      return;
+    }
+    const decoder = new TextDecoder();
+    let buffer = '';
+    const processChunk = () => {
+      reader.read().then(({ done, value }) => {
+        if (done) {
+          resolve();
+          return;
+        }
+        buffer += decoder.decode(value, { stream: true });
+        const parts = buffer.split('\n\n');
+        buffer = parts.pop() || '';
+        for (const part of parts) {
+          const dataMatch = part.match(/data:\s*(.+)/s);
+          try {
+            const data = dataMatch?.[1] ? JSON.parse(dataMatch[1].trim()) : {};
+            onData(data);
+          } catch {
+            onData({});
+          }
+        }
+        processChunk();
+      }).catch(reject);
+    };
+    processChunk();
+  });
+}
+
+interface RealSwapProps {
+  isPrivateMode?: boolean;
+}
+
+export function RealSwap({ isPrivateMode = false }: RealSwapProps) {
+  const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
   const {
     isRealSwapEnabled,
@@ -21,8 +62,12 @@ export function RealSwap() {
     error,
     executeRealSwap,
   } = useRealSwap();
+  const { ensureRailgunWallet, getWalletCredentials } = usePrivateSwap();
 
   const [slippage, setSlippage] = useState('0.5');
+  const [isPrivateSwapping, setIsPrivateSwapping] = useState(false);
+  const [privateError, setPrivateError] = useState<string | null>(null);
+  const [privateTxHash, setPrivateTxHash] = useState<string | null>(null);
 
   const handleSwap = useCallback(async () => {
     if (!isConnected) {
@@ -30,16 +75,75 @@ export function RealSwap() {
       return;
     }
     if (!amountIn || parseFloat(amountIn) <= 0) return;
-    const expected = parseFloat(amountOut);
-    if (expected <= 0) return; // no liquidity or quote failed
 
+    if (isPrivateMode) {
+      setIsPrivateSwapping(true);
+      setPrivateError(null);
+      setPrivateTxHash(null);
+      try {
+        await ensureRailgunWallet();
+        const creds = getWalletCredentials();
+        if (!creds) {
+          setPrivateError('Wallet creation failed or was cancelled.');
+          return;
+        }
+        const walletRes = await fetch('/api/railgun/wallet', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mnemonic: creds.mnemonic, password: creds.password }),
+        });
+        const walletData = await walletRes.json();
+        if (!walletRes.ok || !walletData.success || !walletData.walletID || !walletData.railgunAddress || !walletData.encryptionKey) {
+          setPrivateError(walletData.error || 'Failed to get wallet');
+          return;
+        }
+        const amountWei = parseUnits(amountIn, 18).toString();
+        const res = await fetch('/api/railgun/private-transfer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            senderWalletID: walletData.walletID,
+            senderEncryptionKey: walletData.encryptionKey,
+            senderRailgunAddress: walletData.railgunAddress,
+            recipientAddress: address,
+            tokenAddress: WETH_SEPOLIA,
+            amount: amountWei,
+            userAddress: address,
+            gasAbstraction: 'approved',
+          }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          setPrivateError(data.error || 'Private transfer failed');
+          return;
+        }
+        await parseSSE(res, (obj) => {
+          if (obj.type === 'complete' && obj.data) {
+            const d = obj.data as { unshieldTxHash?: string };
+            setPrivateTxHash(d.unshieldTxHash || null);
+          } else if (obj.type === 'error') {
+            setPrivateError((obj as { data?: { error?: string }; error?: string }).data?.error ?? (obj as { error?: string }).error ?? 'Private transfer failed');
+          }
+        });
+      } catch (e) {
+        setPrivateError(e instanceof Error ? e.message : 'Private transfer failed');
+      } finally {
+        setIsPrivateSwapping(false);
+      }
+      return;
+    }
+
+    const expected = parseFloat(amountOut);
+    if (expected <= 0) return;
     const minOut = expected * (1 - parseFloat(slippage) / 100);
     const minOutWei = parseUnits(minOut.toFixed(18), 18).toString();
-
     await executeRealSwap(amountIn, minOutWei);
-  }, [isConnected, amountIn, amountOut, slippage, executeRealSwap, openConnectModal]);
+  }, [isConnected, address, amountIn, amountOut, slippage, isPrivateMode, ensureRailgunWallet, getWalletCredentials, executeRealSwap, openConnectModal]);
 
-  const canSwap = isConnected && amountIn && parseFloat(amountIn) > 0 && parseFloat(amountOut) > 0 && !quoteLoading && !isSwapping;
+  const swapping = isPrivateMode ? isPrivateSwapping : isSwapping;
+  const displayError = isPrivateMode ? privateError : error;
+  const displayTxHash = isPrivateMode ? privateTxHash : txHash;
+  const canSwap = isConnected && amountIn && parseFloat(amountIn) > 0 && !swapping && (isPrivateMode || (parseFloat(amountOut) > 0 && !quoteLoading));
 
   if (!isRealSwapEnabled) {
     return null;
@@ -71,10 +175,12 @@ export function RealSwap() {
           backgroundClip: 'text',
         }}
       >
-        REAL SWAP (ETH → OrbUSD)
+        {isPrivateMode ? 'PRIVATE SWAP (ETH)' : 'REAL SWAP (ETH → OrbUSD)'}
       </h2>
       <p className="text-xs font-mono text-cyan-400">
-        Native Sepolia ETH → OrbUSD via OrbPool. One tx, on-chain.
+        {isPrivateMode
+          ? 'Same UI: backend uses RAILGUN (create wallet → shield → POI → unshield).'
+          : 'Native Sepolia ETH → OrbUSD via OrbPool. One tx, on-chain.'}
       </p>
 
       {/* Input: ETH */}
@@ -136,10 +242,10 @@ export function RealSwap() {
         <span className="text-xs text-gray-500">%</span>
       </div>
 
-      {error && (
+      {displayError && (
         <div className="rounded-lg p-3 bg-amber-500/10 border border-amber-500/50 text-amber-400 text-sm font-mono space-y-1">
-          <div>{error}</div>
-          {error.includes('no liquidity') && (
+          <div>{displayError}</div>
+          {!isPrivateMode && displayError.includes('no liquidity') && (
             <div className="text-xs text-amber-500 mt-2">
               From project root: <code className="bg-black/30 px-1 rounded">npm run pool:add-weth-orbusd</code>
             </div>
@@ -147,11 +253,11 @@ export function RealSwap() {
         </div>
       )}
 
-      {txHash && (
+      {displayTxHash && (
         <div className="rounded-lg p-3 bg-green-500/10 border border-green-500/50 text-green-400 text-sm font-mono flex items-center gap-2">
-          <span>Swap submitted!</span>
+          <span>{isPrivateMode ? 'Private transfer complete!' : 'Swap submitted!'}</span>
           <a
-            href={`https://sepolia.etherscan.io/tx/${txHash}`}
+            href={`https://sepolia.etherscan.io/tx/${displayTxHash}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-cyan-400 hover:underline"
@@ -173,11 +279,13 @@ export function RealSwap() {
       >
         {!isConnected ? (
           'Connect Wallet'
-        ) : isSwapping ? (
+        ) : swapping ? (
           <>
             <Loader2 className="w-5 h-5 animate-spin" />
-            Swapping...
+            {isPrivateMode ? 'Private swap...' : 'Swapping...'}
           </>
+        ) : isPrivateMode ? (
+          'Private swap (create wallet + transfer)'
         ) : (
           'Swap ETH → OrbUSD'
         )}

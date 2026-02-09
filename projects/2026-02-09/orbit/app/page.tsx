@@ -1,12 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { PrivateSwap } from '@/components/PrivateSwap';
 import { RealSwap } from '@/components/RealSwap';
+import { RailgunPrivacy } from '@/components/RailgunPrivacy';
 import { ConnectWallet } from '@/components/ConnectWallet';
+import { Eye, EyeOff } from 'lucide-react';
 
 const isRealSwapConfigured = !!process.env.NEXT_PUBLIC_ROUTER_ADDRESS;
 
 export default function Home() {
+  const [isPrivateMode, setIsPrivateMode] = useState(false);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-black relative overflow-hidden">
       {/* Cyberpunk grid background */}
@@ -43,8 +48,44 @@ export default function Home() {
           <ConnectWallet />
         </div>
 
-        {/* Swap: Real (ETH → OrbUSD) when router is set, else Privacy Swap demo */}
-        {isRealSwapConfigured ? <RealSwap /> : <PrivateSwap />}
+        {/* Public / Private mode toggle */}
+        <div className="flex items-center gap-3 mb-4 p-3 rounded-xl border border-fuchsia-500/30 bg-black/40">
+          <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">Mode</span>
+          <button
+            type="button"
+            onClick={() => setIsPrivateMode(false)}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-mono text-sm transition-all ${
+              !isPrivateMode
+                ? 'bg-cyan-500/30 text-cyan-400 border border-cyan-500/50'
+                : 'bg-black/40 text-gray-500 border border-transparent hover:text-gray-400'
+            }`}
+          >
+            <Eye className="w-4 h-4" />
+            Public
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsPrivateMode(true)}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-mono text-sm transition-all ${
+              isPrivateMode
+                ? 'bg-fuchsia-500/30 text-fuchsia-400 border border-fuchsia-500/50'
+                : 'bg-black/40 text-gray-500 border border-transparent hover:text-gray-400'
+            }`}
+          >
+            <EyeOff className="w-4 h-4" />
+            Private
+          </button>
+        </div>
+
+        {/* Same swap UI; private mode = backend uses RAILGUN (create wallet + private transfer) */}
+        {isRealSwapConfigured ? (
+          <RealSwap isPrivateMode={isPrivateMode} />
+        ) : (
+          <PrivateSwap isPrivateMode={isPrivateMode} />
+        )}
+
+        {/* RAILGUN: Wallet, Shield, Unshield, Private Swap */}
+        <RailgunPrivacy isPrivateMode={isPrivateMode} />
 
         {/* Info Section */}
         <div className="mt-8 p-5 relative" style={{

@@ -200,4 +200,66 @@ export interface WalletCreateResponse {
   error?: string;
 }
 
+// ============================================================================
+// Private Transfer (shield → POI → unshield) - gas abstraction
+// ============================================================================
+
+export type GasAbstractionMethod = 'eip7702' | 'permit' | 'approved';
+
+export interface PermitData {
+  owner: string;
+  spender: string;
+  value: string;
+  deadline: string;
+  v: number;
+  r: string;
+  s: string;
+}
+
+export interface EIP7702Authorization {
+  chainId: number;
+  address: string;
+  nonce: number;
+  yParity: number;
+  r: string;
+  s: string;
+}
+
+export interface PrivateTransferParams {
+  senderWalletID: string;
+  senderEncryptionKey: string;
+  senderRailgunAddress: string;
+  recipientPublicAddress: string;
+  tokenAddress: string;
+  amount: bigint;
+  userAddress: string;
+  gasAbstraction: GasAbstractionMethod;
+  permitData?: PermitData;
+  eip7702Auth?: EIP7702Authorization;
+}
+
+export type PrivateTransferStep =
+  | 'approving'
+  | 'shielding'
+  | 'waiting_poi'
+  | 'generating_proof'
+  | 'unshielding'
+  | 'complete'
+  | 'error';
+
+export interface PrivateTransferProgress {
+  step: PrivateTransferStep;
+  progress: number;
+  message: string;
+  txHash?: string;
+}
+
+export interface PrivateTransferResult {
+  success: boolean;
+  shieldTxHash?: string;
+  unshieldTxHash?: string;
+  senderRailgunAddress?: string;
+  error?: string;
+}
+
 

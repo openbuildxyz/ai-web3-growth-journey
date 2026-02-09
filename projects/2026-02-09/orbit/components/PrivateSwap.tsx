@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAccount } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { ArrowDownUp, Eye, EyeOff, Shield, Loader2, ChevronDown, Wallet } from 'lucide-react';
+import { parseUnits } from 'viem';
 import {
   usePrivateSwap,
   getSwapOutput,
@@ -15,6 +16,44 @@ import {
 
 interface PrivateSwapProps {
   className?: string;
+  isPrivateMode?: boolean;
+}
+
+const WETH_ADDRESS = '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14';
+const ETH_ADDRESS = '0x0000000000000000000000000000000000000000';
+
+function parseSSEPrivate(response: Response, onData: (obj: { type?: string; data?: unknown; error?: string }) => void): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const reader = response.body?.getReader();
+    if (!reader) {
+      reject(new Error('No response body'));
+      return;
+    }
+    const decoder = new TextDecoder();
+    let buffer = '';
+    const processChunk = () => {
+      reader.read().then(({ done, value }) => {
+        if (done) {
+          resolve();
+          return;
+        }
+        buffer += decoder.decode(value, { stream: true });
+        const parts = buffer.split('\n\n');
+        buffer = parts.pop() || '';
+        for (const part of parts) {
+          const dataMatch = part.match(/data:\s*(.+)/s);
+          try {
+            const data = dataMatch?.[1] ? JSON.parse(dataMatch[1].trim()) : {};
+            onData(data);
+          } catch {
+            onData({});
+          }
+        }
+        processChunk();
+      }).catch(reject);
+    };
+    processChunk();
+  });
 }
 
 // Token icon component with cyberpunk gradient style
@@ -185,7 +224,7 @@ const ProgressStep = ({
   );
 };
 
-export const PrivateSwap = ({ className }: PrivateSwapProps) => {
+export const PrivateSwap = ({ className, isPrivateMode = false }: PrivateSwapProps) => {
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
   const {
@@ -197,6 +236,8 @@ export const PrivateSwap = ({ className }: PrivateSwapProps) => {
     executeSwap,
     resetSwap,
     tokens,
+    ensureRailgunWallet,
+    getWalletCredentials,
   } = usePrivateSwap();
 
   const [stealthMode, setStealthMode] = useState(true);
@@ -204,10 +245,13 @@ export const PrivateSwap = ({ className }: PrivateSwapProps) => {
   const [tokenOut, setTokenOut] = useState<TokenInfo>(tokens.USDC);
   const [amountIn, setAmountIn] = useState('1');
   const [slippage, setSlippage] = useState('0.5');
+  const [isPrivateBackendSwapping, setIsPrivateBackendSwapping] = useState(false);
+  const [privateBackendError, setPrivateBackendError] = useState<string | null>(null);
+  const [privateBackendTxHash, setPrivateBackendTxHash] = useState<string | null>(null);
 
-  // In private mode, wallet must be ready (or will be created on first swap)
-  const isWalletPreparing = stealthMode && railgunWalletStatus === 'creating';
-  const canSwap = !isWalletPreparing && (!stealthMode || railgunWalletStatus !== 'error');
+  // When isPrivateMode (page toggle), backend = RAILGUN private transfer; wallet created on first swap
+  const isWalletPreparing = !isPrivateMode && stealthMode && railgunWalletStatus === 'creating';
+  const canSwap = !isWalletPreparing && (!stealthMode || railgunWalletStatus !== 'error') && !isPrivateBackendSwapping;
 
   // Calculate output amount
   const amountOut = useMemo(() => {
@@ -222,30 +266,87 @@ export const PrivateSwap = ({ className }: PrivateSwapProps) => {
     setTokenOut(temp);
   }, [tokenIn, tokenOut]);
 
-  // Handle swap execution
+  // Handle swap execution (when isPrivateMode = backend uses RAILGUN private transfer)
   const handleSwap = useCallback(async () => {
-    if (!isConnected) {
+    if (!isConnected || !address) {
       openConnectModal?.();
       return;
     }
+    if (!amountIn || parseFloat(amountIn) <= 0) return;
 
-    if (!amountIn || parseFloat(amountIn) <= 0) {
+    if (isPrivateMode) {
+      setIsPrivateBackendSwapping(true);
+      setPrivateBackendError(null);
+      setPrivateBackendTxHash(null);
+      try {
+        await ensureRailgunWallet();
+        const creds = getWalletCredentials();
+        if (!creds) {
+          setPrivateBackendError('Wallet creation failed or was cancelled.');
+          return;
+        }
+        const walletRes = await fetch('/api/railgun/wallet', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mnemonic: creds.mnemonic, password: creds.password }),
+        });
+        const walletData = await walletRes.json();
+        if (!walletRes.ok || !walletData.success || !walletData.walletID || !walletData.railgunAddress || !walletData.encryptionKey) {
+          setPrivateBackendError(walletData.error || 'Failed to get wallet');
+          return;
+        }
+        const transferTokenAddress = tokenIn.address === ETH_ADDRESS ? WETH_ADDRESS : tokenIn.address;
+        const amountWei = parseUnits(amountIn, tokenIn.decimals).toString();
+        const res = await fetch('/api/railgun/private-transfer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            senderWalletID: walletData.walletID,
+            senderEncryptionKey: walletData.encryptionKey,
+            senderRailgunAddress: walletData.railgunAddress,
+            recipientAddress: address,
+            tokenAddress: transferTokenAddress,
+            amount: amountWei,
+            userAddress: address,
+            gasAbstraction: 'approved',
+          }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          setPrivateBackendError(data.error || 'Private transfer failed');
+          return;
+        }
+        await parseSSEPrivate(res, (obj) => {
+          if (obj.type === 'complete' && obj.data) {
+            const d = obj.data as { unshieldTxHash?: string };
+            setPrivateBackendTxHash(d.unshieldTxHash || null);
+          } else if (obj.type === 'error') {
+            setPrivateBackendError((obj as { data?: { error?: string }; error?: string }).data?.error ?? (obj as { error?: string }).error ?? 'Private transfer failed');
+          }
+        });
+      } catch (e) {
+        setPrivateBackendError(e instanceof Error ? e.message : 'Private transfer failed');
+      } finally {
+        setIsPrivateBackendSwapping(false);
+      }
       return;
     }
 
-    // Calculate minimum output with slippage
     const expectedOutput = parseFloat(amountOut);
     const minOutput = expectedOutput * (1 - parseFloat(slippage) / 100);
-
     await executeSwap(tokenIn, tokenOut, amountIn, stealthMode, minOutput.toString());
   }, [
     isConnected,
+    address,
     amountIn,
     amountOut,
     slippage,
     tokenIn,
     tokenOut,
     stealthMode,
+    isPrivateMode,
+    ensureRailgunWallet,
+    getWalletCredentials,
     executeSwap,
     openConnectModal,
   ]);
@@ -509,14 +610,43 @@ export const PrivateSwap = ({ className }: PrivateSwapProps) => {
 
       {/* Swap Progress */}
       <AnimatePresence>
-        {isSwapping && (
+        {isPrivateMode && isPrivateBackendSwapping && (
+          <ProgressStep step="preparing" progress={50} message="Private swap (create wallet → shield → POI → unshield)..." />
+        )}
+        {!isPrivateMode && isSwapping && (
           <ProgressStep step={progress.step} progress={progress.progress} message={progress.message} />
         )}
       </AnimatePresence>
 
-      {/* Result Message */}
+      {/* Private backend result (when isPrivateMode) */}
+      {isPrivateMode && (privateBackendError || privateBackendTxHash) && !isPrivateBackendSwapping && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-xl p-4 border font-mono text-xs"
+          style={{
+            background: privateBackendTxHash
+              ? 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%)'
+              : 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%)',
+            border: privateBackendTxHash ? '1px solid rgba(0, 255, 136, 0.5)' : '1px solid rgba(239, 68, 68, 0.5)',
+          }}
+        >
+          {privateBackendTxHash ? (
+            <span style={{ color: '#00ff88' }}>
+              ✓ Private transfer complete.{' '}
+              <a href={`https://sepolia.etherscan.io/tx/${privateBackendTxHash}`} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">
+                View TX
+              </a>
+            </span>
+          ) : (
+            <span style={{ color: '#ef4444' }}>✗ {privateBackendError}</span>
+          )}
+        </motion.div>
+      )}
+
+      {/* Result Message (non-private backend) */}
       <AnimatePresence>
-        {result && !isSwapping && (
+        {result && !isSwapping && !isPrivateMode && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -557,7 +687,7 @@ export const PrivateSwap = ({ className }: PrivateSwapProps) => {
       {/* Swap Button */}
       <button
         onClick={handleSwap}
-        disabled={isSwapping || !canSwap || !amountIn || parseFloat(amountIn) <= 0}
+        disabled={(isSwapping || isPrivateBackendSwapping) || !canSwap || !amountIn || parseFloat(amountIn) <= 0}
         className="w-full h-14 rounded-xl font-bold uppercase tracking-widest text-xs transition-all disabled:opacity-50 disabled:hover:translate-y-0 relative overflow-hidden font-mono group"
         style={{
           background: stealthMode
@@ -591,7 +721,12 @@ export const PrivateSwap = ({ className }: PrivateSwapProps) => {
         }}></div>
 
         <span className="relative z-10 flex items-center justify-center gap-2">
-          {isSwapping ? (
+          {isPrivateBackendSwapping ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              PRIVATE_SWAP...
+            </>
+          ) : isSwapping ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
               PROCESSING...
@@ -603,6 +738,8 @@ export const PrivateSwap = ({ className }: PrivateSwapProps) => {
             </>
           ) : !isConnected ? (
             'CONNECT_WALLET'
+          ) : isPrivateMode ? (
+            'PRIVATE_SWAP (backend RAILGUN)'
           ) : stealthMode ? (
             'PRIVATE_SWAP'
           ) : (

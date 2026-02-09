@@ -1,28 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { railgunEngine } from '@/lib/railgun/engine';
+import { railgunWallet } from '@/lib/railgun/wallet';
 import type { WalletCreateResponse, RailgunWalletInfo } from '@/lib/railgun/types';
 
 /**
  * POST /api/railgun/wallet - Create or load a RAILGUN wallet
  *
- * This endpoint handles:
- * - Creating new RAILGUN wallets from mnemonic
- * - Loading existing wallets from mnemonic
- * - Returning wallet information (address, balances)
- *
- * The wallet is deterministic - the same mnemonic always produces the same RAILGUN address.
+ * Uses real @railgun-community/wallet. Returns walletID, railgunAddress, encryptionKey
+ * (encryptionKey is needed for private-transfer; client sends it back).
  */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { mnemonic, password, tokenAddress } = body;
 
-    // Ensure engine is initialized
     if (!railgunEngine.isReady()) {
       await railgunEngine.initialize();
     }
 
-    // Validate mnemonic
     if (!mnemonic || typeof mnemonic !== 'string') {
       return NextResponse.json<WalletCreateResponse>({
         success: false,
@@ -38,7 +33,6 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // Validate password
     if (!password || typeof password !== 'string') {
       return NextResponse.json<WalletCreateResponse>({
         success: false,
@@ -48,19 +42,16 @@ export async function POST(request: NextRequest) {
 
     console.log('[API /railgun/wallet] Creating/loading wallet...');
 
-    // For POC: Generate a deterministic mock RAILGUN address from the mnemonic
-    // In production, this would use: fullWalletFromMnemonic from @railgun-community/wallet
-    const mockRailgunAddress = `0x${Buffer.from(mnemonic.substring(0, 40)).toString('hex')}`;
-    const mockWalletID = `wallet_${mockRailgunAddress.substring(0, 10)}`;
+    const walletInfo = await railgunWallet.createWalletFromMnemonic(mnemonic.trim(), password);
 
-    console.log('[API /railgun/wallet] Wallet loaded:', mockWalletID);
-    console.log('[API /railgun/wallet] RAILGUN address:', mockRailgunAddress);
+    console.log('[API /railgun/wallet] Wallet loaded:', walletInfo.walletID);
+    console.log('[API /railgun/wallet] RAILGUN address:', walletInfo.railgunAddress.slice(0, 30) + '...');
 
     return NextResponse.json<WalletCreateResponse>({
       success: true,
-      walletID: mockWalletID,
-      railgunAddress: mockRailgunAddress,
-      encryptionKey: password, // In production, this should be handled more securely
+      walletID: walletInfo.walletID,
+      railgunAddress: walletInfo.railgunAddress,
+      encryptionKey: walletInfo.encryptionKey,
     });
 
   } catch (error) {
