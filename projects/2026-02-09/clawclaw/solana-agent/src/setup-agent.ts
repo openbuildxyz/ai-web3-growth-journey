@@ -1,11 +1,15 @@
 /**
- * Setup Script — Creates the Solana Demo Agent
+ * Setup Script — Configures the Solana Demo Agent
+ *
+ * Supports two modes:
+ *   A. Use your own wallet: set AGENT_PUBLIC_KEY env var (read-only, no secret key needed)
+ *   B. Generate a new keypair: leave AGENT_PUBLIC_KEY empty
  *
  * This script:
- *   1. Generates a new Solana keypair (the "agent" wallet)
- *   2. Airdrops SOL for transaction fees
- *   3. Creates an Associated Token Account for USDC
- *   4. Prints the addresses needed by the Sepolia side (CCTP mintRecipient)
+ *   1. Resolves the agent wallet (your address or a new keypair)
+ *   2. Derives the USDC Associated Token Account address
+ *   3. Computes the CCTP mintRecipient (bytes32) for Sepolia
+ *   4. Optionally airdrops SOL and creates the ATA on-chain
  *
  * Run: npm run setup
  */
@@ -23,7 +27,9 @@ import {
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 
-dotenv.config();
+// Load .env.local first (user overrides), then .env as fallback
+dotenv.config({ path: ".env.local" });
+dotenv.config({ path: ".env" });
 
 /** Solana Devnet USDC mint (Circle official) */
 const USDC_MINT = new PublicKey(
@@ -43,60 +49,69 @@ function toBytes32Hex(pubkey: PublicKey): string {
 async function main() {
   const connection = new Connection(RPC_URL, "confirmed");
 
-  // ── Step 1: Generate or load agent keypair ─────────────
-  let agentKeypair: Keypair;
+  // ── Step 1: Resolve agent wallet ───────────────────────
+  // Priority: AGENT_PUBLIC_KEY env > AGENT_SECRET_KEY env > generate new
+  let agentPublicKey: PublicKey;
+  let agentKeypair: Keypair | null = null;
 
-  if (process.env.AGENT_SECRET_KEY) {
-    // Load existing keypair from base58 secret key
+  if (process.env.AGENT_PUBLIC_KEY) {
+    // Use an existing wallet (read-only mode, no secret key required)
+    agentPublicKey = new PublicKey(process.env.AGENT_PUBLIC_KEY);
+    console.log("Using provided wallet address (read-only mode)");
+  } else if (process.env.AGENT_SECRET_KEY) {
+    // Load full keypair from secret key
     const secretKey = Uint8Array.from(
       JSON.parse(process.env.AGENT_SECRET_KEY)
     );
     agentKeypair = Keypair.fromSecretKey(secretKey);
+    agentPublicKey = agentKeypair.publicKey;
     console.log("Loaded existing agent keypair");
   } else {
-    // Generate a new keypair
+    // Generate a brand-new keypair
     agentKeypair = Keypair.generate();
+    agentPublicKey = agentKeypair.publicKey;
     console.log("Generated new agent keypair");
   }
 
-  const agentPublicKey = agentKeypair.publicKey;
   console.log(`\nAgent Public Key: ${agentPublicKey.toBase58()}`);
 
-  // ── Step 2: Airdrop SOL for fees (retry with backoff) ──
-  console.log("\nRequesting SOL airdrop for transaction fees...");
-  let isAirdropSuccessful = false;
-  const MAX_AIRDROP_RETRIES = 3;
+  // ── Step 2: Check SOL balance ──────────────────────────
+  const solBalance = await connection.getBalance(agentPublicKey);
+  console.log(`SOL Balance: ${solBalance / LAMPORTS_PER_SOL} SOL`);
 
-  for (let attempt = 1; attempt <= MAX_AIRDROP_RETRIES; attempt++) {
-    try {
-      const airdropSig = await connection.requestAirdrop(
-        agentPublicKey,
-        1 * LAMPORTS_PER_SOL
-      );
-      await connection.confirmTransaction(airdropSig, "confirmed");
-      console.log("Airdrop successful: 1 SOL");
-      isAirdropSuccessful = true;
-      break;
-    } catch {
-      console.warn(`Airdrop attempt ${attempt}/${MAX_AIRDROP_RETRIES} failed.`);
-      if (attempt < MAX_AIRDROP_RETRIES) {
-        const delay = attempt * 3000;
-        console.log(`Retrying in ${delay / 1000}s...`);
-        await new Promise((r) => setTimeout(r, delay));
+  // Only attempt airdrop if we have a keypair (not read-only mode)
+  // and balance is low
+  if (agentKeypair && solBalance < 0.01 * LAMPORTS_PER_SOL) {
+    console.log("\nRequesting SOL airdrop for transaction fees...");
+    const MAX_AIRDROP_RETRIES = 3;
+
+    for (let attempt = 1; attempt <= MAX_AIRDROP_RETRIES; attempt++) {
+      try {
+        const airdropSig = await connection.requestAirdrop(
+          agentPublicKey,
+          1 * LAMPORTS_PER_SOL
+        );
+        await connection.confirmTransaction(airdropSig, "confirmed");
+        console.log("Airdrop successful: 1 SOL");
+        break;
+      } catch {
+        console.warn(`Airdrop attempt ${attempt}/${MAX_AIRDROP_RETRIES} failed.`);
+        if (attempt < MAX_AIRDROP_RETRIES) {
+          const delay = attempt * 3000;
+          console.log(`Retrying in ${delay / 1000}s...`);
+          await new Promise((r) => setTimeout(r, delay));
+        }
       }
     }
   }
 
-  const solBalance = await connection.getBalance(agentPublicKey);
-  console.log(`SOL Balance: ${solBalance / LAMPORTS_PER_SOL} SOL`);
-
-  // ── Step 3: Derive ATA address, create on-chain only if funded ──
-  // Always derive the deterministic ATA address (works offline)
+  // ── Step 3: Derive USDC ATA address ────────────────────
   const ataAddress = await getAssociatedTokenAddress(USDC_MINT, agentPublicKey);
   let isAtaCreated = false;
 
-  if (solBalance > 0) {
-    // Enough SOL to pay for the ATA creation tx
+  // Try to create ATA on-chain only if we have a signing keypair
+  const updatedBalance = await connection.getBalance(agentPublicKey);
+  if (agentKeypair && updatedBalance > 0) {
     console.log("\nCreating USDC Associated Token Account on-chain...");
     try {
       await getOrCreateAssociatedTokenAccount(
@@ -111,12 +126,10 @@ async function main() {
       console.warn("Failed to create ATA on-chain:", (err as Error).message);
     }
   } else {
-    console.log("\nSkipping on-chain ATA creation (no SOL for fees).");
-    console.log("The ATA address is derived deterministically and is still valid.");
+    console.log("\nATA address derived (deterministic). Create on-chain when ready.");
   }
 
-  // ── Step 4: Derive the CCTP mintRecipient (bytes32) ────
-  // CCTP expects the token account address as a 32-byte value
+  // ── Step 4: Compute CCTP mintRecipient (bytes32) ───────
   const mintRecipientBytes32 = toBytes32Hex(ataAddress);
 
   console.log("\n════════════════════════════════════════════");
@@ -128,28 +141,22 @@ async function main() {
   console.log(`  CCTP mintRecipient:  ${mintRecipientBytes32}`);
   console.log("════════════════════════════════════════════\n");
 
-  // ── Step 5: Save keypair to .env for future use ────────
-  const secretKeyArray = JSON.stringify(Array.from(agentKeypair.secretKey));
+  // ── Step 5: Save config to .env ────────────────────────
+  const secretKeyLine = agentKeypair
+    ? `AGENT_SECRET_KEY=${JSON.stringify(Array.from(agentKeypair.secretKey))}`
+    : "# No secret key (using external wallet)";
 
   const envContent = `# Generated by setup-agent.ts
 SOLANA_RPC_URL=${RPC_URL}
-AGENT_SECRET_KEY=${secretKeyArray}
-USDC_MINT=${USDC_MINT.toBase58()}
 AGENT_PUBLIC_KEY=${agentPublicKey.toBase58()}
+${secretKeyLine}
+USDC_MINT=${USDC_MINT.toBase58()}
 USDC_TOKEN_ACCOUNT=${ataAddress.toBase58()}
 CCTP_MINT_RECIPIENT=${mintRecipientBytes32}
 `;
 
   fs.writeFileSync(".env", envContent);
   console.log("Saved agent config to .env");
-
-  if (!isAirdropSuccessful) {
-    console.log("\n── IMPORTANT ───────────────────────────────");
-    console.log("SOL airdrop failed. To complete setup:");
-    console.log(`  1. Fund ${agentPublicKey.toBase58()} with SOL on Devnet`);
-    console.log("     - Use https://faucet.solana.com or solana airdrop 1");
-    console.log("  2. Re-run: npm run setup   (to create the ATA on-chain)");
-  }
 
   console.log("\n── NEXT STEPS ──────────────────────────────");
   console.log("1. Copy the CCTP mintRecipient above");

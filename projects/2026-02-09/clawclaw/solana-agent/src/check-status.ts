@@ -8,7 +8,8 @@ import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { getAccount } from "@solana/spl-token";
 import * as dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: ".env.local" });
+dotenv.config({ path: ".env" });
 
 const RPC_URL = process.env.SOLANA_RPC_URL || "https://api.devnet.solana.com";
 

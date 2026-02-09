@@ -22,7 +22,8 @@ import {
 } from "@solana/web3.js";
 import * as dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: ".env.local" });
+dotenv.config({ path: ".env" });
 
 const RPC_URL = process.env.SOLANA_RPC_URL || "https://api.devnet.solana.com";
 
