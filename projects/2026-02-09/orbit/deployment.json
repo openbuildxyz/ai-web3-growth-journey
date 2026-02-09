@@ -1,0 +1,10 @@
+{
+  "network": "sepolia",
+  "weth": "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
+  "tokens": {
+    "orbUSD": "0xB5De1ECbDDDb3fC4a94061618c1Df25c604D3294"
+  },
+  "pool": "0xE270273A4e75c150837bd22B6340268569f3eC14",
+  "router": "0x4616CCD99E588fbD55C01D89017C90aD2C6a940c",
+  "deploymentDate": "2026-02-09T08:01:02.865Z"
+}
