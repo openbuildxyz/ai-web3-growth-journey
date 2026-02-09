@@ -1,0 +1,50 @@
+name: Publish NPM Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_path:
+        description: "Path to the package to publish (restricted)"
+        required: true
+        type: choice
+        options:
+          - "packages/ui"
+          - "packages/hooks"
+        default: "packages/ui"
+      registry_url:
+        description: "NPM registry URL (private or public)"
+        required: true
+        default: "https://registry.npmjs.org"
+      tag:
+        description: "NPM dist-tag"
+        required: true
+        default: "latest"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: ${{ inputs.registry_url }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish package
+        run: pnpm -C "${{ inputs.package_path }}" publish --no-git-checks --tag "${{ inputs.tag }}" --registry "${{ inputs.registry_url }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

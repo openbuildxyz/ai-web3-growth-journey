@@ -1,0 +1,8 @@
+packages:
+  - apps/*
+  - packages/*
+  - contracts/*
+
+onlyBuiltDependencies:
+  - esbuild
+  - "@fission-ai/openspec"
