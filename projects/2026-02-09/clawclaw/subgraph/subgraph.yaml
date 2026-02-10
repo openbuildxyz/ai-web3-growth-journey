@@ -1,0 +1,82 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: IdentityRegistry
+    network: sepolia
+    source:
+      address: "{{IDENTITY_REGISTRY_ADDRESS}}"
+      abi: IdentityRegistry
+      startBlock: {{IDENTITY_REGISTRY_START_BLOCK}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Agent
+        - RegistrationEvent
+        - URIUpdateEvent
+      abis:
+        - name: IdentityRegistry
+          file: ./abis/IdentityRegistry.json
+      eventHandlers:
+        - event: Registered(uint256,string,address)
+          handler: handleRegistered
+        - event: URIUpdated(uint256,string,address)
+          handler: handleURIUpdated
+        - event: MetadataSet(uint256,string,string,bytes)
+          handler: handleMetadataSet
+        - event: AgentWalletSet(uint256,address,address)
+          handler: handleAgentWalletSet
+      file: ./src/identity-registry.ts
+
+  - kind: ethereum
+    name: ReputationRegistry
+    network: sepolia
+    source:
+      address: "{{REPUTATION_REGISTRY_ADDRESS}}"
+      abi: ReputationRegistry
+      startBlock: {{REPUTATION_REGISTRY_START_BLOCK}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Agent
+        - Feedback
+        - Response
+      abis:
+        - name: ReputationRegistry
+          file: ./abis/ReputationRegistry.json
+        - name: IdentityRegistry
+          file: ./abis/IdentityRegistry.json
+      eventHandlers:
+        - event: NewFeedback(uint256,address,uint64,int128,uint8,string,string,string,string,string,bytes32)
+          handler: handleNewFeedback
+        - event: FeedbackRevoked(uint256,address,uint64)
+          handler: handleFeedbackRevoked
+        - event: ResponseAppended(uint256,address,uint64,address,string,bytes32)
+          handler: handleResponseAppended
+      file: ./src/reputation-registry.ts
+
+  - kind: ethereum
+    name: AgentPayment
+    network: sepolia
+    source:
+      address: "{{AGENT_PAYMENT_ADDRESS}}"
+      abi: AgentPayment
+      startBlock: {{AGENT_PAYMENT_START_BLOCK}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - PaymentEvent
+      abis:
+        - name: AgentPayment
+          file: ./abis/AgentPayment.json
+      eventHandlers:
+        - event: AgentTipped(uint256,address,address,uint256,bool,uint32)
+          handler: handleAgentTipped
+      file: ./src/agent-payment.ts
